@@ -86,12 +86,10 @@ const workoutsDay = {
 };
 
 const DietPlan = () => {
-  const [selectedDay, setSelectedDay] = useState(days[0]);
-  const [btn, setBtn] = useState(false);
+  const [selectedDay, setSelectedDay] = useState(null);
 
   const handleClick = (day) => {
     setSelectedDay(day);
-    setBtn(true);
   };
 
   return (
@@ -105,13 +103,11 @@ const DietPlan = () => {
             {days.map((day, index) => (
               <Button
                 key={index}
-                mode="text"
+                mode="container"
                 onPress={() => handleClick(day)}
-                labelStyle={styles.buttonLabel}
+                // labelStyle={styles.buttonLabel}
               >
-                <Text
-                  style={{ backgroundColor: btn ? "pink" : "", color: "#000" }}
-                >
+                <Text style={selectedDay === day && styles.headerText}>
                   {day}
                 </Text>
               </Button>
@@ -119,6 +115,7 @@ const DietPlan = () => {
           </View>
         </View>
       </View>
+
       <ScrollView contentContainerStyle={styles.workoutContainer}>
         {/* <Text style={styles.workoutText}>{workouts[selectedDay]}</Text> */}
         <Text style={styles.workoutsIncluded}>
@@ -170,11 +167,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     // marginBottom: 20,
   },
-  // appbar: {
-  //   height: "100%",
-  //   justifyContent: "center",
-  //   paddingTop: 10, // Adjust this value for spacing
-  // },
+  headerText: {
+    color: "#000",
+    fontWeight: "bold",
+  },
   buttonRow: {
     flexDirection: "row",
     // alignItems: "center",

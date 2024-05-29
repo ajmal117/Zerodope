@@ -166,7 +166,7 @@ export default function DietPlan() {
       initialRouteName="Diet Plan"
       screenOptions={{
         headerTitleAlign: "center",
-        headerShown:false,
+        headerShown: false,
         headerStyle: {
           // backgroundColor: "#051810",
           borderRadius: 10,
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     // color:"#F5F5F5",
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
   },
   itemDescription: {
