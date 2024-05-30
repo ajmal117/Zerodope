@@ -11,10 +11,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import WorkOutPlan from "@/screens/WorkOutPlan";
 import DietPlan from "@/screens/DietPlan";
 
+
 const App = () => {
   const theme = useTheme();
   const Stack = createNativeStackNavigator();
 
+  
   return (
     // <NavigationContainer>
     <Stack.Navigator initialRouteName="WorkOutPlan">
@@ -37,6 +39,7 @@ const App = () => {
             backgroundColor: "black",
           },
           headerTintColor: "white",
+
         }}
       />
 

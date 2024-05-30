@@ -197,6 +197,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: 16,
     fontWeight: "bold",
+    fontFamily: "Poppins ExtraBold",
   },
 
   workoutItem: {

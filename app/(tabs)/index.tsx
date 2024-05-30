@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+
 import App from "../App.js";
 import {
   MD3LightTheme as DefaultTheme,
