@@ -45,9 +45,9 @@ const App = () => {
         component={WorkOutPlan}
         options={{
           headerShown: false,
-          headerStyle: {
-            backgroundColor: "black",
-          },
+          // headerStyle: {
+          //   backgroundColor: "black",
+          // },
           headerTintColor: "white",
         }}
       />

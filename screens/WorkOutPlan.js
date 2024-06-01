@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import { Button } from "react-native-paper";
 // import { NavigationContainer } from '@react-navigation/native';
 
-
 const days = [
   "Monday",
   "Tuesday",
@@ -87,14 +86,12 @@ const workoutsDay = {
 };
 
 const DietPlan = () => {
-   
-
   const [selectedDay, setSelectedDay] = useState(null);
 
   const handleClick = (day) => {
     setSelectedDay(day);
   };
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -128,10 +125,14 @@ const DietPlan = () => {
           {workouts[selectedDay]?.map((workout, index) => (
             <View key={index} style={styles.workoutItem}>
               <Image source={workout.image} style={styles.workoutImage} />
-              <View>
-                <Text style={styles.workoutName}>{workout.name}</Text>
-                <Text style={styles.workoutMuscle}>{workout.muscle}</Text>
-                <Text style={styles.workoutSets}>{workout.sets}</Text>
+              <View style={{gap:2}}>
+                <View>
+                  <Text style={styles.workoutName}>{workout.name}</Text>
+                </View>
+                <View style={{ flex: 1, flexDirection: "row",gap:6 , paddingTop:4}}>
+                  <Text style={styles.workoutMuscle} >{workout.muscle}</Text>
+                  <Text style={styles.workoutSets}>{workout.sets}</Text>
+                </View>
               </View>
             </View>
           ))}
@@ -161,8 +162,8 @@ const styles = StyleSheet.create({
 
   headerContainer: {
     justifyContent: "center",
-    borderWidth: 1,
-    borderColor: "#ccc",
+    // borderWidth: 1,
+    // borderColor: "#ccc",
     height: 60, // Adjust this value to reduce the height of the header
   },
 
@@ -199,7 +200,7 @@ const styles = StyleSheet.create({
   workoutsIncluded: {
     textAlign: "center",
     marginBottom: 20,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
     fontFamily: "poppinsMedium",
     // fontFamily: "satoshiRegular",
@@ -216,8 +217,9 @@ const styles = StyleSheet.create({
   },
   workoutSets: {
     fontSize: 14,
-    color: "#555",
-    fontWeight: "bold",
+    color: "#0366be",
+   fontWeight: "bold",
+
   },
   workoutList: {
     flexGrow: 1,
@@ -233,10 +235,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
   },
+
   workoutMuscle: {
     fontSize: 14,
     color: "#555",
+    backgroundColor:"#e7ecf0",
+    borderRadius:4,
+    padding:2
   },
+
 });
 
 // import React, { useState } from "react";
