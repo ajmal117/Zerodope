@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import { Button } from "react-native-paper";
 // import { NavigationContainer } from '@react-navigation/native';
 
+
 const days = [
   "Monday",
   "Tuesday",
@@ -86,12 +87,14 @@ const workoutsDay = {
 };
 
 const DietPlan = () => {
+   
+
   const [selectedDay, setSelectedDay] = useState(null);
 
   const handleClick = (day) => {
     setSelectedDay(day);
   };
-
+  
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -145,6 +148,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // fontFamily: "poppinsMedium",
   },
   textView: {
     alignItems: "center",
@@ -197,7 +201,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: 16,
     fontWeight: "bold",
-    fontFamily: "Poppins ExtraBold",
+    fontFamily: "poppinsMedium",
+    // fontFamily: "satoshiRegular",
   },
 
   workoutItem: {
@@ -216,6 +221,7 @@ const styles = StyleSheet.create({
   },
   workoutList: {
     flexGrow: 1,
+    fontFamily: "poppinsMedium",
   },
   workoutImage: {
     width: 135,
