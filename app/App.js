@@ -46,7 +46,7 @@ const App = () => {
         options={{
           headerShown: false,
           // headerStyle: {
-          //   backgroundColor: "black",
+            backgroundColor: "#000",
           // },
           headerTintColor: "white",
         }}

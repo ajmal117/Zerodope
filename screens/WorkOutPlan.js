@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
-import { Button } from "react-native-paper";
-// import { NavigationContainer } from '@react-navigation/native';
+import { Button, IconButton, useTheme } from "react-native-paper";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const days = [
   "Monday",
@@ -19,28 +19,24 @@ const workouts = {
       muscle: "Biceps",
       sets: "1 set",
       image: require("../assets/images/gymi.jpg"),
-      // image: require("../assets/images/partial-react-logo.png"),
     },
     {
       name: "Bench Dip13333333",
       muscle: "Triceps",
       sets: "1 set",
       image: require("../assets/images/gymi.jpg"),
-      // image: require("../assets/images/partial-react-logo.png"),
     },
     {
       name: "Dumbbell33333 wrist curl",
       muscle: "Biceps",
       sets: "1 set",
       image: require("../assets/images/gymi.jpg"),
-      // image: require("../assets/images/partial-react-logo.png"),
     },
     {
       name: "Dumbbell3 skull crushers",
       muscle: "Triceps3333",
       sets: "1 set",
       image: require("../assets/images/gymi.jpg"),
-      // image: require("../assets/images/partial-react-logo.png"),
     },
   ],
   Tuesday: [
@@ -76,17 +72,9 @@ const workouts = {
   // Define workouts for other days similarly
 };
 
-const workoutsDay = {
-  Monday: "Run 5 miles",
-  Tuesday: "Upper body strength training",
-  Wednesday: "Yoga and stretching",
-  Thursday: "HIIT workout",
-  Friday: "Lower body strength training",
-  Saturday: "Rest day OR light activity",
-};
-
 const DietPlan = () => {
   const [selectedDay, setSelectedDay] = useState(null);
+  const { colors } = useTheme();
 
   const handleClick = (day) => {
     setSelectedDay(day);
@@ -97,7 +85,7 @@ const DietPlan = () => {
       <View style={styles.headerContainer}>
         <View style={styles.dayTabs}>
           <View style={styles.textView}>
-            <Text style={styles.stackText}>Work Out Plan</Text>
+            <Text style={styles.stackText}>Workout Plan</Text>
           </View>
           <View style={styles.buttonRow}>
             {days.map((day, index) => (
@@ -107,9 +95,34 @@ const DietPlan = () => {
                 onPress={() => handleClick(day)}
                 // labelStyle={styles.buttonLabel}
               >
-                <Text style={selectedDay === day && styles.headerText}>
-                  {day}
-                </Text>
+                <View
+                  style={
+                    (selectedDay === day && styles.headerText) ||
+                    styles.buttonColor
+                  }
+                >
+                  <View style={styles.headerDays}>
+                    <Text>Day </Text>
+                    <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+                      {index + 1}
+                    </Text>
+                  </View>
+                  <View style={selectedDay === day && styles.downArrow}>
+                    {selectedDay === day && (
+                      <IconButton
+                        icon={() => (
+                          <MaterialCommunityIcons
+                            name="chevron-down"
+                            size={20}
+                            color={colors.text}
+                          />
+                        )}
+                        style={styles.downArrow}
+                        size={20}
+                      />
+                    )}
+                  </View>
+                </View>
               </Button>
             ))}
           </View>
@@ -119,18 +132,28 @@ const DietPlan = () => {
       <ScrollView contentContainerStyle={styles.workoutContainer}>
         {/* <Text style={styles.workoutText}>{workouts[selectedDay]}</Text> */}
         <Text style={styles.workoutsIncluded}>
-          Workouts included: Chest, Triceps, Full Body
+          <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+            Workouts included :
+          </Text>{" "}
+          Chest, Triceps, Full Body
         </Text>
         <ScrollView contentContainerStyle={styles.workoutList}>
           {workouts[selectedDay]?.map((workout, index) => (
             <View key={index} style={styles.workoutItem}>
               <Image source={workout.image} style={styles.workoutImage} />
-              <View style={{gap:2}}>
+              <View style={{ gap: 2 }}>
                 <View>
                   <Text style={styles.workoutName}>{workout.name}</Text>
                 </View>
-                <View style={{ flex: 1, flexDirection: "row",gap:6 , paddingTop:4}}>
-                  <Text style={styles.workoutMuscle} >{workout.muscle}</Text>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    gap: 6,
+                    paddingTop: 4,
+                  }}
+                >
+                  <Text style={styles.workoutMuscle}>{workout.muscle}</Text>
                   <Text style={styles.workoutSets}>{workout.sets}</Text>
                 </View>
               </View>
@@ -149,22 +172,40 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff",
+    padding: 14,
     // fontFamily: "poppinsMedium",
   },
   textView: {
     alignItems: "center",
+    marginBottom: 26,
+  },
+  downArrow: {
+    flex: 1,
+    // marginLeft: 5,
+    // borderRadius: 4,
+    // padding: 2,
+    alignSelf: "flex-start",
   },
 
   stackText: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
+    // fontFamily: "poppinsMedium",
   },
 
   headerContainer: {
-    justifyContent: "center",
+    // justifyContent: "center",
     // borderWidth: 1,
     // borderColor: "#ccc",
-    height: 60, // Adjust this value to reduce the height of the header
+    height: 100, // Adjust this value to reduce the height of the header
+  },
+  headerDays: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    gap: 4,
   },
 
   dayTabs: {
@@ -173,9 +214,13 @@ const styles = StyleSheet.create({
     // marginBottom: 20,
   },
   headerText: {
-    color: "#000",
-    fontWeight: "bold",
+    backgroundColor: "#E8EBF5",
+    paddingTop: 14,
+    borderRadius: 50,
+    borderWidth: 1,
   },
+  buttonColor: { backgroundColor: "#E8EBF5", padding: 12, borderRadius: 50 },
+
   buttonRow: {
     flexDirection: "row",
     // alignItems: "center",
@@ -188,9 +233,9 @@ const styles = StyleSheet.create({
   },
   workoutContainer: {
     flexGrow: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
+    // justifyContent: "center",
+    // alignItems: "center",
+    paddingTop: 14,
   },
   workoutText: {
     fontSize: 24,
@@ -198,10 +243,11 @@ const styles = StyleSheet.create({
   },
 
   workoutsIncluded: {
-    textAlign: "center",
-    marginBottom: 20,
+    // textAlign: "center",
+    marginBottom: 25,
+    marginTop: 10,
     fontSize: 14,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     fontFamily: "poppinsMedium",
     // fontFamily: "satoshiRegular",
   },
@@ -218,17 +264,16 @@ const styles = StyleSheet.create({
   workoutSets: {
     fontSize: 14,
     color: "#0366be",
-   fontWeight: "bold",
-
+    fontWeight: "bold",
   },
   workoutList: {
     flexGrow: 1,
-    fontFamily: "poppinsMedium",
+    // fontFamily: "poppinsMedium",
   },
   workoutImage: {
-    width: 135,
-    height: 80,
-    marginRight: 20,
+    width: 80,
+    height: 50,
+    marginRight: 15,
     borderRadius: 5,
   },
   workoutName: {
@@ -238,156 +283,10 @@ const styles = StyleSheet.create({
 
   workoutMuscle: {
     fontSize: 14,
-    color: "#555",
-    backgroundColor:"#e7ecf0",
-    borderRadius:4,
-    padding:2
+    color: "#181b21",
+    backgroundColor: "#e7ecf0",
+    borderRadius: 4,
+    padding: 2,
+    alignSelf: "flex-start",
   },
-
 });
-
-// import React, { useState } from "react";
-// import {
-//   View,
-//   Text,
-//   Button,
-//   StyleSheet,
-//   ScrollView,
-//   Image,
-//   TouchableOpacity,
-// } from "react-native";
-
-// const workouts = {
-//   day1: [
-//     {
-//       name: "Barbell biceps curl",
-//       muscle: "Biceps",
-//       sets: "1 set",
-//       image: require("../assets/images/partial-react-logo.png"),
-//     },
-//     {
-//       name: "Bench Dip",
-//       muscle: "Triceps",
-//       sets: "1 set",
-//       image: require("../assets/images/partial-react-logo.png"),
-//     },
-//     {
-//       name: "Dumbbell wrist curl",
-//       muscle: "Biceps",
-//       sets: "1 set",
-//       image: require("../assets/images/partial-react-logo.png"),
-//     },
-//     {
-//       name: "Dumbbell skull crushers",
-//       muscle: "Triceps",
-//       sets: "1 set",
-//       image: require("../assets/images/partial-react-logo.png"),
-//     },
-//   ],
-//   // Define workouts for other days similarly
-// };
-
-// const WorkOutPlan = () => {
-//   const [selectedDay, setSelectedDay] = useState("day1");
-
-//   return (
-//     <View style={styles.container}>
-//       <View style={styles.dayTabs}>
-//         {Object.keys(workouts).map((day, index) => (
-//           <TouchableOpacity
-//             key={index}
-//             style={[
-//               styles.dayTab,
-//               selectedDay === day ? styles.activeTab : null,
-//             ]}
-//             onPress={() => setSelectedDay(day)}
-//           >
-//             <Text style={styles.dayTabText}>Day {index + 1}</Text>
-//           </TouchableOpacity>
-//         ))}
-//       </View>
-//       <Text style={styles.workoutsIncluded}>
-//         Workouts included: Chest, Triceps, Full Body
-//       </Text>
-//       <ScrollView contentContainerStyle={styles.workoutList}>
-//         {workouts[selectedDay].map((workout, index) => (
-//           <View key={index} style={styles.workoutItem}>
-//             <Image
-//               source={workout.image}
-//               style={styles.workoutImage}
-//               alt="image"
-//             />
-//             <View>
-//               <Text style={styles.workoutName}>{workout.name}</Text>
-//               <Text style={styles.workoutMuscle}>{workout.muscle}</Text>
-//               <Text style={styles.workoutSets}>{workout.sets}</Text>
-//             </View>
-//           </View>
-//         ))}
-//       </ScrollView>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     padding: 16,
-//     backgroundColor: "#fff",
-//   },
-//   dayTabs: {
-//     flexDirection: "row",
-//     justifyContent: "space-around",
-//     marginBottom: 20,
-//   },
-//   dayTab: {
-//     padding: 10,
-//     borderWidth: 1,
-//     borderColor: "#ccc",
-//     borderRadius: 5,
-//   },
-//   activeTab: {
-//     backgroundColor: "#007bff",
-//   },
-//   dayTabText: {
-//     color: "#007bff",
-//   },
-//   workoutsIncluded: {
-//     textAlign: "center",
-//     marginBottom: 20,
-//     fontSize: 16,
-//     fontWeight: "bold",
-//   },
-//   workoutList: {
-//     flexGrow: 1,
-//   },
-//   workoutItem: {
-//     flexDirection: "row",
-//     alignItems: "center",
-//     borderWidth: 1,
-//     borderColor: "#ccc",
-//     marginBottom: 10,
-//     padding: 10,
-//     borderRadius: 5,
-//   },
-//   workoutImage: {
-//     width: 80,
-//     height: 80,
-//     marginRight: 20,
-//     borderRadius: 5,
-//   },
-//   workoutName: {
-//     fontSize: 18,
-//     fontWeight: "bold",
-//   },
-//   workoutMuscle: {
-//     fontSize: 14,
-//     color: "#555",
-//   },
-//   workoutSets: {
-//     fontSize: 14,
-//     color: "#555",
-//   },
-// });
-
-// export default WorkOutPlan;
