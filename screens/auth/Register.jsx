@@ -2,16 +2,18 @@ import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
 import React, { useState } from "react";
 import InputBox from "../../components/form/InputBox";
 import SubmitButton from "../../components/form/SubmitButton";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ImageBackground } from "react-native";
 
-const Register = ({navigation}) => {
+const Register = ({ navigation }) => {
+  // const localImage = require("../../assets/images/gymi.jpg");
+  const localImage = require("../../assets/images/bgimage.jpg");
   // states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async ({navigation}) => {
+  const handleSubmit = async ({ navigation }) => {
     try {
       setLoading(true);
       if (!name || !email || !password) {
@@ -36,7 +38,7 @@ const Register = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ImageBackground  source={localImage} style={styles.container}>
       <Text style={styles.pageTitle}>Register</Text>
       <View style={{ marginHorizontal: 20 }}>
         <InputBox inputTitle={"Name"} value={name} setValue={setName} />
@@ -68,8 +70,7 @@ const Register = ({navigation}) => {
           <Text style={styles.link}>LOGIN</Text>{" "}
         </Text>
       </Text>
-
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -77,17 +78,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    // backgroundColor: "#e1d5c9",
+    alignContent: "center",
+    backgroundColor: "#fff",
   },
   pageTitle: {
-    fontSize: 40,
+    fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
     color: "#1e2225",
     marginBottom: 20,
   },
   inputBox: {
-    height: 40,
+    height: 16,
     marginBottom: 20,
     backgroundColor: "#ffffff",
     borderRadius: 10,
@@ -101,7 +103,7 @@ const styles = StyleSheet.create({
   link: {
     color: "red",
     height: 25,
-    borderRadius: 80,
+    // borderRadius: 80,
   },
 });
 

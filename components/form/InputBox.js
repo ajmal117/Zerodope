@@ -28,12 +28,18 @@ const InputBox = ({
 const styles = StyleSheet.create({
   inputBox: {
     height: 40,
+    borderWidth:1,
     marginBottom: 20,
-    backgroundColor: "#ffffff",
+    // backgroundColor: "#fdebe0",
+    // backgroundColor: "transparent",
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
     borderRadius: 10,
     marginTop: 10,
     paddingLeft: 10,
-    color: "#af9f85",
+    fontSize:14,
+    // fontWeight:"500",
+    fontFamily:"poppinsMedium",
+    // color: "#af9f85",
   },
 });
 

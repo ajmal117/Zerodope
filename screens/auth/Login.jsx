@@ -1,12 +1,18 @@
-import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Alert,
+  ImageBackground,
+} from "react-native";
 import React, { useState } from "react";
 // import { AuthContext } from "../../context/authContext";
 import InputBox from "../../components/form/InputBox";
 import SubmitButton from "../../components/form/SubmitButton";
 
-
-
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
+  const localImage = require("../../assets/images/bgimage.jpg");
   //global state
 
   //   const [state, setState] = useContext(AuthContext);
@@ -47,7 +53,7 @@ const Login = ({navigation}) => {
   //   getLcoalStorageData();
 
   return (
-    <View style={styles.container}>
+    <ImageBackground source={localImage} style={styles.container}>
       <Text style={styles.pageTitle}>Login</Text>
       <View style={{ marginHorizontal: 20 }}>
         <InputBox
@@ -75,12 +81,12 @@ const Login = ({navigation}) => {
         Not a user Please?{" "}
         <Text
           style={styles.link}
-            onPress={() => navigation.navigate("Register")}
+          onPress={() => navigation.navigate("Register")}
         >
           REGISTER
         </Text>{" "}
       </Text>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -91,7 +97,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "#e1d5c9",
   },
   pageTitle: {
-    fontSize: 40,
+    fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
     color: "#1e2225",

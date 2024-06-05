@@ -29,7 +29,7 @@ const App = () => {
   }
   return (
     // <NavigationContainer>
-    <Stack.Navigator initialRouteName="WorkOutPlan">
+    <Stack.Navigator initialRouteName="Register">
       <Stack.Screen
         name="Register"
         component={Register}
@@ -46,7 +46,7 @@ const App = () => {
         options={{
           headerShown: false,
           // headerStyle: {
-            backgroundColor: "#000",
+          backgroundColor: "#000",
           // },
           headerTintColor: "white",
         }}

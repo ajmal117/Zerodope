@@ -16,16 +16,16 @@ const SubmitButton = ({ handleSubmit, btnTitle, loading }) => {
 const styles = StyleSheet.create({
   submitBtn: {
     backgroundColor: "#1e2225",
-    height: 50,
+    height: 40,
     marginHorizontal: 25,
-    borderRadius: 80,
+    borderRadius: 70,
     justifyContent: "center",
     marginBottom: 20,
   },
   btnText: {
     color: "#ffffff",
     textAlign: "center",
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "400",
   },
 });
