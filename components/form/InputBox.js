@@ -8,18 +8,21 @@ const InputBox = ({
   secureTextEntry = false,
   value,
   setValue,
+  placeholder,
 }) => {
   return (
-    <View>
-      <Text>{inputTitle}</Text>
+    <View style={{ width: "90%" }}>
+      {/* <Text>{inputTitle}</Text> */}
       <TextInput
         style={styles.inputBox}
         autoCorrect={false}
+        placeholder={placeholder}
         keyboardType={keyboardType}
         autoComplete={autoComplete}
         secureTextEntry={secureTextEntry}
         value={value}
         onChangeText={(text) => setValue(text)}
+        placeholderTextColor="#000"
       />
     </View>
   );
@@ -28,18 +31,20 @@ const InputBox = ({
 const styles = StyleSheet.create({
   inputBox: {
     height: 40,
-    borderWidth:1,
-    marginBottom: 20,
+    // borderWidth: 1,
+    width: "100%",
+    // marginBottom: 10,
     // backgroundColor: "#fdebe0",
     // backgroundColor: "transparent",
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    borderRadius: 10,
-    marginTop: 10,
-    paddingLeft: 10,
-    fontSize:14,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    // borderRadius: 6,
+    // marginTop: 10,
+    // paddingLeft: 10,
+    fontSize: 14,
     // fontWeight:"500",
-    fontFamily:"poppinsMedium",
-    // color: "#af9f85",
+    fontFamily: "poppinsMedium",
+    color: "#00000",
+    // paddingHorizontal:4
   },
 });
 

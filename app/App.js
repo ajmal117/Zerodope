@@ -4,6 +4,8 @@ import { useTheme } from "react-native-paper";
 
 import Register from "@/screens/auth/Register";
 import Login from "@/screens/auth/Login";
+import Signup from "@/screens/auth/Signup";
+
 // import WorkOutPlan from "@/screens/WorkOutPlan";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
@@ -38,6 +40,11 @@ const App = () => {
       <Stack.Screen
         name="Login"
         component={Login}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
         options={{ headerShown: false }}
       />
       <Stack.Screen

@@ -1,19 +1,23 @@
-import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
 import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Alert,
+  Image,
+  ImageBackground,
+} from "react-native";
 import InputBox from "../../components/form/InputBox";
 import SubmitButton from "../../components/form/SubmitButton";
-import { ImageBackground } from "react-native";
 
 const Register = ({ navigation }) => {
-  // const localImage = require("../../assets/images/gymi.jpg");
-  const localImage = require("../../assets/images/bgimage.jpg");
-  // states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async ({ navigation }) => {
+  const handleSubmit = async () => {
     try {
       setLoading(true);
       if (!name || !email || !password) {
@@ -22,42 +26,58 @@ const Register = ({ navigation }) => {
         return;
       }
       setLoading(false);
-      // const { data } = await axios.post("/auth/register", {
-      //   name,
-      //   email,
-      //   password,
-      // });
-      // alert(data && data.message);
       navigation.navigate("Login");
       console.log("Register Data==> ", { name, email, password });
     } catch (error) {
-      // alert(error.response.data.message);
       setLoading(false);
       console.log(error);
     }
   };
 
   return (
-    <ImageBackground  source={localImage} style={styles.container}>
-      <Text style={styles.pageTitle}>Register</Text>
-      <View style={{ marginHorizontal: 20 }}>
-        <InputBox inputTitle={"Name"} value={name} setValue={setName} />
+    <ImageBackground style={styles.container}>
+      <Text style={styles.pageTitle}>FITTR</Text>
+      <Text style={styles.pageTitle}>Sign up</Text>
+
+      <View style={styles.inputCont}>
+        <Image
+          source={require("../../assets/images/name.png")}
+          style={styles.flag}
+        />
         <InputBox
-          inputTitle={"Email"}
+          placeholder="Name"
+          autoComplete="Name"
+          value={name}
+          setValue={setName}
+        />
+      </View>
+      <View style={styles.inputCont}>
+        <Image
+          source={require("../../assets/images/email.jpg")}
+          style={styles.flag}
+        />
+        <InputBox
+          placeholder="Email"
           keyboardType="email-address"
           autoComplete="email"
           value={email}
           setValue={setEmail}
         />
+      </View>
+      <View style={styles.inputCont}>
+        <Image
+          source={require("../../assets/images/password.webp")}
+          style={styles.flag}
+        />
         <InputBox
           inputTitle={"Password"}
+          placeholder="Password"
           secureTextEntry={true}
           autoComplete="password"
           value={password}
           setValue={setPassword}
         />
       </View>
-      <Text>{JSON.stringify({ name, email, password }, null, 4)}</Text>
       <SubmitButton
         btnTitle="Register"
         loading={loading}
@@ -67,7 +87,7 @@ const Register = ({ navigation }) => {
       <Text style={styles.linkText}>
         Already Register Please ?{" "}
         <Text style={styles.link} onPress={() => navigation.navigate("Login")}>
-          <Text style={styles.link}>LOGIN</Text>{" "}
+          LOGIN
         </Text>
       </Text>
     </ImageBackground>
@@ -80,22 +100,36 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     backgroundColor: "#fff",
+    paddingHorizontal: 20,
+  },
+  flag: {
+    width: 30,
+    height: 26,
+    marginRight: 10,
+  },
+  inputCont: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 6,
+    marginVertical: 16,
+    paddingHorizontal: 10,
+    height: 45, // Adjust the height as per your design
   },
   pageTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    textAlign: "center",
     color: "#1e2225",
-    marginBottom: 20,
+    marginBottom: 10,
   },
   inputBox: {
-    height: 16,
-    marginBottom: 20,
+    flex: 1,
+    height: 40, // Adjust the height as per your design
     backgroundColor: "#ffffff",
     borderRadius: 10,
     marginTop: 10,
-    paddingLeft: 10,
     color: "#af9f85",
+    paddingHorizontal: 10,
   },
   linkText: {
     textAlign: "center",
@@ -103,7 +137,6 @@ const styles = StyleSheet.create({
   link: {
     color: "red",
     height: 25,
-    // borderRadius: 80,
   },
 });
 
