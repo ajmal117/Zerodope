@@ -12,6 +12,8 @@ import AppLoading from "expo-app-loading";
 
 // import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import Homepage from "@/screens/home/Homepage";
 import WorkOutPlan from "@/screens/WorkOutPlan";
 import DietPlan from "@/screens/DietPlan";
 
@@ -31,7 +33,7 @@ const App = () => {
   }
   return (
     // <NavigationContainer>
-    <Stack.Navigator initialRouteName="ForgetPassword">
+    <Stack.Navigator initialRouteName="Homepage">
       <Stack.Screen
         name="Register"
         component={Register}
@@ -45,6 +47,11 @@ const App = () => {
       <Stack.Screen
         name="ForgetPassword"
         component={ForgetPassword}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Homepage"
+        component={Homepage}
         options={{ headerShown: false }}
       />
 
