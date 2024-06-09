@@ -4,7 +4,7 @@ import { useTheme } from "react-native-paper";
 
 import Register from "@/screens/auth/Register";
 import Login from "@/screens/auth/Login";
-import Signup from "@/screens/auth/Signup";
+import ForgetPassword from "@/screens/auth/ForgetPassword";
 
 // import WorkOutPlan from "@/screens/WorkOutPlan";
 import { useFonts } from "expo-font";
@@ -31,7 +31,7 @@ const App = () => {
   }
   return (
     // <NavigationContainer>
-    <Stack.Navigator initialRouteName="Register">
+    <Stack.Navigator initialRouteName="ForgetPassword">
       <Stack.Screen
         name="Register"
         component={Register}
@@ -43,10 +43,11 @@ const App = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Signup"
-        component={Signup}
+        name="ForgetPassword"
+        component={ForgetPassword}
         options={{ headerShown: false }}
       />
+
       <Stack.Screen
         name="WorkOutPlan"
         component={WorkOutPlan}

@@ -137,21 +137,21 @@ import InputBox from "../../components/form/InputBox";
 import SubmitButton from "../../components/form/SubmitButton";
 
 const Register = ({ navigation }) => {
-  const [name, setName] = useState("");
+  //   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  //   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      if (!email || !password) {
+      if (!email) {
         Alert.alert("Please Fill All Fields");
         setLoading(false);
         return;
       }
       setLoading(false);
-      console.log("Register Data==> ", { email, password });
+      console.log("Register Data==> ", { email });
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -161,7 +161,7 @@ const Register = ({ navigation }) => {
   return (
     <ImageBackground style={styles.container}>
       <Text style={styles.pageTitle}>FITTR</Text>
-      <Text style={styles.pageTitle}>Sign In</Text>
+      <Text style={styles.pageTitle}>Forget Password</Text>
 
       <View style={styles.inputCont}>
         <Image
@@ -176,7 +176,7 @@ const Register = ({ navigation }) => {
           setValue={setEmail}
         />
       </View>
-      <View style={styles.inputCont}>
+      {/* <View style={styles.inputCont}>
         <Image
           source={require("../../assets/images/password.webp")}
           style={styles.flag}
@@ -189,28 +189,17 @@ const Register = ({ navigation }) => {
           value={password}
           setValue={setPassword}
         />
-      </View>
+      </View> */}
       <SubmitButton
-        btnTitle="Login"
+        btnTitle="Get OTP"
         loading={loading}
         handleSubmit={handleSubmit}
         onPress="Login"
       />
       <Text style={styles.linkText}>
-        <Text
-          style={styles.link1}
-          onPress={() => navigation.navigate("ForgetPassword")}
-        >
-          Forget Password ?
-        </Text>
-      </Text>
-      <Text style={styles.linkText}>
-        Don't have an acount, Please ?{" "}
-        <Text
-          style={styles.link}
-          onPress={() => navigation.navigate("Register")}
-        >
-          SIGN UP
+        Already Register Please ?{" "}
+        <Text style={styles.link} onPress={() => navigation.navigate("Login")}>
+          Login
         </Text>
       </Text>
     </ImageBackground>
@@ -256,13 +245,8 @@ const styles = StyleSheet.create({
   },
   linkText: {
     textAlign: "center",
-    marginVertical: 4,
   },
-  link1: {
-    fontSize: 16,
-    color: "#0d99ff",
-    height: 25,
-  },
+
   link: {
     color: "red",
     height: 25,
