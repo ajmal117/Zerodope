@@ -1,255 +1,182 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import { View, Text, Button, StyleSheet, FlatList, Image } from "react-native";
-import { Video } from "expo-av";
+import React from "react";
+import { View, StyleSheet, Text, Image, ScrollView } from "react-native";
+import {
+  Card,
+  Title,
+  Paragraph,
+  Divider,
+  Button,
+  Chip,
+} from "react-native-paper";
 
-import DietCart from "@/components/DietCard";
-import { ScrollView } from "react-native-gesture-handler";
+const NutritionCard = ({ title, imageSource, data }) => {
+  return (
+    <Card style={styles.card}>
+      <View style={styles.cardRow}>
+        <Card.Cover source={imageSource} style={styles.cardCover} />
+        <Card.Content style={styles.cardContent}>
+          <Title style={styles.cardTitle}>{title}</Title>
+          <Paragraph style={styles.cardData}>
+            {data.gm} | {data.kcal} Kcal
+          </Paragraph>
+          <View style={styles.cardNutrients}>
+            <Chip style={styles.cardNutrientChip}>
+              <Text style={styles.cardNutrientText}>P: {data.p}g</Text>
+            </Chip>
+            <Chip style={styles.cardNutrientChip}>
+              <Text style={styles.cardNutrientText}>C: {data.c}g</Text>
+            </Chip>
+            <Chip style={styles.cardNutrientChip}>
+              <Text style={styles.cardNutrientText}>F: {data.f}g</Text>
+            </Chip>
+          </View>
+        </Card.Content>
+      </View>
+    </Card>
+  );
+};
 
-const Stack = createStackNavigator();
-
-const HomeScreen = ({ navigation }) => {
-  const cards = [
+const DietPlan = () => {
+  const breakfastData = [
     {
-      title: "Breakfast",
-      // imageSource: require('./assets/breakfast.jpg'), // Replace with your image path
-      description: "Start your day with a healthy breakfast.",
-      target: "Breakfast",
+      title: "Milk",
+      imageSource: require("../assets/images/dosa.webp"),
+      data: { gm: "150 ml", kcal: "78.2", p: "0.5", c: "12.5", f: "7.1" },
     },
     {
-      title: "Lunch",
-      // imageSource: require('./assets/lunch.jpg'), // Replace with your image path
-      description: "Enjoy a delicious lunch.",
-      target: "Lunch",
+      title: "Dosa",
+      imageSource: require("../assets/images/dosa.webp"),
+      data: { gm: "75 gm", kcal: "105.8", p: "2.8", c: "22.4", f: "0.6" },
     },
     {
-      title: "Snacks",
-      // imageSource: require('./assets/snacks.jpg'), // Replace with your image path
-      description: "Grab a quick snack.",
-      target: "Snacks",
+      title: "Scrambled eggs",
+      imageSource: require("../assets/images/dosa.webp"),
+      data: { gm: "2.0 large eggs", kcal: "176", p: "12", c: "2", f: "13.4" },
+    },
+  ];
+  const lunchData = [
+    {
+      title: "Jeera rice",
+      imageSource: require("../assets/images/dosa.webp"),
+      data: { gm: "100 gm", kcal: "79", p: "0.8", c: "12.8", f: "2.8" },
     },
     {
-      title: "Dinner",
-      // imageSource: require('./assets/dinner.jpg'), // Replace with your image path
-      description: "End your day with a satisfying dinner.",
-      target: "Dinner",
+      title: "Dal tadka",
+      imageSource: require("../assets/images/dosa.webp"),
+      data: { gm: "100 gm", kcal: "94", p: "5", c: "14", f: "2" },
+    },
+    {
+      title: "Paneer jalfrezi",
+      imageSource: require("../assets/images/dosa.webp"),
+      data: { gm: "150 gm", kcal: "201", p: "7.4", c: "9.1", f: "15" },
     },
   ];
 
   return (
-    <ScrollView style={styles.scrollCard}>
-      {cards.map((card, index) => (
-        <DietCart
-          key={index}
-          title={card.title}
-          // imageSource={card.imageSource}
-          description={card.description}
-          onPress={() => navigation.navigate(card.target)}
-        />
-      ))}
+    <ScrollView style={styles.container}>
+      {/* <Text style={styles.header}>Nutrition Plan</Text> */}
+      <View style={styles.section}>
+        <View style={styles.sectionItem}>
+          <Text style={styles.sectionTitle}>Breakfast (360 Kcal)</Text>
+        </View>
+        {breakfastData.map((item, index) => (
+          <NutritionCard
+            key={index}
+            title={item.title}
+            imageSource={item.imageSource}
+            data={item.data}
+          />
+        ))}
+      </View>
+      <View style={styles.section}>
+        <View style={styles.sectionItem}>
+          <Text style={styles.sectionTitle}>Lunch (374 Kcal)</Text>
+        </View>
+        {lunchData.map((item, index) => (
+          <NutritionCard
+            key={index}
+            title={item.title}
+            imageSource={item.imageSource}
+            data={item.data}
+          />
+        ))}
+      </View>
     </ScrollView>
   );
 };
 
-const MealScreen = ({ route }) => {
-  const { category } = route.params;
-  const [meals, setMeals] = useState([]);
-
-  useEffect(() => {
-    fetchMeals(category);
-  }, []);
-
-  const fetchMeals = (category) => {
-    const mealData = {
-      Breakfast: [
-        {
-          name: "Oatmeal with Fruits and Nuts",
-          description:
-            "A healthy bowl of oatmeal topped with fresh fruits and nuts.",
-          image: "https://example.com/oatmeal.jpg",
-          video: "https://example.com/oatmeal.mp4",
-        },
-        {
-          name: "Greek Yogurt Parfait",
-          description: "Greek yogurt layered with granola and fresh berries.",
-          image: "https://example.com/yogurt.jpg",
-          video: "https://example.com/yogurt.mp4",
-        },
-      ],
-      Lunch: [
-        {
-          name: "Grilled Chicken Salad",
-          description:
-            "A nutritious salad with grilled chicken and fresh veggies.",
-          image: "https://example.com/chicken_salad.jpg",
-          video: "https://example.com/chicken_salad.mp4",
-        },
-        {
-          name: "Quinoa and Vegetable Bowl",
-          description: "A hearty bowl of quinoa mixed with roasted vegetables.",
-          image: "https://example.com/quinoa_bowl.jpg",
-          video: "https://example.com/quinoa_bowl.mp4",
-        },
-      ],
-      Snacks: [
-        {
-          name: "Hummus and Veggie Sticks",
-          description: "Fresh veggie sticks served with hummus.",
-          image: "https://example.com/hummus.jpg",
-          video: "https://example.com/hummus.mp4",
-        },
-        {
-          name: "Apple Slices with Almond Butter",
-          description: "Crisp apple slices paired with creamy almond butter.",
-          image: "https://example.com/apple_almond.jpg",
-          video: "https://example.com/apple_almond.mp4",
-        },
-        {
-          name: "Trail Mix",
-          description: "A mix of nuts, dried fruits, and dark chocolate.",
-          image: "https://example.com/trail_mix.jpg",
-          video: "https://example.com/trail_mix.mp4",
-        },
-      ],
-      Dinner: [
-        {
-          name: "Baked Salmon with Asparagus",
-          description: "Tender baked salmon served with steamed asparagus.",
-          image: "https://example.com/salmon.jpg",
-          video: "https://example.com/salmon.mp4",
-        },
-        {
-          name: "Vegetable Stir-Fry with Tofu",
-          description: "A colorful vegetable stir-fry with tofu.",
-          image: "https://example.com/stir_fry.jpg",
-          video: "https://example.com/stir_fry.mp4",
-        },
-      ],
-    };
-    setMeals(mealData[category]);
-  };
-
-  const renderMealItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text style={styles.itemTitle}>{item.name}</Text>
-      <Text style={styles.itemDescription}>{item.description}</Text>
-      <Image source={{ uri: item.image }} style={styles.itemImage} />
-      {/* <Video
-        source={{ uri: data.video }}
-        rate={1.0}
-        volume={1.0}
-        isMuted={false}
-        resizeMode="cover"
-        shouldPlay={false}
-        useNativeControls
-        style={styles.itemVideo}
-      /> */}
-    </View>
-  );
-
-  return (
-    <View style={styles.container}>
-      {/* <Text style={styles.title}>{category}</Text> */}
-      <FlatList
-        data={meals}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderMealItem}
-      />
-    </View>
-  );
-};
-
-export default function DietPlan() {
-  return (
-    <Stack.Navigator
-      initialRouteName="Diet Plan"
-      screenOptions={{
-        headerTitleAlign: "center",
-        headerShown: false,
-        headerStyle: {
-          // backgroundColor: "#051810",
-          borderRadius: 10,
-          // height:70,
-        },
-        headerTintColor: "#051810",
-      }}
-    >
-      <Stack.Screen name="Diet Plan" component={HomeScreen} />
-      <Stack.Screen
-        name="Breakfast"
-        component={MealScreen}
-        initialParams={{ category: "Breakfast" }}
-      />
-      <Stack.Screen
-        name="Lunch"
-        component={MealScreen}
-        initialParams={{ category: "Lunch" }}
-      />
-      <Stack.Screen
-        name="Snacks"
-        component={MealScreen}
-        initialParams={{ category: "Snacks" }}
-      />
-      <Stack.Screen
-        name="Dinner"
-        component={MealScreen}
-        initialParams={{ category: "Dinner" }}
-      />
-    </Stack.Navigator>
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    // backgroundColor: "#fff",
-    padding: 16,
-  },
-
-  scrollCard: {
-    padding: 10,
-    marginBottom: 10,
-  },
-
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-    fontWeight: "bold",
-  },
-  item: {
-    // backgroundColor: "#f9c2ff",
-    backgroundColor: "#fff",
-    borderRadius: 6,
     padding: 20,
-    marginBottom: 10,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
-    marginVertical: 8,
-    width: "100%",
+    backgroundColor: "#fff",
   },
-  itemTitle: {
-    // color:"#F5F5F5",
-    fontSize: 16,
+  header: {
+    fontSize: 24,
     fontWeight: "bold",
+    marginBottom: 20,
   },
-  itemDescription: {
-    // color:"#F5F5F5",
-    fontSize: 16,
-    marginVertical: 8,
+  section: {
+    marginBottom: 20,
   },
-  itemImage: {
-    width: 200,
-    height: 150,
+  sectionItem: {
+    borderBottomWidth: 1, // Add bottom border
+    borderColor: "blue",
+    marginBottom: 10,
+    // elevation: 1, // Add elevation for shadow effect
+    // shadowOffset: { width: 0, height: 1 }, // Shadow offset
+    // shadowOpacity: 0.1, // Shadow opacity
+    // shadowRadius: 1,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
     marginBottom: 8,
   },
-  itemVideo: {
-    width: 300,
-    height: 200,
+  card: {
+    marginBottom: 12,
+  },
+  cardRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  cardContent: {
+    flex: 1,
+  },
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  cardNutrients: {
+    flexDirection: "row",
+    // marginTop: 4,
+  },
+  cardNutrientText: {
+    fontSize: 12,
+  },
+  cardCover: {
+    paddingLeft: 4,
+    height: 85,
+    width: 90,
+    resizeMode: "cover",
+  },
+
+  cardData: {
+    fontSize: 14,
+    marginBottom: 6,
+  },
+  cardNutrients: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  cardNutrientChip: {
+    marginHorizontal: 3,
+    marginVertical: 4,
+  },
+  cardNutrientText: {
+    fontSize: 12,
   },
 });
+
+export default DietPlan;

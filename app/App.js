@@ -33,7 +33,7 @@ const App = () => {
   }
   return (
     // <NavigationContainer>
-    <Stack.Navigator initialRouteName="Homepage">
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Register"
         component={Register}
@@ -50,7 +50,7 @@ const App = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Homepage"
+        name="Home"
         component={Homepage}
         options={{ headerShown: false }}
       />
@@ -71,6 +71,7 @@ const App = () => {
         name="DietPlan"
         component={DietPlan}
         options={{
+          // headerShown: false,
           headerStyle: {
             height: 0,
           },

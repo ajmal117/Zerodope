@@ -45,16 +45,12 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Appbar.Header style={styles.appbar}>
+      <Appbar.Header style={styles.appbar} mode="small">
         <Avatar.Image
           size={40}
           source={require("../../assets/images/gyma.jpg")}
         />
-
-        <Appbar.Content
-          titleStyle={[styles.appbarTitle, { textAlign: "left" }]}
-          title="Hi, Rahul"
-        />
+        <Appbar.Content titleStyle={styles.appbarTitle} title="Hi, Rahul" />
         <Appbar.Action icon="bell" onPress={onToggleSnackBar1} />
         <Appbar.Action icon="account-circle" onPress={onToggleSnackBar2} />
       </Appbar.Header>
@@ -190,8 +186,9 @@ const BookNowScreen = ({ navigation }) => {
                 <Paragraph>Free Diet Plan, Free Workout Plan</Paragraph>
               </Card.Content>
               <Card.Actions>
-                style={styles.button}
-                <Button mode="contained">Book Now</Button>
+                <Button mode="contained" style={styles.button}>
+                  Book Now
+                </Button>
               </Card.Actions>
             </Card>
 
@@ -202,7 +199,9 @@ const BookNowScreen = ({ navigation }) => {
                 <Paragraph>Free Diet Plan, Free Workout Plan</Paragraph>
               </Card.Content>
               <Card.Actions>
-                <Button mode="contained">Book Now</Button>
+                <Button mode="contained" style={styles.button}>
+                  Book Now
+                </Button>
               </Card.Actions>
             </Card>
           </View>
@@ -222,9 +221,7 @@ const styles = StyleSheet.create({
   },
   appbar: {
     minHeight: 60,
-    // borderBottomWidth: 1,
     elevation: 1, // Add elevation for shadow effect
-    // shadowColor: "#000", // Shadow color
     shadowOffset: { width: 0, height: 1 }, // Shadow offset
     shadowOpacity: 0.1, // Shadow opacity
     shadowRadius: 1, // Shadow radius
@@ -235,9 +232,8 @@ const styles = StyleSheet.create({
   content: {
     padding: 16,
   },
-
   headTitleSection: {
-    alignItems: "center",
+    // alignItems: "center",
     borderTopWidth: 1, // Add top border
     borderBottomWidth: 1, // Add bottom border
     borderColor: "#333", // Color of the border
@@ -265,7 +261,6 @@ const styles = StyleSheet.create({
     width: 250,
     padding: 1,
     marginHorizontal: 6,
-    // height: 300, // Set a fixed height for the cards
   },
 });
 
