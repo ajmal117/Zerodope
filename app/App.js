@@ -32,7 +32,6 @@ const App = () => {
     return <AppLoading />;
   }
   return (
-    // <NavigationContainer>
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Register"
@@ -78,7 +77,6 @@ const App = () => {
         }}
       />
     </Stack.Navigator>
-    // </NavigationContainer>
   );
 };
 
