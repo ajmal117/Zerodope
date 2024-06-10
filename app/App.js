@@ -59,11 +59,11 @@ const App = () => {
         name="WorkOutPlan"
         component={WorkOutPlan}
         options={{
-          headerShown: false,
+          // headerShown: false,
           // headerStyle: {
           backgroundColor: "#000",
           // },
-          headerTintColor: "white",
+          // headerTintColor: "white",
         }}
       />
 

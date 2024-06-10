@@ -84,9 +84,9 @@ const DietPlan = () => {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.dayTabs}>
-          <View style={styles.textView}>
+          {/* <View style={styles.textView}>
             <Text style={styles.stackText}>Workout Plan</Text>
-          </View>
+          </View> */}
           <View style={styles.buttonRow}>
             {days.map((day, index) => (
               <Button
@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 14,
     // fontFamily: "poppinsMedium",
+    // paddingTop: 62,
   },
   textView: {
     alignItems: "center",
