@@ -19,7 +19,7 @@ const Homepage = () => {
     <Provider>
       <Stack.Navigator>
         <Stack.Screen
-          name="Home"
+          name="Homepage"
           component={HomeScreen}
           options={{ headerShown: false }}
         />
@@ -49,10 +49,11 @@ const HomeScreen = ({ navigation }) => {
         <Avatar.Image
           size={40}
           source={require("../../assets/images/gyma.jpg")}
+          style={{ marginRight: 6 }}
         />
         <Appbar.Content titleStyle={styles.appbarTitle} title="Hi, Rahul" />
         <Appbar.Action icon="bell" onPress={onToggleSnackBar1} />
-        <Appbar.Action icon="account-circle" onPress={onToggleSnackBar2} />
+        {/* <Appbar.Action icon="account-circle" onPress={onToggleSnackBar2} /> */}
       </Appbar.Header>
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.headTitleSection}>
@@ -157,13 +158,13 @@ const HomeScreen = ({ navigation }) => {
       >
         Notifications
       </Snackbar>
-      <Snackbar
+      {/* <Snackbar
         visible={visible2}
         onDismiss={onDismissSnackBar2}
         duration={Snackbar.DURATION_SHORT}
       >
         Profile
-      </Snackbar>
+      </Snackbar> */}
     </View>
   );
 };
@@ -249,7 +250,7 @@ const styles = StyleSheet.create({
   },
   cardsContainer: {
     flexDirection: "row",
-    paddingHorizontal: 6,
+    paddingHorizontal: 4,
     marginVertical: 6,
   },
   cards: {
@@ -259,7 +260,6 @@ const styles = StyleSheet.create({
   },
   card: {
     width: 250,
-    padding: 1,
     marginHorizontal: 6,
   },
 });
