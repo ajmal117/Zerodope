@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { Profiler } from "react";
 import { useTheme } from "react-native-paper";
 
 import Register from "@/screens/auth/Register";
@@ -16,6 +16,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Homepage from "@/screens/home/Homepage";
 import WorkOutPlan from "@/screens/WorkOutPlan";
 import DietPlan from "@/screens/DietPlan";
+import Profile from "@/screens/Profile";
 
 const App = () => {
   const theme = useTheme();
@@ -52,6 +53,11 @@ const App = () => {
         name="Home"
         component={Homepage}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        // options={{ headerShown: false }}
       />
 
       <Stack.Screen

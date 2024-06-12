@@ -1,47 +1,3 @@
-// import { Tabs } from "expo-router";
-// import React from "react";
-
-// import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-// import { useColorScheme } from "@/hooks/useColorScheme";
-
-// export default function TabLayout() {
-//   const colorScheme = useColorScheme();
-
-//   return (
-//     <Tabs
-//       screenOptions={{
-//         // tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-//         headerShown: false,
-//       }}
-//     >
-//       <Tabs.Screen
-//         name="index"
-//         options={{
-//           title: "Home",
-//           tabBarIcon: ({ color, focused }) => (
-//             <TabBarIcon
-//               name={focused ? "home" : "home-outline"}
-//               color={color}
-//             />
-//           ),
-//         }}
-//       />
-//       <Tabs.Screen
-//         name="Login"
-//         options={{
-//           title: "Explore",
-//           tabBarIcon: ({ color, focused }) => (
-//             <TabBarIcon
-//               name={focused ? "code-slash" : "code-slash-outline"}
-//               color={color}
-//             />
-//           ),
-//         }}
-//       />
-//     </Tabs>
-//   );
-// }
-
 
 import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -49,8 +5,6 @@ import { Icon } from "react-native-paper";
 
 import index from "./index"; // Replace with your actual screen component
 import Homepage from "../../screens/home/Homepage"; // Replace with your actual screen component
-// import SearchScreen from "./screens/SearchScreen"; // Replace with your actual screen component
-// import ProfileScreen from "./screens/ProfileScreen"; // Replace with your actual screen component
 
 const Tab = createBottomTabNavigator();
 
@@ -75,22 +29,42 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Search"
+        name="chat"
         component={Homepage}
         options={{
-          tabBarLabel: "Search",
+          tabBarLabel: "Chat",
           tabBarIcon: ({ color, size }) => (
-            <Icon source="magnify" color={color} size={size} />
+            <Icon source="chat-processing-outline" color={color} size={size} />
           ),
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="coach"
         component={Homepage}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: "Get a Coach",
           tabBarIcon: ({ color, size }) => (
-            <Icon source="account" color={color} size={size} />
+            <Icon source="police-badge-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="notifications"
+        component={Homepage}
+        options={{
+          tabBarLabel: "Notifications",
+          tabBarIcon: ({ color, size }) => (
+            <Icon source="bell-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="tools"
+        component={Homepage}
+        options={{
+          tabBarLabel: "Tools",
+          tabBarIcon: ({ color, size }) => (
+            <Icon source="bag-personal-outline" color={color} size={size} />
           ),
         }}
       />

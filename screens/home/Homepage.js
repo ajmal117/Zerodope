@@ -11,6 +11,7 @@ import {
   Snackbar,
 } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Stack = createStackNavigator();
 
@@ -46,14 +47,16 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Appbar.Header style={styles.appbar} mode="small">
-        <Avatar.Image
-          size={40}
-          source={require("../../assets/images/gyma.jpg")}
-          style={{ marginRight: 6 }}
-        />
+        <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+          <Avatar.Image
+            size={40}
+            source={require("../../assets/images/gyma.jpg")}
+            style={{ marginRight: 6 }}
+          />
+        </TouchableOpacity>
         <Appbar.Content titleStyle={styles.appbarTitle} title="Hi, Rahul" />
-        <Appbar.Action icon="bell" onPress={onToggleSnackBar1} />
-        {/* <Appbar.Action icon="account-circle" onPress={onToggleSnackBar2} /> */}
+        {/* <Appbar.Action icon="bell" onPress={onToggleSnackBar1} /> */}
+        <Appbar.Action icon="magnify" onPress={onToggleSnackBar2} />
       </Appbar.Header>
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.headTitleSection}>
@@ -151,20 +154,20 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </ScrollView>
       </ScrollView>
-      <Snackbar
+      {/* <Snackbar
         visible={visible1}
         onDismiss={onDismissSnackBar1}
         duration={Snackbar.DURATION_SHORT}
       >
         Notifications
-      </Snackbar>
-      {/* <Snackbar
+      </Snackbar> */}
+      <Snackbar
         visible={visible2}
         onDismiss={onDismissSnackBar2}
         duration={Snackbar.DURATION_SHORT}
       >
         Profile
-      </Snackbar> */}
+      </Snackbar>
     </View>
   );
 };
@@ -177,10 +180,12 @@ const BookNowScreen = ({ navigation }) => {
         <Appbar.Content title="Book Now" titleStyle={styles.appbarTitle} />
       </Appbar.Header>
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.sectionTitle}>Choose Your Plan</Text>
-        <ScrollView horizontal contentContainerStyle={styles.cardsContainer}>
-          <View style={styles.cards}>
-            <Card style={styles.card}>
+        <View style={styles.headTitleSection}>
+          <Text style={styles.sectionTitle}>Choose Your Plan</Text>
+        </View>
+        <ScrollView contentContainerStyle={styles.cardsContainer}>
+          <View style={styles.bookNowcards}>
+            <Card style={styles.bookCard}>
               <Card.Cover source={require("../../assets/images/gyma.jpg")} />
               <Card.Content>
                 <Title>Consultation Scheduling</Title>
@@ -193,7 +198,7 @@ const BookNowScreen = ({ navigation }) => {
               </Card.Actions>
             </Card>
 
-            <Card style={styles.card}>
+            <Card style={styles.bookCard}>
               <Card.Cover source={require("../../assets/images/gyma.jpg")} />
               <Card.Content>
                 <Title>Free Support</Title>
@@ -258,9 +263,18 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 8,
   },
+  bookNowcards: {
+    flexDirection: "column",
+    // justifyContent: "space-between",
+    paddingVertical: 8,
+  },
   card: {
     width: 250,
     marginHorizontal: 6,
+  },
+  bookCard: {
+    width: 340,
+    margin: 6,
   },
 });
 
