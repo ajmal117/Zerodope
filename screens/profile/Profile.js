@@ -1,5 +1,11 @@
 import * as React from "react";
-import { View, StyleSheet, ScrollView, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import {
   Avatar,
   Button,
@@ -16,71 +22,94 @@ const HomeProfile = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
       <Card style={styles.profileCard}>
-        <Card.Title
-          title="Hey, Rahul"
-          subtitle="Complete your profile here"
-          left={(props) => <Avatar.Icon {...props} icon="account" />}
-          onPress={() => navigation.navigate("Profile")}
-        />
+        <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")}>
+          <Card.Title
+            title="Hey, Rahul"
+            subtitle="Complete your profile here"
+            left={(props) => <Avatar.Icon {...props} icon="account" />}
+          />
+        </TouchableOpacity>
       </Card>
       <List.Section style={styles.ListSection}>
         <List.Item
           title="Fitcoins"
           left={() => <List.Icon icon="currency-usd" />}
+          right={() => <List.Icon icon="chevron-right" />}
           onPress={() => navigation.navigate("Fitcoins")}
+          style={styles.listItem}
         />
         <List.Item
           title="Leaderboard"
           left={() => <List.Icon icon="trophy-outline" />}
+          right={() => <List.Icon icon="chevron-right" />}
           onPress={() => navigation.navigate("Leaderboard")}
+          style={styles.listItem}
         />
         <List.Item
           title="My Bookmarks"
           left={() => <List.Icon icon="bookmark-outline" />}
+          right={() => <List.Icon icon="chevron-right" />}
           onPress={() => navigation.navigate("Bookmarks")}
+          style={styles.listItem}
         />
         <List.Item
           title="My Orders"
           left={() => <List.Icon icon="cart" />}
+          right={() => <List.Icon icon="chevron-right" />}
           onPress={() => navigation.navigate("Orders")}
+          style={styles.listItem}
         />
       </List.Section>
       <List.Section style={styles.ListSection}>
         <List.Item
           title="Help & Support"
           left={() => <List.Icon icon="help-circle" />}
+          right={() => <List.Icon icon="chevron-right" />}
           onPress={() => navigation.navigate("HelpSupport")}
+          style={styles.listItem}
         />
         <List.Item
           title="Review"
           left={() => <List.Icon icon="star-outline" />}
+          right={() => <List.Icon icon="chevron-right" />}
           onPress={() => navigation.navigate("Review")}
+          style={styles.listItem}
         />
         <List.Item
           title="Terms & Conditions"
           left={() => <List.Icon icon="file-document-outline" />}
+          right={() => <List.Icon icon="chevron-right" />}
           onPress={() => navigation.navigate("TermsConditions")}
+          style={styles.listItem}
         />
         <List.Item
           title="Privacy Policy"
           left={() => <List.Icon icon="shield-star-outline" />}
+          right={() => <List.Icon icon="chevron-right" />}
           onPress={() => navigation.navigate("PrivacyPolicy")}
+          style={styles.listItem}
         />
         <List.Item
           title="Community Guidelines"
           left={() => <List.Icon icon="file-check-outline" />}
+          right={() => <List.Icon icon="chevron-right" />}
           onPress={() => navigation.navigate("CommunityGuidelines")}
+          style={styles.listItem}
         />
       </List.Section>
       <List.Section style={styles.ListSection}>
         <List.Item
           title="App Version: 5.8.3 (3)"
           left={() => <List.Icon icon="cellphone" />}
+          right={() => <List.Icon icon="chevron-right" />}
+          style={styles.listItem}
         />
         <List.Item
           title="Logout"
           left={() => <List.Icon icon="logout" />}
+          right={() => <List.Icon icon="chevron-right" />}
           onPress={() => navigation.navigate("Logout")}
+          style={styles.listItem}
         />
       </List.Section>
     </ScrollView>
@@ -90,7 +119,7 @@ const HomeProfile = ({ navigation }) => {
 const ProfileScreen = () => {
   return (
     <View>
-      <Text>Profile Screen</Text>
+      <Text>complete your profile here ... </Text>
     </View>
   );
 };
@@ -187,6 +216,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 }, // Shadow offset
     shadowOpacity: 0.5, // Shadow opacity
     shadowRadius: 12, // Shadow radius
+  },
+  listItem: {
+    paddingStart: 10,
   },
 });
 
