@@ -99,7 +99,7 @@ const HomeProfile = ({ navigation }) => {
       </List.Section>
       <List.Section style={styles.ListSection}>
         <List.Item
-          title="App Version: 5.8.3 (3)"
+          title="App Version: 5.8.1 (3)"
           left={() => <List.Icon icon="cellphone" />}
           right={() => <List.Icon icon="chevron-right" />}
           style={styles.listItem}

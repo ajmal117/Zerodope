@@ -74,7 +74,7 @@ const HomeScreen = ({ navigation }) => {
                 <Button
                   style={styles.button}
                   mode="contained"
-                  onPress={() => navigation.navigate("BookNow")}
+                  onPress={() => navigation.navigate("ConsultSchedule")}
                 >
                   Book Now
                 </Button>

@@ -16,6 +16,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Homepage from "@/screens/home/Homepage";
 import WorkOutPlan from "@/screens/WorkOutPlan";
 import DietPlan from "@/screens/DietPlan";
+import ConsultSchedule from "@/screens/ConsultSchedule";
 import Profile from "@/screens/profile/Profile";
 
 const App = () => {
@@ -57,6 +58,11 @@ const App = () => {
       <Stack.Screen
         name="Profile"
         component={Profile}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ConsultSchedule"
+        component={ConsultSchedule}
         options={{ headerShown: false }}
       />
 
