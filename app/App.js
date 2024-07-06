@@ -34,7 +34,7 @@ const App = () => {
     return <AppLoading />;
   }
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
         name="Register"
         component={Register}

@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import InputBox from "../../components/form/InputBox";
 import SubmitButton from "../../components/form/SubmitButton";
+import axios from "axios";
 
 const Register = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -17,21 +18,39 @@ const Register = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
-    try {
-      setLoading(true);
-      if (!name || !email || !password) {
-        Alert.alert("Please Fill All Fields");
-        setLoading(false);
-        return;
-      }
-      setLoading(false);
-      navigation.navigate("Login");
-      console.log("Register Data==> ", { name, email, password });
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
+  // const handleSubmit = async () => {
+  //   try {
+  //     setLoading(true);
+  //     if (!name || !email || !password) {
+  //       Alert.alert("Please Fill All Fields");
+  //       setLoading(false);
+  //       return;
+  //     }
+  //     setLoading(false);
+  //     navigation.navigate("Login");
+  //     console.log("Register Data==> ", { name, email, password });
+  //   } catch (error) {
+  //     setLoading(false);
+  //     console.log(error);
+  //   }
+  // };
+  const handleSubmit = () => {
+    // console.log("Register Data==> ", { name, email, password });
+    axios
+      .post(
+        "https://beta.zerodope.in/documentation#/Users-Permissions%20-%20Auth/post_auth_local_register",
+        {
+          username: name,
+          email: email,
+          password: password,
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

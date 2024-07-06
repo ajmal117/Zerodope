@@ -166,7 +166,7 @@ const HomeScreen = ({ navigation }) => {
         onDismiss={onDismissSnackBar2}
         duration={Snackbar.DURATION_SHORT}
       >
-        Profile
+        Search
       </Snackbar>
     </View>
   );
