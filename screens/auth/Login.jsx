@@ -13,26 +13,51 @@ import SubmitButton from "../../components/form/SubmitButton";
 import axios from "axios";
 
 const Register = ({ navigation }) => {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-
-
   const handleSubmit = async () => {
     try {
       setLoading(true);
+
+      // Check if email and password fields are filled
       if (!email || !password) {
-        Alert.alert("Please Fill All Fields");
+        Alert.alert("Error", "Please Fill All Fields");
         setLoading(false);
         return;
       }
-      setLoading(false);
+
+      // Log register data for debugging purposes
       console.log("Register Data==> ", { email, password });
-    } catch (error) {
+
+      // Make API call to register the user
+      const response = await axios.post(
+        "https://beta.zerodope.in/api/auth/local",
+        {
+          identifier: email,
+          password: password,
+        }
+      );
+
+      // Log the API response
+      console.log(response.data);
+
+      // Stop loading state
       setLoading(false);
-      console.log(error);
+
+      // Navigate to Homepage if login is successful
+      if (response.data.jwt) {
+        navigation.navigate("Home");
+      }
+    } catch (error) {
+      // Handle any errors
+      setLoading(false);
+      console.log(error.response ? error.response.data : error.message);
+      Alert.alert(
+        "Email or Password is incorrect",
+        error.response ? error.response.data.message : error.message
+      );
     }
   };
 
@@ -72,7 +97,7 @@ const Register = ({ navigation }) => {
         btnTitle="Login"
         loading={loading}
         handleSubmit={handleSubmit}
-        onPress="Login"
+        onPress={handleSubmit}
       />
       <Text style={styles.linkText}>
         <Text
@@ -83,7 +108,7 @@ const Register = ({ navigation }) => {
         </Text>
       </Text>
       <Text style={styles.linkText}>
-        Don't have an acount, Please ?{" "}
+        Don't have an account, Please ?{" "}
         <Text
           style={styles.link}
           onPress={() => navigation.navigate("Register")}

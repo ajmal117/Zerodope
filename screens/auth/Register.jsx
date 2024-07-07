@@ -18,39 +18,47 @@ const Register = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // const handleSubmit = async () => {
-  //   try {
-  //     setLoading(true);
-  //     if (!name || !email || !password) {
-  //       Alert.alert("Please Fill All Fields");
-  //       setLoading(false);
-  //       return;
-  //     }
-  //     setLoading(false);
-  //     navigation.navigate("Login");
-  //     console.log("Register Data==> ", { name, email, password });
-  //   } catch (error) {
-  //     setLoading(false);
-  //     console.log(error);
-  //   }
-  // };
-  const handleSubmit = () => {
-    // console.log("Register Data==> ", { name, email, password });
-    axios
-      .post(
-        "https://beta.zerodope.in/documentation#/Users-Permissions%20-%20Auth/post_auth_local_register",
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      // Check if email and password fields are filled
+      if (!email || !password) {
+        Alert.alert("Error", "Please Fill All Fields");
+        setLoading(false);
+        return;
+      }
+
+      // Log register data for debugging purposes
+      console.log("Register Data==> ", { name, email, password });
+
+      // Make API call to register the user
+      const response = await axios.post(
+        "https://beta.zerodope.in/api/auth/local/register",
         {
           username: name,
           email: email,
           password: password,
         }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      );
+
+      console.log(response.status);
+      // Log the API response
+      if (response.status === 200) {
+        navigation.navigate("Login");
+      }
+      Alert.alert("Register succesfully");
+
+      // Stop loading state
+      setLoading(false);
+    } catch (error) {
+      // Handle any errors
+      setLoading(false);
+      console.log(error.response ? error.response.data : error.message);
+      Alert.alert(
+        "Email or Password is incorrect",
+        error.response ? error.response.data.message : error.message
+      );
+    }
   };
 
   return (
@@ -101,7 +109,7 @@ const Register = ({ navigation }) => {
         btnTitle="Register"
         loading={loading}
         handleSubmit={handleSubmit}
-        onPress="Login"
+        onPress={handleSubmit}
       />
       <Text style={styles.linkText}>
         Already Register Please ?{" "}
