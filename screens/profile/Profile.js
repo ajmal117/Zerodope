@@ -15,6 +15,7 @@ import {
   List,
 } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
+import Logout from "./Logout";
 
 const Stack = createStackNavigator();
 
@@ -193,7 +194,7 @@ const Profile = () => {
         name="CommunityGuidelines"
         component={CommunityGuidelinesScreen}
       />
-      <Stack.Screen name="Logout" component={LogoutScreen} />
+      <Stack.Screen name="Logout" component={Logout} />
     </Stack.Navigator>
   );
 };

@@ -12,6 +12,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ]
+    "expo-env.d.ts",
+    "app/login.js",
+    "app/(auth)/(tabs)/index.js",
+    "app/(auth)/_layout.js",
+    "app/_layout.js"
+, "components/EditScreenInfo.js", "components/Themed.tsx", "components/ExternalLink.js", "components/ParallaxScrollView.js", "components/StyledText.js", "components/ThemedText.tsx", "components/ThemedView.tsx", "components/useColorScheme.js", "components/useColorScheme.web.js", "components/useClientOnlyValue.web.ts"  ]
 }

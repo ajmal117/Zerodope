@@ -1,12 +1,4 @@
-import { View, Text } from "react-native";
-import React, { Profiler } from "react";
-import { useTheme } from "react-native-paper";
-
-import Register from "@/screens/auth/Register";
-import Login from "@/screens/auth/Login";
-import ForgetPassword from "@/screens/auth/ForgetPassword";
-
-// import WorkOutPlan from "@/screens/WorkOutPlan";
+import React from "react";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 
@@ -20,7 +12,6 @@ import ConsultSchedule from "@/screens/ConsultSchedule";
 import Profile from "@/screens/profile/Profile";
 
 const App = () => {
-  const theme = useTheme();
   const Stack = createNativeStackNavigator();
 
   let [fontsLoaded] = useFonts({
@@ -34,22 +25,7 @@ const App = () => {
     return <AppLoading />;
   }
   return (
-    <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen
-        name="Register"
-        component={Register}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Login"
-        component={Login}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="ForgetPassword"
-        component={ForgetPassword}
-        options={{ headerShown: false }}
-      />
+    <Stack.Navigator initialRouteName="home">
       <Stack.Screen
         name="Home"
         component={Homepage}

@@ -1,5 +1,75 @@
+// import { Button, StyleSheet, TextInput } from "react-native";
+// import { Text, View } from "@/components/Themed";
+// import { useSession } from "./ctx";
+// import { router } from "expo-router";
+
+// export default function Login() {
+//   const { signIn } = useSession();
+//   const handleLogin = () => {
+//     //Adicione sua lógica de login aqui
+//     signIn();
+//     //Antes de navegar, tenha certeza de que o usuário está autenticado
+//     router.replace("/");
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.title}>Welcome! 🌈 </Text>
+//       <Text style={styles.paragraph}>
+//         This is a simple repo that emulates a login authentication workflow
+//         using Expo Router, focused on the navigation aspect.
+//       </Text>
+//       <View
+//         style={styles.separator}
+//         lightColor="#eee"
+//         darkColor="rgba(255,255,255,0.1)"
+//       />
+//       <TextInput placeholder="Username(not required)" style={styles.input} />
+//       <TextInput
+//         placeholder="Password(not required)"
+//         secureTextEntry
+//         style={styles.input}
+//       />
+//       <Button title="Login" onPress={handleLogin} />
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+//   title: {
+//     fontSize: 20,
+//     fontWeight: "bold",
+//   },
+//   paragraph: {
+//     margin: 24,
+//     fontSize: 18,
+//     textAlign: "center",
+//   },
+
+//   separator: {
+//     marginVertical: 30,
+//     height: 1,
+//     width: "80%",
+//   },
+//   input: {
+//     width: "80%",
+//     borderWidth: 1,
+//     borderColor: "#000",
+//     padding: 10,
+//     margin: 10,
+//     borderRadius: 4,
+//   },
+// });
+
 import React, { useState } from "react";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSession } from "./ctx";
+
 import {
   View,
   Text,
@@ -9,14 +79,17 @@ import {
   Image,
   ImageBackground,
 } from "react-native";
-import InputBox from "../../components/form/InputBox";
-import SubmitButton from "../../components/form/SubmitButton";
+import InputBox from "../components/form/InputBox";
+import SubmitButton from "../components/form/SubmitButton";
 import axios from "axios";
+import { router } from "expo-router";
 
-const Login = ({ navigation }) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const { signIn } = useSession();
 
   // const { setToken } = useAuth();
 
@@ -46,7 +119,7 @@ const Login = ({ navigation }) => {
       // Log the API response
       console.log(response.data);
       console.log(response.data.jwt);
-    
+      signIn();
 
       // token store in asyncStore
       // await AsyncStorage.setItem("token", response.data.jwt);
@@ -56,7 +129,7 @@ const Login = ({ navigation }) => {
 
       // Navigate to Homepage if login is successful
       if (response.data.jwt) {
-        navigation.navigate("Home");
+        router.replace("/");
         Alert.alert("Login Successfull");
       }
     } catch (error) {
@@ -66,7 +139,6 @@ const Login = ({ navigation }) => {
     }
   };
 
- 
   return (
     <ImageBackground style={styles.container}>
       <Text style={styles.pageTitle}>FITTR</Text>
@@ -74,7 +146,7 @@ const Login = ({ navigation }) => {
 
       <View style={styles.inputCont}>
         <Image
-          source={require("../../assets/images/email.jpg")}
+          source={require("../assets/images/email.jpg")}
           style={styles.flag}
         />
         <InputBox
@@ -87,7 +159,7 @@ const Login = ({ navigation }) => {
       </View>
       <View style={styles.inputCont}>
         <Image
-          source={require("../../assets/images/password.webp")}
+          source={require("../assets/images/password.webp")}
           style={styles.flag}
         />
         <InputBox
@@ -108,17 +180,14 @@ const Login = ({ navigation }) => {
       <Text style={styles.linkText}>
         <Text
           style={styles.link1}
-          onPress={() => navigation.navigate("ForgetPassword")}
+          onPress={() => router.replace("ForgetPassword")}
         >
           Forget Password ?
         </Text>
       </Text>
       <Text style={styles.linkText}>
         Don't have an account, Please ?{" "}
-        <Text
-          style={styles.link}
-          onPress={() => navigation.navigate("Register")}
-        >
+        <Text style={styles.link} onPress={() => router.replace("Register")}>
           SIGN UP
         </Text>
       </Text>
