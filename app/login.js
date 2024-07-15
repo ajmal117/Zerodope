@@ -68,6 +68,7 @@
 
 import React, { useState } from "react";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 import { useSession } from "./ctx";
 
 import {
@@ -96,7 +97,6 @@ const Login = () => {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-
       // Check if email and password fields are filled
       if (!email || !password) {
         Alert.alert("Error", "Please Fill All Fields");
@@ -119,19 +119,23 @@ const Login = () => {
       // Log the API response
       console.log(response.data);
       console.log(response.data.jwt);
+
+      await SecureStore.setItemAsync("token", response.data.jwt);
+      // await AsyncStorage.setItem("token", response.data.jwt);
+
       signIn();
 
+      if (response.data.jwt) {
+        router.replace("/");
+        Alert.alert("Login Successfull");
+      }
+
       // token store in asyncStore
-      // await AsyncStorage.setItem("token", response.data.jwt);
 
       // Stop loading state
       setLoading(false);
 
       // Navigate to Homepage if login is successful
-      if (response.data.jwt) {
-        router.replace("/");
-        Alert.alert("Login Successfull");
-      }
     } catch (error) {
       // Handle any errors
       setLoading(false);

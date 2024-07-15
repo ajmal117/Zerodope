@@ -5,6 +5,7 @@ import { useSession } from "@/app/ctx";
 
 const Logout = () => {
   const { signOut } = useSession();
+  console.log("logout");
   return (
     <View>
       <Button onPress={() => signOut()} style={{ borderWidth: 2 }}>

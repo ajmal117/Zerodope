@@ -1,5 +1,9 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text, Image, ScrollView } from "react-native";
+import * as SecureStore from "expo-secure-store";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
   Card,
   Title,
@@ -71,6 +75,43 @@ const DietPlan = () => {
       data: { gm: "150 gm", kcal: "201", p: "7.4", c: "9.1", f: "15" },
     },
   ];
+
+  const [data, setData] = useState("");
+
+  const getToken = async () => {
+    try {
+      const token = await SecureStore.getItemAsync("token");
+      // const token = await AsyncStorage.getItem("token");
+      return token;
+    } catch (error) {
+      console.error("Error retrieving token:", error);
+    }
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      const token = await getToken();
+      console.log(token);
+      try {
+        const response = await axios.get(
+          // "https://beta.zerodope.in/api/diet-plans",
+          "https://beta.zerodope.in/api/diet-plans?pagination[withCount]=true&populate[Breakfast]=*&populate[Lunch]=*&populate[Snacks]=*&populate[Dinner]=*",
+
+          {
+            headers: {
+              accept: "application/json",
+              Authorization: `Bearer ${token}`,
+              // Authorization: token,
+            },
+          }
+        );
+        console.log("this is fetched data", response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    getData();
+  }, []);
 
   return (
     <ScrollView style={styles.container}>

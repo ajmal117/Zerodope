@@ -77,6 +77,10 @@ import { Icon } from "react-native-paper";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 import index from "./index"; // Replace with your actual screen component
 import Homepage from "../../../screens/home/Homepage"; // Replace with your actual screen componen
+import Chat from "../../../screens/services/Chat";
+import Notification from "../../../screens/services/Notification";
+import Coach from "../../../screens/services/Coach";
+import Tools from "../../../screens/services/Tools";
 
 const Tab = createBottomTabNavigator();
 
@@ -102,7 +106,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="chat"
-        component={Homepage}
+        component={Chat}
         options={{
           tabBarLabel: "Chat",
           tabBarIcon: ({ color, size }) => (
@@ -112,7 +116,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="coach"
-        component={Homepage}
+        component={Coach}
         options={{
           tabBarLabel: "Get a Coach",
           tabBarIcon: ({ color, size }) => (
@@ -122,7 +126,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="notifications"
-        component={Homepage}
+        component={Notification}
         options={{
           tabBarLabel: "Notifications",
           tabBarIcon: ({ color, size }) => (
@@ -132,7 +136,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="tools"
-        component={Homepage}
+        component={Tools}
         options={{
           tabBarLabel: "Tools",
           tabBarIcon: ({ color, size }) => (
