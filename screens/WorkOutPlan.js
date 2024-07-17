@@ -342,7 +342,6 @@
 //   },
 // });
 
-
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import { Button, IconButton, useTheme } from "react-native-paper";
@@ -483,7 +482,7 @@ const Wplan = () => {
       <ScrollView contentContainerStyle={styles.workoutContainer}>
         <Text style={styles.workoutsIncluded}>
           <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-            Workouts included: {exerciseName}
+            Workouts Included: {exerciseName}
           </Text>
         </Text>
         <ScrollView contentContainerStyle={styles.workoutList}>
@@ -544,9 +543,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   button: {
-    borderRadius: 20,
+    borderRadius: 50,
     borderWidth: 1,
     borderColor: "black",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 3,
+    // },
+    // shadowOpacity: 0.17,
+    // shadowRadius: 3.05,
+    // elevation: 4,
   },
   activeButton: {
     backgroundColor: "#E8EBF5",
@@ -567,7 +573,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 14,
     fontFamily: "poppinsMedium",
-    textAlign: "center",
+    // textAlign: "center",
   },
   workoutItem: {
     flexDirection: "row",
