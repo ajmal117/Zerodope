@@ -13,6 +13,7 @@ import {
 } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import BodyBuildingPlan from "./BodyBuildingPlan";
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,11 @@ const Homepage = () => {
           component={BookNowScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="BodyBuild"
+          component={BodyBuildingPlan}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </Provider>
   );
@@ -38,7 +44,6 @@ const Homepage = () => {
 const HomeScreen = ({ navigation }) => {
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
- 
 
   const onToggleSnackBar1 = () => setVisible1(!visible1);
   const onDismissSnackBar1 = () => setVisible1(false);
@@ -46,7 +51,6 @@ const HomeScreen = ({ navigation }) => {
   const onToggleSnackBar2 = () => setVisible2(!visible2);
   const onDismissSnackBar2 = () => setVisible2(false);
 
- 
   return (
     <View style={styles.container}>
       <Appbar.Header style={styles.appbar} mode="small">
@@ -148,7 +152,7 @@ const HomeScreen = ({ navigation }) => {
                 <Button
                   style={styles.button}
                   mode="contained"
-                  onPress={() => navigation.navigate("BookNow")}
+                  onPress={() => navigation.navigate("BodyBuild")}
                 >
                   Book Now
                 </Button>

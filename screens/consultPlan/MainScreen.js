@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
-import { Button } from "react-native-paper";
+import axios from "axios";
+import * as SecureStore from "expo-secure-store";
 
 const plans = [
   {
@@ -32,7 +33,10 @@ const MainScreen = () => {
     <ScrollView style={styles.container}>
       {plans.map((plan) => (
         <View key={plan.key} style={styles.card}>
-          <Image source={require("../../assets/images/gyma.jpg")} style={styles.cardImage} />
+          <Image
+            source={require("../../assets/images/gyma.jpg")}
+            style={styles.cardImage}
+          />
           <View style={styles.cardContent}>
             <Text style={styles.cardTitle}>{plan.title}</Text>
             <Text style={styles.cardSubtitle}>{plan.subtitle}</Text>

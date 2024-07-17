@@ -10,6 +10,7 @@ import WorkOutPlan from "@/screens/WorkOutPlan";
 import DietPlan from "@/screens/DietPlan";
 import ConsultSchedule from "@/screens/ConsultSchedule";
 import Profile from "@/screens/profile/Profile";
+import BodyBuildingPlan from "../screens/home/BodyBuildingPlan";
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -63,6 +64,11 @@ const App = () => {
             height: 0,
           },
         }}
+      />
+      <Stack.Screen
+        name="BodyBuild"
+        component={BodyBuildingPlan}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

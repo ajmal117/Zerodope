@@ -1,7 +1,7 @@
 import axios from "axios";
+import * as SecureStore from "expo-secure-store";
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text, Image, ScrollView } from "react-native";
-import * as SecureStore from "expo-secure-store";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
@@ -91,21 +91,33 @@ const DietPlan = () => {
   useEffect(() => {
     const getData = async () => {
       const token = await getToken();
-      console.log(token);
+      console.log("Token:", token);
       try {
         const response = await axios.get(
-          // "https://beta.zerodope.in/api/diet-plans",
-          "https://beta.zerodope.in/api/diet-plans?pagination[withCount]=true&populate[Breakfast]=*&populate[Lunch]=*&populate[Snacks]=*&populate[Dinner]=*",
-
+          "https://beta.zerodope.in/api/diet-plans?filters[users_permissions_users].[id].[$eq]=1&populate=*",
           {
             headers: {
               accept: "application/json",
               Authorization: `Bearer ${token}`,
-              // Authorization: token,
             },
           }
         );
-        console.log("this is fetched data", response.data);
+        const responseData = response.data;
+        console.log(
+          "Complete Response Data:",
+          JSON.stringify(responseData, null, 2)
+        );
+
+        // Access the nested data
+        if (responseData.data && responseData.data.length > 0) {
+          const fetchedData = responseData.data.map((item) => {
+            const { id, attributes } = item;
+            return { id, attributes };
+          });
+          console.log("Fetched Data:", JSON.stringify(fetchedData, null, 2));
+        } else {
+          console.log("No data found");
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
