@@ -11,6 +11,7 @@ import DietPlan from "@/screens/DietPlan";
 import ConsultSchedule from "@/screens/ConsultSchedule";
 import Profile from "@/screens/profile/Profile";
 import BodyBuildingPlan from "../screens/home/BodyBuildingPlan";
+import FreeSupport from "../screens/consultPlan/FreeSupport";
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -68,6 +69,11 @@ const App = () => {
       <Stack.Screen
         name="BodyBuild"
         component={BodyBuildingPlan}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="FreeSupport"
+        component={FreeSupport}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

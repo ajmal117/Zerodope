@@ -13,7 +13,7 @@ import {
 } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import BodyBuildingPlan from "./BodyBuildingPlan";
+// import BodyBuildingPlan from "./BodyBuildingPlan";
 
 const Stack = createStackNavigator();
 
@@ -31,11 +31,11 @@ const Homepage = () => {
           component={BookNowScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="BodyBuild"
           component={BodyBuildingPlan}
           options={{ headerShown: false }}
-        />
+        /> */}
       </Stack.Navigator>
     </Provider>
   );
@@ -97,7 +97,7 @@ const HomeScreen = ({ navigation }) => {
                 <Button
                   style={styles.button}
                   mode="contained"
-                  onPress={() => navigation.navigate("BookNow")}
+                  onPress={() => navigation.navigate("FreeSupport")}
                 >
                   Book Now
                 </Button>
