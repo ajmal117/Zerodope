@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
 
+import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import {
   Avatar,
@@ -13,7 +13,6 @@ import {
 } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native-gesture-handler";
-// import BodyBuildingPlan from "./BodyBuildingPlan";
 
 const Stack = createStackNavigator();
 
@@ -31,25 +30,37 @@ const Homepage = () => {
           component={BookNowScreen}
           options={{ headerShown: false }}
         />
-        {/* <Stack.Screen
-          name="BodyBuild"
-          component={BodyBuildingPlan}
-          options={{ headerShown: false }}
-        /> */}
       </Stack.Navigator>
     </Provider>
   );
 };
 
 const HomeScreen = ({ navigation }) => {
-  const [visible1, setVisible1] = useState(false);
+  const [paid, setPaid] = useState(false);
   const [visible2, setVisible2] = useState(false);
-
-  const onToggleSnackBar1 = () => setVisible1(!visible1);
-  const onDismissSnackBar1 = () => setVisible1(false);
 
   const onToggleSnackBar2 = () => setVisible2(!visible2);
   const onDismissSnackBar2 = () => setVisible2(false);
+
+  const renderButton = (targetScreen) => (
+    <Button
+      style={styles.button}
+      mode="contained"
+      onPress={() => navigation.navigate(paid ? targetScreen : "BookNow")}
+    >
+      {paid ? "Open Now" : "Book Now"}
+    </Button>
+  );
+
+  const renderFreeSupportButton = () => (
+    <Button
+      style={styles.button}
+      mode="contained"
+      onPress={() => navigation.navigate("FreeSupport")}
+    >
+      Open Now
+    </Button>
+  );
 
   return (
     <View style={styles.container}>
@@ -62,7 +73,6 @@ const HomeScreen = ({ navigation }) => {
           />
         </TouchableOpacity>
         <Appbar.Content titleStyle={styles.appbarTitle} title="Hi, Rahul" />
-        {/* <Appbar.Action icon="bell" onPress={onToggleSnackBar1} /> */}
         <Appbar.Action icon="magnify" onPress={onToggleSnackBar2} />
       </Appbar.Header>
       <ScrollView contentContainerStyle={styles.content}>
@@ -77,15 +87,7 @@ const HomeScreen = ({ navigation }) => {
                 <Title>Consultation Scheduling</Title>
                 <Paragraph>Free Diet Plan, Free Workout Plan</Paragraph>
               </Card.Content>
-              <Card.Actions>
-                <Button
-                  style={styles.button}
-                  mode="contained"
-                  onPress={() => navigation.navigate("ConsultSchedule")}
-                >
-                  Book Now
-                </Button>
-              </Card.Actions>
+              <Card.Actions>{renderButton("ConsultSchedule")}</Card.Actions>
             </Card>
             <Card style={styles.card}>
               <Card.Cover source={require("../../assets/images/gyma.jpg")} />
@@ -93,15 +95,7 @@ const HomeScreen = ({ navigation }) => {
                 <Title>Free Support</Title>
                 <Paragraph>Free Diet Plan, Free Workout Plan</Paragraph>
               </Card.Content>
-              <Card.Actions>
-                <Button
-                  style={styles.button}
-                  mode="contained"
-                  onPress={() => navigation.navigate("FreeSupport")}
-                >
-                  Book Now
-                </Button>
-              </Card.Actions>
+              <Card.Actions>{renderFreeSupportButton()}</Card.Actions>
             </Card>
           </View>
         </ScrollView>
@@ -116,15 +110,7 @@ const HomeScreen = ({ navigation }) => {
                 <Title>WorkOut Plan</Title>
                 <Paragraph>Audio, Video & Text</Paragraph>
               </Card.Content>
-              <Card.Actions>
-                <Button
-                  style={styles.button}
-                  mode="contained"
-                  onPress={() => navigation.navigate("WorkOutPlan")}
-                >
-                  Book Now
-                </Button>
-              </Card.Actions>
+              <Card.Actions>{renderButton("WorkOutPlan")}</Card.Actions>
             </Card>
             <Card style={styles.card}>
               <Card.Cover source={require("../../assets/images/gymi.jpg")} />
@@ -132,15 +118,7 @@ const HomeScreen = ({ navigation }) => {
                 <Title>DietPlan</Title>
                 <Paragraph>Audio, Video & Text</Paragraph>
               </Card.Content>
-              <Card.Actions>
-                <Button
-                  style={styles.button}
-                  mode="contained"
-                  onPress={() => navigation.navigate("DietPlan")}
-                >
-                  Book Now
-                </Button>
-              </Card.Actions>
+              <Card.Actions>{renderButton("DietPlan")}</Card.Actions>
             </Card>
             <Card style={styles.card}>
               <Card.Cover source={require("../../assets/images/gymi.jpg")} />
@@ -148,26 +126,11 @@ const HomeScreen = ({ navigation }) => {
                 <Title>Body Building</Title>
                 <Paragraph>Audio, Video & Text</Paragraph>
               </Card.Content>
-              <Card.Actions>
-                <Button
-                  style={styles.button}
-                  mode="contained"
-                  onPress={() => navigation.navigate("BodyBuild")}
-                >
-                  Book Now
-                </Button>
-              </Card.Actions>
+              <Card.Actions>{renderButton("BodyBuild")}</Card.Actions>
             </Card>
           </View>
         </ScrollView>
       </ScrollView>
-      {/* <Snackbar
-        visible={visible1}
-        onDismiss={onDismissSnackBar1}
-        duration={Snackbar.DURATION_SHORT}
-      >
-        Notifications
-      </Snackbar> */}
       <Snackbar
         visible={visible2}
         onDismiss={onDismissSnackBar2}
@@ -204,7 +167,6 @@ const BookNowScreen = ({ navigation }) => {
                 </Button>
               </Card.Actions>
             </Card>
-
             <Card style={styles.bookCard}>
               <Card.Cover source={require("../../assets/images/gyma.jpg")} />
               <Card.Content>
@@ -246,7 +208,6 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   headTitleSection: {
-    // alignItems: "center",
     borderTopWidth: 1, // Add top border
     borderBottomWidth: 1, // Add bottom border
     borderColor: "#333", // Color of the border
@@ -272,7 +233,6 @@ const styles = StyleSheet.create({
   },
   bookNowcards: {
     flexDirection: "column",
-    // justifyContent: "space-between",
     paddingVertical: 8,
   },
   card: {

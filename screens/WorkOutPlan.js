@@ -349,21 +349,24 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 
-const days = ["Day1", "Day2", "Day3", "Day4", "Day5", "Day6"];
+const days = ["day1", "day2", "day3", "day4", "day5", "day6"];
 
 const parseExercises = (exercisesObj) => {
+  console.log("Parsing exercises for:", exercisesObj);
   const { ExerciseName, Exercises } = exercisesObj;
-  return {
+  const parsed = {
     ExerciseName,
     sets: Exercises.split("\n\n").map((exercise) => {
       const [name, sets] = exercise.split(": ");
       return { name, sets };
     }),
   };
+  console.log("Parsed exercises:", parsed);
+  return parsed;
 };
 
 const Wplan = () => {
-  const [selectedDay, setSelectedDay] = useState("Day1"); // Default selected day is Day1
+  const [selectedDay, setSelectedDay] = useState("day1"); // Default selected day is Day1
   const { colors } = useTheme();
   const [data, setData] = useState({});
   const [exerciseName, setExerciseName] = useState(""); // State to hold exercise name
@@ -387,7 +390,7 @@ const Wplan = () => {
       console.log("Token:", token);
       try {
         const response = await axios.get(
-          "https://beta.zerodope.in/api/body-building-plans?filters[users_permissions_users].[id].[$eq]=1&populate=*",
+          "https://beta.zerodope.in/api/workout-plans?filters[users_permissions_users].[id].[$eq]=1&populate=*",
           {
             headers: {
               accept: "application/json",
@@ -396,19 +399,17 @@ const Wplan = () => {
           }
         );
         const responseData = response.data;
-        console.log(
-          "Complete Response Data:",
-          JSON.stringify(responseData, null, 2)
-        );
+        console.log("Complete Response Data:", JSON.stringify(responseData));
 
         if (responseData.data && responseData.data.length > 0) {
-          const fetchedData = responseData.data[0].attributes; // Assuming there's only one object in the data array
+          const fetchedData = responseData.data[0].attributes;
           console.log("Fetched Data:", fetchedData);
 
-          // Filter out only the days data
           const filteredData = days.reduce((acc, day) => {
             if (fetchedData[day] && fetchedData[day].Exercises) {
               acc[day] = parseExercises(fetchedData[day]);
+            } else {
+              console.log(`No exercises found for ${day}`);
             }
             return acc;
           }, {});
@@ -416,7 +417,6 @@ const Wplan = () => {
           console.log("Filtered Data:", filteredData);
           setData(filteredData);
 
-          // Set initial exercise name for selected day
           if (filteredData[selectedDay]) {
             setExerciseName(filteredData[selectedDay].ExerciseName);
           }
@@ -431,7 +431,6 @@ const Wplan = () => {
   }, []);
 
   useEffect(() => {
-    // Update exercise name when selected day changes
     if (data[selectedDay]) {
       setExerciseName(data[selectedDay].ExerciseName);
     }
@@ -546,13 +545,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 1,
     borderColor: "black",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 3,
-    // },
-    // shadowOpacity: 0.17,
-    // shadowRadius: 3.05,
-    // elevation: 4,
   },
   activeButton: {
     backgroundColor: "#E8EBF5",
@@ -573,7 +565,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 14,
     fontFamily: "poppinsMedium",
-    // textAlign: "center",
   },
   workoutItem: {
     flexDirection: "row",
