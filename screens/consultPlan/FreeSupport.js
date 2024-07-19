@@ -14,7 +14,7 @@ import {
   Snackbar,
 } from "react-native-paper";
 
-const FreeSuppor = ({ navigation }) => {
+const FreeSupport = ({ navigation }) => {
   const getToken = async () => {
     try {
       const token = await SecureStore.getItemAsync("token");
@@ -24,49 +24,45 @@ const FreeSuppor = ({ navigation }) => {
       console.error("Error retrieving token:", error);
     }
   };
-//   useEffect(() => {
-//     const getData = async () => {
-//       const token = await getToken();
-//       console.log("Token:", token);
-//       try {
-//         const response = await axios.get(
-//           "https://beta.zerodope.in/api/body-building-plans?filters[users_permissions_users].[id].[$eq]=1&populate=*",
-//           {
-//             headers: {
-//               accept: "application/json",
-//               Authorization: `Bearer ${token}`,
-//             },
-//           }
-//         );
-//         const responseData = response.data;
-//         console.log(
-//           "Complete Response Data:",
-//           JSON.stringify(responseData, null, 2)
-//         );
+  //   useEffect(() => {
+  //     const getData = async () => {
+  //       const token = await getToken();
+  //       console.log("Token:", token);
+  //       try {
+  //         const response = await axios.get(
+  //           "https://beta.zerodope.in/api/body-building-plans?filters[users_permissions_users].[id].[$eq]=1&populate=*",
+  //           {
+  //             headers: {
+  //               accept: "application/json",
+  //               Authorization: `Bearer ${token}`,
+  //             },
+  //           }
+  //         );
+  //         const responseData = response.data;
+  //         console.log(
+  //           "Complete Response Data:",
+  //           JSON.stringify(responseData, null, 2)
+  //         );
 
-//         // Access the nested data
-//         if (responseData.data && responseData.data.length > 0) {
-//           const fetchedData = responseData.data.map((item) => {
-//             const { id, attributes } = item;
-//             return { id, attributes };
-//           });
-//           console.log("Fetched Data:", JSON.stringify(fetchedData, null, 2));
-//         } else {
-//           console.log("No data found");
-//         }
-//       } catch (error) {
-//         console.error("Error fetching data:", error);
-//       }
-//     };
-//     getData();
-//   }, []);
+  //         // Access the nested data
+  //         if (responseData.data && responseData.data.length > 0) {
+  //           const fetchedData = responseData.data.map((item) => {
+  //             const { id, attributes } = item;
+  //             return { id, attributes };
+  //           });
+  //           console.log("Fetched Data:", JSON.stringify(fetchedData, null, 2));
+  //         } else {
+  //           console.log("No data found");
+  //         }
+  //       } catch (error) {
+  //         console.error("Error fetching data:", error);
+  //       }
+  //     };
+  //     getData();
+  //   }, []);
 
   return (
     <View style={styles.container}>
-      <Appbar.Header style={styles.appbar}>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Body Building" titleStyle={styles.appbarTitle} />
-      </Appbar.Header>
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.headTitleSection}>
           <Text style={styles.sectionTitle}>Choose Your Plan</Text>
@@ -166,4 +162,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FreeSuppor;
+export default FreeSupport;

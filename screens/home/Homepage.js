@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import {
@@ -36,7 +35,7 @@ const Homepage = () => {
 };
 
 const HomeScreen = ({ navigation }) => {
-  const [paid, setPaid] = useState(false);
+  const [paid, setPaid] = useState(true);
   const [visible2, setVisible2] = useState(false);
 
   const onToggleSnackBar2 = () => setVisible2(!visible2);
@@ -115,7 +114,7 @@ const HomeScreen = ({ navigation }) => {
             <Card style={styles.card}>
               <Card.Cover source={require("../../assets/images/gymi.jpg")} />
               <Card.Content>
-                <Title>DietPlan</Title>
+                <Title>Diet Plan</Title>
                 <Paragraph>Audio, Video & Text</Paragraph>
               </Card.Content>
               <Card.Actions>{renderButton("DietPlan")}</Card.Actions>

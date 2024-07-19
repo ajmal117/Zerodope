@@ -10,7 +10,7 @@ import WorkOutPlan from "@/screens/WorkOutPlan";
 import DietPlan from "@/screens/DietPlan";
 import ConsultSchedule from "@/screens/ConsultSchedule";
 import Profile from "@/screens/profile/Profile";
-import BodyBuildingPlan from "../screens/home/BodyBuildingPlan";
+import BodyBuildingPlan from "../screens/BodyBuildingPlan";
 import FreeSupport from "../screens/consultPlan/FreeSupport";
 
 const App = () => {
@@ -60,6 +60,7 @@ const App = () => {
         name="DietPlan"
         component={DietPlan}
         options={{
+          title: "Diet Plan",
           // headerShown: false,
           headerStyle: {
             height: 0,
@@ -69,12 +70,26 @@ const App = () => {
       <Stack.Screen
         name="BodyBuild"
         component={BodyBuildingPlan}
-        options={{ headerShown: false }}
+        options={{
+          title: "Body Building Plan",
+          // headerShown: false,
+          // headerStyle: {
+          backgroundColor: "#000",
+          // },
+          // headerTintColor: "white",
+        }}
       />
       <Stack.Screen
         name="FreeSupport"
         component={FreeSupport}
-        options={{ headerShown: false }}
+        options={{
+          title: "Free Support",
+          // headerShown: false,
+          // headerStyle: {
+          backgroundColor: "#000",
+          // },
+          // headerTintColor: "white",
+        }}
       />
     </Stack.Navigator>
   );
