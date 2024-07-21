@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import {
   Avatar,
@@ -12,6 +12,7 @@ import {
 } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import * as SecureStore from "expo-secure-store";
 
 const Stack = createStackNavigator();
 
@@ -37,9 +38,22 @@ const Homepage = () => {
 const HomeScreen = ({ navigation }) => {
   const [paid, setPaid] = useState(true);
   const [visible2, setVisible2] = useState(false);
+  const [username, setUsername] = useState("");
 
   const onToggleSnackBar2 = () => setVisible2(!visible2);
   const onDismissSnackBar2 = () => setVisible2(false);
+
+  useEffect(() => {
+    const getName = async () => {
+      try {
+        const name = await SecureStore.getItemAsync("username");
+        setUsername(name);
+      } catch (error) {
+        console.error("Error retrieving name:", error);
+      }
+    };
+    getName();
+  }, []);
 
   const renderButton = (targetScreen) => (
     <Button
@@ -71,7 +85,10 @@ const HomeScreen = ({ navigation }) => {
             style={{ marginRight: 6 }}
           />
         </TouchableOpacity>
-        <Appbar.Content titleStyle={styles.appbarTitle} title="Hi, Rahul" />
+        <Appbar.Content
+          titleStyle={styles.appbarTitle}
+          title={`Hi,${username}`}
+        />
         <Appbar.Action icon="magnify" onPress={onToggleSnackBar2} />
       </Appbar.Header>
       <ScrollView contentContainerStyle={styles.content}>
@@ -214,21 +231,21 @@ const styles = StyleSheet.create({
     marginVertical: 9,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#333",
-    paddingVertical: 4, // Optional: Add some padding for better spacing
+    paddingVertical: 2, // Optional: Add some padding for better spacing
     paddingHorizontal: 4, // Optional: Add horizontal padding
   },
   cardsContainer: {
     flexDirection: "row",
     paddingHorizontal: 4,
-    marginVertical: 6,
+    marginVertical: 4,
   },
   cards: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 8,
+    paddingVertical: 2,
   },
   bookNowcards: {
     flexDirection: "column",

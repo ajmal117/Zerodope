@@ -102,33 +102,36 @@ const Wplan = () => {
             {days.map((day, index) => (
               <Button
                 key={index}
-                mode="contained"
+                mode="container"
                 onPress={() => handleClick(day)}
-                style={[
-                  styles.button,
-                  selectedDay === day && styles.activeButton,
-                ]}
               >
-                <View>
+                <View
+                  style={
+                    (selectedDay === day && styles.headerText) ||
+                    styles.buttonColor
+                  }
+                >
                   <View style={styles.headerDays}>
                     <Text>Day </Text>
                     <Text style={{ fontSize: 18, fontWeight: "bold" }}>
                       {index + 1}
                     </Text>
                   </View>
-                  {selectedDay === day && (
-                    <IconButton
-                      icon={() => (
-                        <MaterialCommunityIcons
-                          fontSize={30}
-                          name="chevron-down"
-                          size={25}
-                          color={colors.text}
-                        />
-                      )}
-                      size={10}
-                    />
-                  )}
+                  <View style={selectedDay === day && styles.downArrow}>
+                    {selectedDay === day && (
+                      <IconButton
+                        icon={() => (
+                          <MaterialCommunityIcons
+                            name="chevron-down"
+                            size={20}
+                            color={colors.text}
+                          />
+                        )}
+                        style={styles.downArrow}
+                        size={20}
+                      />
+                    )}
+                  </View>
                 </View>
               </Button>
             ))}
@@ -200,6 +203,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     gap: 4,
+  },
+  headerText: {
+    backgroundColor: "#E8EBF5",
+    paddingTop: 14,
+    borderRadius: 50,
+    borderWidth: 1,
+  },
+  buttonColor: { backgroundColor: "#E8EBF5", padding: 12, borderRadius: 50 },
+  downArrow: {
+    flex: 1,
+    alignSelf: "flex-start",
   },
   dayTabs: {
     flexDirection: "column",

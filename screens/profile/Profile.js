@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -15,17 +15,32 @@ import {
   List,
 } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
+import * as SecureStore from "expo-secure-store";
 import Logout from "./Logout";
 
 const Stack = createStackNavigator();
 
 const HomeProfile = ({ navigation }) => {
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const getName = async () => {
+      try {
+        const name = await SecureStore.getItemAsync("username");
+        setUsername(name);
+      } catch (error) {
+        console.error("Error retrieving name:", error);
+      }
+    };
+    getName();
+  }, []);
+
   return (
     <ScrollView style={styles.container}>
       <Card style={styles.profileCard}>
         <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")}>
           <Card.Title
-            title="Hey, Rahul"
+            title={`Hey, ${username}`}
             subtitle="Complete your profile here"
             left={(props) => <Avatar.Icon {...props} icon="account" />}
           />
