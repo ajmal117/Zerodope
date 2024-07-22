@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    padding: 14,
+    paddingHorizontal: 14,
   },
   headerContainer: {
     height: 100,
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
   },
   workoutContainer: {
     flexGrow: 1,
-    paddingTop: 14,
+    marginTop: 14,
   },
   workoutsIncluded: {
     // textAlign: "center",

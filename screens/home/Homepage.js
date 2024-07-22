@@ -221,14 +221,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   content: {
-    padding: 16,
+    padding:12,
   },
   headTitleSection: {
     borderTopWidth: 1, // Add top border
     borderBottomWidth: 1, // Add bottom border
     borderColor: "#333", // Color of the border
     width: "100%", // Ensure it takes the full width
-    marginVertical: 9,
+    // marginVertical: 9,
   },
   sectionTitle: {
     fontSize: 18,
@@ -239,21 +239,22 @@ const styles = StyleSheet.create({
   },
   cardsContainer: {
     flexDirection: "row",
-    paddingHorizontal: 4,
+    // paddingHorizontal: 4,
     marginVertical: 4,
   },
   cards: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 2,
+    paddingTop: 4,
+    paddingBottom: 12,
   },
   bookNowcards: {
     flexDirection: "column",
-    paddingVertical: 8,
+    paddingVertical: 6,
   },
   card: {
     width: 250,
-    marginHorizontal: 6,
+    marginRight: 8,
   },
   bookCard: {
     width: 340,
