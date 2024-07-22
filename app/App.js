@@ -1,6 +1,6 @@
 import React from "react";
-import { useFonts } from "expo-font";
-import AppLoading from "expo-app-loading";
+// import { useFonts } from "expo-font";
+// import AppLoading from "expo-app-loading";
 
 // import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -16,16 +16,14 @@ import FreeSupport from "../screens/consultPlan/FreeSupport";
 const App = () => {
   const Stack = createNativeStackNavigator();
 
-  let [fontsLoaded] = useFonts({
-    poppins: require("../assets/fonts/Poppins-ExtraLight.ttf"),
-    poppinsBold: require("../assets/fonts/Poppins-ExtraBold.ttf"),
-    poppinsMedium: require("../assets/fonts/Poppins-Medium.ttf"),
-    satoshiRegular: require("../assets/fonts/Satoshi-Regular.ttf"),
-  });
+  // let [fontsLoaded] = useFonts({
+   
+  
+  // });
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
+  // if (!fontsLoaded) {
+  //   return <AppLoading />;
+  // }
   return (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen

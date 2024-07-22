@@ -62,7 +62,7 @@ const Login = () => {
 
       if (response.data.jwt) {
         router.replace("/");
-        Alert.alert("Login Successfull");
+        Alert.alert("Logged in Successfull");
       }
 
       // token store in asyncStore
@@ -73,6 +73,7 @@ const Login = () => {
       // Navigate to Homepage if login is successful
     } catch (error) {
       // Handle any errors
+      Alert.alert("Enter valid email and password");
       setLoading(false);
       console.log(error.response ? error.response.data : error.message);
     }
