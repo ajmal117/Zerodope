@@ -63,7 +63,7 @@ const ForgetPassword = ({ navigation }) => {
 
   return (
     <ImageBackground style={styles.container}>
-      <Text style={styles.pageTitle}>FITTR</Text>
+      <Text style={styles.pageTitle}>ZERODOPE</Text>
       <Text style={styles.pageTitle}>Forget Password</Text>
 
       <View style={styles.inputCont}>

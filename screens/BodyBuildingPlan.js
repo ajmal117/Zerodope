@@ -96,86 +96,75 @@ const Wplan = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <View style={styles.dayTabs}>
-          <View style={styles.buttonRow}>
-            {days.map((day, index) => (
-              <Button
-                key={index}
-                mode="container"
-                onPress={() => handleClick(day)}
-              >
-                <View
+      <ScrollView Style={styles.scrollContainer}>
+        <View style={styles.headerContainer}>
+          <View style={styles.dayTabs}>
+            <View style={styles.buttonRow}>
+              {days.map((day, index) => (
+                <Button
+                  key={index}
+                  mode="contained"
+                  onPress={() => handleClick(day)}
                   style={
-                    (selectedDay === day && styles.headerText) ||
-                    styles.buttonColor
+                    selectedDay === day ? styles.selectedButton : styles.button
                   }
                 >
-                  <View style={styles.headerDays}>
-                    <Text>Day </Text>
-                    <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-                      {index + 1}
-                    </Text>
-                  </View>
-                  <View style={selectedDay === day && styles.downArrow}>
+                  <View style={styles.buttonContent}>
+                    <Text style={styles.buttonText}>Day</Text>
+                    <Text style={styles.buttonTextNumber}>{index + 1}</Text>
                     {selectedDay === day && (
-                      <IconButton
-                        icon={() => (
-                          <MaterialCommunityIcons
-                            name="chevron-down"
-                            size={20}
-                            color={colors.text}
-                          />
-                        )}
+                      <MaterialCommunityIcons
+                        name="chevron-down"
+                        size={14}
+                        color={colors.text}
                         style={styles.downArrow}
-                        size={20}
                       />
                     )}
                   </View>
-                </View>
-              </Button>
-            ))}
+                </Button>
+              ))}
+            </View>
           </View>
         </View>
-      </View>
 
-      <ScrollView contentContainerStyle={styles.workoutContainer}>
-        {hasExercises && (
-          <Text style={styles.workoutsIncluded}>
-            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-              Workouts Included: {exerciseName}
+        <ScrollView contentContainerStyle={styles.workoutContainer}>
+          {hasExercises && (
+            <Text style={styles.workoutsIncluded}>
+              <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                Workouts Included: {exerciseName}
+              </Text>
             </Text>
-          </Text>
-        )}
-        <ScrollView contentContainerStyle={styles.workoutList}>
-          {hasExercises ? (
-            data[selectedDay].sets.map((exercise, index) => (
-              <View key={index} style={styles.workoutItem}>
-                <Image
-                  source={require("../assets/images/gymi.jpg")}
-                  style={styles.workoutImage}
-                  alt="image"
-                />
-                <View style={{ gap: 2 }}>
-                  <View>
-                    <Text style={styles.workoutName}>{exercise.name}</Text>
-                  </View>
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: "row",
-                      gap: 6,
-                      paddingTop: 4,
-                    }}
-                  >
-                    <Text style={styles.workoutSets}>{exercise.sets}</Text>
+          )}
+          <ScrollView contentContainerStyle={styles.workoutList}>
+            {hasExercises ? (
+              data[selectedDay].sets.map((exercise, index) => (
+                <View key={index} style={styles.workoutItem}>
+                  <Image
+                    source={require("../assets/images/gymi.jpg")}
+                    style={styles.workoutImage}
+                    alt="image"
+                  />
+                  <View style={{ gap: 2 }}>
+                    <View>
+                      <Text style={styles.workoutName}>{exercise.name}</Text>
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        gap: 6,
+                        paddingTop: 4,
+                      }}
+                    >
+                      <Text style={styles.workoutSets}>{exercise.sets}</Text>
+                    </View>
                   </View>
                 </View>
-              </View>
-            ))
-          ) : (
-            <Text style={styles.restMessage}>TAKE REST</Text>
-          )}
+              ))
+            ) : (
+              <Text style={styles.restMessage}>TAKE REST</Text>
+            )}
+          </ScrollView>
         </ScrollView>
       </ScrollView>
     </View>
@@ -190,57 +179,74 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    padding: 14,
+    paddingHorizontal: 10,
+  },
+  scrollContainer: {
+    justifyContent: "center",
+    alignItems: "center",
   },
   headerContainer: {
     justifyContent: "center",
     alignItems: "center",
-    height: 100,
+    marginVertical: 15,
   },
   headerDays: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
-    gap: 4,
+    gap: 1,
   },
-  headerText: {
-    backgroundColor: "#E8EBF5",
-    paddingTop: 14,
-    borderRadius: 50,
+
+  selectedButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "black",
+    paddingTop: 8,
     borderWidth: 1,
-  },
-  buttonColor: { backgroundColor: "#E8EBF5", padding: 12, borderRadius: 50 },
-  downArrow: {
-    flex: 1,
-    alignSelf: "flex-start",
-  },
-  dayTabs: {
-    flexDirection: "column",
-    justifyContent: "space-around",
+    // backgroundColor: "#f0f0f0",
+    height: 70,
   },
   button: {
-    borderRadius: 50,
-    borderWidth: 1,
+    backgroundColor: "#f0f0f0",
     borderColor: "black",
+    justifyContent: "center",
+    borderWidth: 1,
+    height: 70,
   },
-  activeButton: {
-    backgroundColor: "#E8EBF5",
-    borderWidth: 1,
-    borderColor: "black",
+  buttonContent: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonText: {
+    fontSize: 12,
+    fontWeight: "bold",
+  },
+  buttonTextNumber: {
+    fontSize: 12,
+    fontWeight: "bold",
+  },
+  dayTabs: {
+    flex: 1,
+    flexDirection: "column",
   },
   buttonRow: {
     flexDirection: "row",
     justifyContent: "space-around",
-    width: "100%",
+    width: "95%",
+  },
+  downArrow: {
+    // marginTop: 5,
+    marginBottom: 0,
   },
   workoutContainer: {
     flexGrow: 1,
-    paddingTop: 14,
+    // paddingTop: 14,
   },
   workoutsIncluded: {
     marginBottom: 25,
-    marginTop: 10,
+    // marginTop: 10,
     fontSize: 14,
     fontFamily: "poppinsMedium",
   },

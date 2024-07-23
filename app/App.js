@@ -17,8 +17,7 @@ const App = () => {
   const Stack = createNativeStackNavigator();
 
   // let [fontsLoaded] = useFonts({
-   
-  
+
   // });
 
   // if (!fontsLoaded) {
@@ -46,6 +45,7 @@ const App = () => {
         name="WorkOutPlan"
         component={WorkOutPlan}
         options={{
+          title: "WorkOut Plan",
           // headerShown: false,
           // headerStyle: {
           backgroundColor: "#000",

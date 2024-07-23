@@ -15,15 +15,15 @@ import {
 } from "react-native-paper";
 
 const FreeSupport = ({ navigation }) => {
-  const getToken = async () => {
-    try {
-      const token = await SecureStore.getItemAsync("token");
-      // const token = await AsyncStorage.getItem("token");
-      return token;
-    } catch (error) {
-      console.error("Error retrieving token:", error);
-    }
-  };
+  // const getToken = async () => {
+  //   try {
+  //     const token = await SecureStore.getItemAsync("token");
+  //     // const token = await AsyncStorage.getItem("token");
+  //     return token;
+  //   } catch (error) {
+  //     console.error("Error retrieving token:", error);
+  //   }
+  // };
   //   useEffect(() => {
   //     const getData = async () => {
   //       const token = await getToken();

@@ -23,7 +23,7 @@ const Register = ({ navigation }) => {
     try {
       setLoading(true);
       // Check if email and password fields are filled
-      if (!email || !password) {
+      if (!email || !password || !name) {
         Alert.alert("Error", "Please Fill All Fields");
         setLoading(false);
         return;
@@ -47,7 +47,7 @@ const Register = ({ navigation }) => {
       if (response.status === 200) {
         router.replace("login");
       }
-      Alert.alert("Register succesfully");
+      Alert.alert("Register succesfully ! please Login ");
 
       // Stop loading state
       setLoading(false);
@@ -64,7 +64,7 @@ const Register = ({ navigation }) => {
 
   return (
     <ImageBackground style={styles.container}>
-      <Text style={styles.pageTitle}>FITTR</Text>
+      <Text style={styles.pageTitle}>ZERODOPE</Text>
       <Text style={styles.pageTitle}>Sign up</Text>
 
       <View style={styles.inputCont}>
