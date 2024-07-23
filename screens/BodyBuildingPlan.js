@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
-import { Button, IconButton, useTheme } from "react-native-paper";
+import { Button, useTheme } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
@@ -21,11 +21,13 @@ const parseExercises = (exercisesObj) => {
   return parsed;
 };
 
-const Wplan = () => {
+const Bplan = () => {
   const [selectedDay, setSelectedDay] = useState("day1"); // Default selected day is Day1
   const { colors } = useTheme();
   const [data, setData] = useState({});
   const [exerciseName, setExerciseName] = useState(""); // State to hold exercise name
+  const [isLoading, setIsLoading] = useState(true);
+  const [noPlan, setNoPlan] = useState(false);
 
   const handleClick = (day) => {
     setSelectedDay(day);
@@ -40,10 +42,22 @@ const Wplan = () => {
     }
   };
 
+  const getUserId = async () => {
+    try {
+      const userId = await SecureStore.getItemAsync("userid");
+      return userId;
+    } catch (error) {
+      console.error("Error retrieving userId:", error);
+    }
+  };
+
   useEffect(() => {
     const getData = async () => {
       const token = await getToken();
+      const storedUserId = await getUserId();
       console.log("Token:", token);
+      console.log("Stored User ID:", storedUserId);
+
       try {
         const response = await axios.get(
           "https://beta.zerodope.in/api/body-building-plans?filters[users_permissions_users].[id].[$eq]=1&populate=*",
@@ -59,28 +73,35 @@ const Wplan = () => {
 
         if (responseData.data && responseData.data.length > 0) {
           const fetchedData = responseData.data[0].attributes;
-          console.log("Fetched Data:", fetchedData);
+          const fetchedUserId = responseData.data[0].id;
 
-          const filteredData = days.reduce((acc, day) => {
-            if (fetchedData[day] && fetchedData[day].Exercises) {
-              acc[day] = parseExercises(fetchedData[day]);
-            } else {
-              console.log(`No exercises found for ${day}`);
+          if (storedUserId === fetchedUserId.toString()) {
+            const filteredData = days.reduce((acc, day) => {
+              if (fetchedData[day] && fetchedData[day].Exercises) {
+                acc[day] = parseExercises(fetchedData[day]);
+              } else {
+                console.log(`No exercises found for ${day}`);
+              }
+              return acc;
+            }, {});
+
+            console.log("Filtered Data:", filteredData);
+            setData(filteredData);
+
+            if (filteredData[selectedDay]) {
+              setExerciseName(filteredData[selectedDay].ExerciseName);
             }
-            return acc;
-          }, {});
-
-          console.log("Filtered Data:", filteredData);
-          setData(filteredData);
-
-          if (filteredData[selectedDay]) {
-            setExerciseName(filteredData[selectedDay].ExerciseName);
+          } else {
+            setNoPlan(true);
           }
         } else {
-          console.log("No data found");
+          setNoPlan(true);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+        setNoPlan(true);
+      } finally {
+        setIsLoading(false);
       }
     };
     getData();
@@ -94,9 +115,28 @@ const Wplan = () => {
 
   const hasExercises = data[selectedDay] && data[selectedDay].sets.length > 0;
 
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  if (noPlan) {
+    return (
+      <View style={styles.noPlanContainer}>
+        <Text>
+          There is no Body Building plan for you right now. Please contact your
+          Body Building planner.
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-      <ScrollView Style={styles.scrollContainer}>
+      <ScrollView style={styles.scrollContainer}>
         <View style={styles.headerContainer}>
           <View style={styles.dayTabs}>
             <View style={styles.buttonRow}>
@@ -171,8 +211,8 @@ const Wplan = () => {
   );
 };
 
-export default function WorkoutPlan() {
-  return <Wplan />;
+export default function BodyBuildingPlan() {
+  return <Bplan />;
 }
 
 const styles = StyleSheet.create({
@@ -197,14 +237,12 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: 1,
   },
-
   selectedButton: {
     justifyContent: "center",
     alignItems: "center",
     borderColor: "black",
     paddingTop: 8,
     borderWidth: 1,
-    // backgroundColor: "#f0f0f0",
     height: 70,
   },
   button: {
@@ -236,17 +274,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     width: "95%",
   },
-  downArrow: {
-    // marginTop: 5,
-    marginBottom: 0,
-  },
+  downArrow: {},
   workoutContainer: {
     flexGrow: 1,
-    // paddingTop: 14,
   },
   workoutsIncluded: {
     marginBottom: 25,
-    // marginTop: 10,
     fontSize: 14,
     fontFamily: "poppinsMedium",
   },
@@ -282,5 +315,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginTop: 20,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  noPlanContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
   },
 });
