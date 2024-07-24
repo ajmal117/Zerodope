@@ -3,14 +3,14 @@
     "version": ">= 10.2.1"
   },
   "build": {
-    "android": {
-      
-    },
     "development": {
       "developmentClient": true,
       "distribution": "internal"
     },
     "preview": {
+      "android": {
+        "buildType": "apk"
+      },
       "distribution": "internal"
     },
     "production": {}

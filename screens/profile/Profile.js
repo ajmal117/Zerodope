@@ -227,11 +227,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
-    elevation: 1, // Add elevation for shadow effect
-    shadowColor: "#000", // Shadow color
-    shadowOffset: { width: 0, height: 1 }, // Shadow offset
-    shadowOpacity: 0.5, // Shadow opacity
-    shadowRadius: 12, // Shadow radius
+    // elevation: 1, // Add elevation for shadow effect
+    // shadowColor: "#000", // Shadow color
+    // shadowOffset: { width: 0, height: 1 }, // Shadow offset
+    // shadowOpacity: 0.2, // Shadow opacity
+    // shadowRadius: 2, // Shadow radius
   },
   listItem: {
     paddingStart: 10,
