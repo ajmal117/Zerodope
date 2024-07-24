@@ -22,7 +22,7 @@
 //   return parsed;
 // };
 
-// const Wplan = () => {
+// const Bplan = () => {
 //   const [selectedDay, setSelectedDay] = useState("day1"); // Default selected day is Day1
 //   const { colors } = useTheme();
 //   const [data, setData] = useState({});
@@ -32,6 +32,14 @@
 //     setSelectedDay(day);
 //   };
 
+//   const getId = async () => {
+//     try {
+//       const id = await SecureStore.getItemAsync("userid");
+//       return id;
+//     } catch (error) {
+//       console.error("Error retrieving token:", error);
+//     }
+//   };
 //   const getToken = async () => {
 //     try {
 //       const token = await SecureStore.getItemAsync("token");
@@ -44,10 +52,12 @@
 //   useEffect(() => {
 //     const getData = async () => {
 //       const token = await getToken();
+//       const id = await getId();
+
 //       console.log("Token:", token);
 //       try {
 //         const response = await axios.get(
-//           "https://beta.zerodope.in/api/workout-plans?filters[users_permissions_users].[id].[$eq]=1&populate=*",
+//           `{https://beta.zerodope.in/api/workout-plans?filters[users_permissions_users].[id].[$eq]=${id}&populate=*}`,
 //           {
 //             headers: {
 //               accept: "application/json",
@@ -166,7 +176,7 @@
 // };
 
 // export default function WorkoutPlan() {
-//   return <Wplan />;
+//   return <Bplan />;
 // }
 
 // const styles = StyleSheet.create({
@@ -271,9 +281,11 @@
 //   },
 // });
 
+//data with id
+
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
-import { Button, useTheme } from "react-native-paper";
+import { Button, IconButton, useTheme } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
@@ -295,17 +307,24 @@ const parseExercises = (exercisesObj) => {
   return parsed;
 };
 
-const Wplan = () => {
+const Bplan = () => {
   const [selectedDay, setSelectedDay] = useState("day1"); // Default selected day is Day1
   const { colors } = useTheme();
   const [data, setData] = useState({});
   const [exerciseName, setExerciseName] = useState(""); // State to hold exercise name
-  const [isLoading, setIsLoading] = useState(true);
-  const [noWorkoutPlan, setNoWorkoutPlan] = useState(false);
-  const [userId, setUserId] = useState("");
+  const [noData, setNoData] = useState(false); // State to hold no data status
 
   const handleClick = (day) => {
     setSelectedDay(day);
+  };
+
+  const getId = async () => {
+    try {
+      const id = await SecureStore.getItemAsync("userid");
+      return id;
+    } catch (error) {
+      console.error("Error retrieving token:", error);
+    }
   };
 
   const getToken = async () => {
@@ -317,26 +336,15 @@ const Wplan = () => {
     }
   };
 
-  const getUserId = async () => {
-    try {
-      const id = await SecureStore.getItemAsync("userid");
-      return id;
-    } catch (error) {
-      console.error("Error retrieving userId:", error);
-    }
-  };
-
   useEffect(() => {
     const getData = async () => {
       const token = await getToken();
-      const storedUserId = await getUserId();
-      setUserId(storedUserId);
-      console.log("Token:", token);
-      console.log("Stored User ID:", storedUserId);
+      const id = await getId();
 
+      console.log("Token:", token);
       try {
         const response = await axios.get(
-          "https://beta.zerodope.in/api/workout-plans?filters[users_permissions_users].[id].[$eq]=1&populate=*",
+          `https://beta.zerodope.in/api/workout-plans?filters[users_permissions_users].[id].[$eq]=${id}&populate=*`,
           {
             headers: {
               accept: "application/json",
@@ -349,35 +357,30 @@ const Wplan = () => {
 
         if (responseData.data && responseData.data.length > 0) {
           const fetchedData = responseData.data[0].attributes;
-          const fetchedUserId = responseData.data[0].id;
+          console.log("Fetched Data:", fetchedData);
 
-          if (storedUserId === fetchedUserId.toString()) {
-            const filteredData = days.reduce((acc, day) => {
-              if (fetchedData[day] && fetchedData[day].Exercises) {
-                acc[day] = parseExercises(fetchedData[day]);
-              } else {
-                console.log(`No exercises found for ${day}`);
-              }
-              return acc;
-            }, {});
-
-            console.log("Filtered Data:", filteredData);
-            setData(filteredData);
-
-            if (filteredData[selectedDay]) {
-              setExerciseName(filteredData[selectedDay].ExerciseName);
+          const filteredData = days.reduce((acc, day) => {
+            if (fetchedData[day] && fetchedData[day].Exercises) {
+              acc[day] = parseExercises(fetchedData[day]);
+            } else {
+              console.log(`No exercises found for ${day}`);
             }
-          } else {
-            setNoWorkoutPlan(true);
+            return acc;
+          }, {});
+
+          console.log("Filtered Data:", filteredData);
+          setData(filteredData);
+
+          if (filteredData[selectedDay]) {
+            setExerciseName(filteredData[selectedDay].ExerciseName);
           }
         } else {
-          setNoWorkoutPlan(true);
+          console.log("No data found");
+          setNoData(true);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
-        setNoWorkoutPlan(true);
-      } finally {
-        setIsLoading(false);
+        setNoData(true);
       }
     };
     getData();
@@ -389,17 +392,9 @@ const Wplan = () => {
     }
   }, [selectedDay, data]);
 
-  if (isLoading) {
+  if (noData) {
     return (
-      <View style={styles.loadingContainer}>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
-
-  if (noWorkoutPlan) {
-    return (
-      <View style={styles.noWorkoutContainer}>
+      <View style={styles.noDataText}>
         <Text>
           There is no workout plan for you right now. Please contact your
           Workout Planner.
@@ -407,10 +402,9 @@ const Wplan = () => {
       </View>
     );
   }
-
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollContainer}>
+      <ScrollView Style={styles.scrollContainer}>
         <View style={styles.headerContainer}>
           <View style={styles.dayTabs}>
             <View style={styles.buttonRow}>
@@ -481,7 +475,7 @@ const Wplan = () => {
 };
 
 export default function WorkoutPlan() {
-  return <Wplan />;
+  return <Bplan />;
 }
 
 const styles = StyleSheet.create({
@@ -512,6 +506,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     paddingTop: 8,
     borderWidth: 1,
+    // backgroundColor: "#f0f0f0",
     height: 70,
   },
   button: {
@@ -543,7 +538,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     width: "92%",
   },
-  downArrow: {},
+  downArrow: {
+    // marginTop: 5,
+    marginBottom: 0,
+  },
   workoutContainer: {
     flexGrow: 1,
   },
@@ -580,15 +578,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
   },
-  loadingContainer: {
+  noDataText: {
     flex: 1,
+    fontSize: 20,
     justifyContent: "center",
-    alignItems: "center",
-  },
-  noWorkoutContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    textAlign: "center",
     padding: 20,
   },
 });

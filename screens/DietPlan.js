@@ -72,10 +72,6 @@
 //           JSON.stringify(responseData, null, 2)
 //         );
 
-//         // console.log(
-//         //   response.data.attributes.users_permissions_users.data.attributes.email
-//         // );
-
 //         // Access the nested data
 //         if (responseData.data && responseData.data.length > 0) {
 //           const fetchedData = responseData.data[0].attributes;
@@ -211,6 +207,9 @@
 // });
 
 // export default DietPlan;
+
+//data with id
+
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import React, { useEffect, useState } from "react";
@@ -250,9 +249,8 @@ const DietPlan = () => {
     snacks: { WriteDiet: [], TillDate: "" },
     dinner: { WriteDiet: [], TillDate: "" },
   });
-  const [userId, setUserId] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [noDietPlan, setNoDietPlan] = useState(false);
+
+  const [noData, setNoData] = useState(false); // State to handle no data status
 
   const getToken = async () => {
     try {
@@ -263,26 +261,24 @@ const DietPlan = () => {
     }
   };
 
-  const getUserId = async () => {
+  const getId = async () => {
     try {
       const id = await SecureStore.getItemAsync("userid");
       return id;
     } catch (error) {
-      console.error("Error retrieving userId:", error);
+      console.error("Error retrieving user ID:", error);
     }
   };
 
   useEffect(() => {
     const getData = async () => {
       const token = await getToken();
-      const storedUserId = await getUserId();
-      setUserId(storedUserId);
+      const id = await getId();
       console.log("Token:", token);
-      console.log("Stored User ID:", storedUserId);
 
       try {
         const response = await axios.get(
-          "https://beta.zerodope.in/api/diet-plans?filters[users_permissions_users].[id].[$eq]=1&populate=*",
+          `https://beta.zerodope.in/api/diet-plans?filters[users_permissions_users].[id].[$eq]=${id}&populate=*`,
           {
             headers: {
               accept: "application/json",
@@ -290,6 +286,7 @@ const DietPlan = () => {
             },
           }
         );
+
         const responseData = response.data;
         console.log(
           "Complete Response Data:",
@@ -298,54 +295,42 @@ const DietPlan = () => {
 
         if (responseData.data && responseData.data.length > 0) {
           const fetchedData = responseData.data[0].attributes;
-          const fetchedUserId = responseData.data[0].id;
-
-          if (storedUserId === fetchedUserId.toString()) {
-            setDietData({
-              breakFast: {
-                WriteDiet: fetchedData.breakFast.WriteDiet.split("\n"),
-                TillDate: fetchedData.breakFast.TillDate,
-              },
-              lunch: {
-                WriteDiet: fetchedData.lunch.WriteDiet.split("\n"),
-                TillDate: fetchedData.lunch.TillDate,
-              },
-              snacks: {
-                WriteDiet: fetchedData.snacks.WriteDiet.split("\n"),
-                TillDate: fetchedData.snacks.TillDate,
-              },
-              dinner: {
-                WriteDiet: fetchedData.dinner.WriteDiet.split("\n"),
-                TillDate: fetchedData.dinner.TillDate,
-              },
-            });
-          } else {
-            setNoDietPlan(true);
-          }
+          setDietData({
+            breakFast: {
+              WriteDiet: fetchedData.breakFast.WriteDiet.split("\n"),
+              TillDate: fetchedData.breakFast.TillDate,
+            },
+            lunch: {
+              WriteDiet: fetchedData.lunch.WriteDiet.split("\n"),
+              TillDate: fetchedData.lunch.TillDate,
+            },
+            snacks: {
+              WriteDiet: fetchedData.snacks.WriteDiet.split("\n"),
+              TillDate: fetchedData.snacks.TillDate,
+            },
+            dinner: {
+              WriteDiet: fetchedData.dinner.WriteDiet.split("\n"),
+              TillDate: fetchedData.dinner.TillDate,
+            },
+          });
+          setNoData(false);
+          console.log("Fetched Data:", JSON.stringify(fetchedData, null, 2));
         } else {
-          setNoDietPlan(true);
+          console.log("No data found");
+          setNoData(true);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
-        setNoDietPlan(true);
-      } finally {
-        setIsLoading(false);
+        setNoData(true);
       }
     };
+
     getData();
   }, []);
 
-  if (isLoading) {
+  if (noData) {
     return (
-      <View style={styles.loadingContainer}>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
-
-  if (noDietPlan) {
-    return (
-      <View style={styles.noDietContainer}>
+      <View style={styles.noDataText}>
         <Text>
           There is no diet plan for you right now. Please contact your Diet
           Planner.
@@ -353,7 +338,6 @@ const DietPlan = () => {
       </View>
     );
   }
-
   return (
     <ScrollView style={styles.container}>
       <View style={styles.section}>
@@ -402,16 +386,10 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#fff",
   },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  noDietContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
   },
   section: {
     marginBottom: 12,
@@ -430,8 +408,8 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   cardContent: {
-    paddingHorizontal: 10,
-    paddingVertical: 7,
+    paddingHorizontal: 10, // Reduced horizontal padding
+    paddingVertical: 7, // Reduced vertical padding
   },
   cardDate: {
     fontSize: 14,
@@ -459,6 +437,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "400",
     color: "#333",
+  },
+  noDataText: {
+    fontSize: 20,
+    flex: 1,
+    textAlign: "center",
+    justifyContent: "center",
+    padding: 20,
   },
 });
 
