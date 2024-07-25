@@ -294,7 +294,6 @@ const days = ["day1", "day2", "day3", "day4", "day5", "day6"];
 
 const parseExercises = (exercisesObj) => {
   console.log("Parsing exercises for:", exercisesObj);
-
   const { ExerciseName, Exercises } = exercisesObj;
   const parsed = {
     ExerciseName,

@@ -16,7 +16,15 @@ import {
 } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as SecureStore from "expo-secure-store";
-import Logout from "./Logout";
+import Logout from "../profilePage/Logout";
+import MainProfile from "../profilePage/mainProfile/MainProfile";
+import MyOrders from "../profilePage/MyOrders";
+import HelpSupport from "../profilePage/HelpSupport";
+import AppVersion from "../profilePage/AppVersion";
+import CommGuid from "../profilePage/CommGuid";
+import Review from "../profilePage/Review";
+import TermsAndCond from "../profilePage/TermsAndCond";
+import PrivacyPolicy from "../profilePage/PrivacyPolicy";
 
 const Stack = createStackNavigator();
 
@@ -38,7 +46,7 @@ const HomeProfile = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
       <Card style={styles.profileCard}>
-        <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")}>
+        <TouchableOpacity onPress={() => navigation.navigate("MainProfile")}>
           <Card.Title
             title={`Hey, ${username}`}
             subtitle="Complete your profile here"
@@ -48,35 +56,12 @@ const HomeProfile = ({ navigation }) => {
       </Card>
       <List.Section style={styles.ListSection}>
         <List.Item
-          title="Fitcoins"
-          left={() => <List.Icon icon="currency-usd" />}
-          right={() => <List.Icon icon="chevron-right" />}
-          onPress={() => navigation.navigate("Fitcoins")}
-          style={styles.listItem}
-        />
-        <List.Item
-          title="Leaderboard"
-          left={() => <List.Icon icon="trophy-outline" />}
-          right={() => <List.Icon icon="chevron-right" />}
-          onPress={() => navigation.navigate("Leaderboard")}
-          style={styles.listItem}
-        />
-        <List.Item
-          title="My Bookmarks"
-          left={() => <List.Icon icon="bookmark-outline" />}
-          right={() => <List.Icon icon="chevron-right" />}
-          onPress={() => navigation.navigate("Bookmarks")}
-          style={styles.listItem}
-        />
-        <List.Item
           title="My Orders"
           left={() => <List.Icon icon="cart" />}
           right={() => <List.Icon icon="chevron-right" />}
-          onPress={() => navigation.navigate("Orders")}
+          onPress={() => navigation.navigate("MyOrders")}
           style={styles.listItem}
         />
-      </List.Section>
-      <List.Section style={styles.ListSection}>
         <List.Item
           title="Help & Support"
           left={() => <List.Icon icon="help-circle" />}
@@ -109,7 +94,7 @@ const HomeProfile = ({ navigation }) => {
           title="Community Guidelines"
           left={() => <List.Icon icon="file-check-outline" />}
           right={() => <List.Icon icon="chevron-right" />}
-          onPress={() => navigation.navigate("CommunityGuidelines")}
+          onPress={() => navigation.navigate("CommGuid")}
           style={styles.listItem}
         />
       </List.Section>
@@ -117,7 +102,7 @@ const HomeProfile = ({ navigation }) => {
         <List.Item
           title="App Version: 5.8.1 (3)"
           left={() => <List.Icon icon="cellphone" />}
-          right={() => <List.Icon icon="chevron-right" />}
+          // right={() => <List.Icon icon="chevron-right" />}
           style={styles.listItem}
         />
         <List.Item
@@ -132,83 +117,22 @@ const HomeProfile = ({ navigation }) => {
   );
 };
 
-const ProfileScreen = () => {
-  return (
-    <View>
-      <Text>complete your profile here ... </Text>
-    </View>
-  );
-};
-const FitcoinsScreen = () => {
-  return (
-    <View>
-      <Text>Profile Screen</Text>
-    </View>
-  );
-};
-const LeaderboardScreen = () => (
-  <View>
-    <Text>Leaderboard Screen</Text>
-  </View>
-);
-const BookmarksScreen = () => (
-  <View>
-    <Text>Bookmarks Screen</Text>
-  </View>
-);
-const OrdersScreen = () => (
-  <View>
-    <Text>Orders Screen</Text>
-  </View>
-);
-const HelpSupportScreen = () => (
-  <View>
-    <Text>Help & Support Screen</Text>
-  </View>
-);
-const ReviewScreen = () => (
-  <View>
-    <Text>Review Screen</Text>
-  </View>
-);
-const TermsConditionsScreen = () => (
-  <View>
-    <Text>Terms & Conditions Screen</Text>
-  </View>
-);
-const PrivacyPolicyScreen = () => (
-  <View>
-    <Text>Privacy Policy Screen</Text>
-  </View>
-);
-const CommunityGuidelinesScreen = () => (
-  <View>
-    <Text>Community Guidelines Screen</Text>
-  </View>
-);
-const LogoutScreen = () => (
-  <View>
-    <Text>Logout Screen</Text>
-  </View>
-);
-
 const Profile = () => {
   return (
     <Stack.Navigator initialRouteName="HomeProfile">
       <Stack.Screen name="HomeProfile" component={HomeProfile} />
-      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-      <Stack.Screen name="Fitcoins" component={FitcoinsScreen} />
-      <Stack.Screen name="Leaderboard" component={LeaderboardScreen} />
-      <Stack.Screen name="Bookmarks" component={BookmarksScreen} />
-      <Stack.Screen name="Orders" component={OrdersScreen} />
-      <Stack.Screen name="HelpSupport" component={HelpSupportScreen} />
-      <Stack.Screen name="Review" component={ReviewScreen} />
-      <Stack.Screen name="TermsConditions" component={TermsConditionsScreen} />
-      <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
       <Stack.Screen
-        name="CommunityGuidelines"
-        component={CommunityGuidelinesScreen}
+        name="MainProfile"
+        component={MainProfile}
+        options={{ headerShown: false }}
       />
+      <Stack.Screen name="MyOrders" component={MyOrders} />
+      <Stack.Screen name="HelpSupport" component={HelpSupport} />
+      <Stack.Screen name="Review" component={Review} />
+      <Stack.Screen name="TermsConditions" component={TermsAndCond} />
+      <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+      <Stack.Screen name="AppVersion" component={AppVersion} />
+      <Stack.Screen name="CommGuid" component={CommGuid} />
       <Stack.Screen name="Logout" component={Logout} />
     </Stack.Navigator>
   );
@@ -227,11 +151,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
-    // elevation: 1, // Add elevation for shadow effect
-    // shadowColor: "#000", // Shadow color
-    // shadowOffset: { width: 0, height: 1 }, // Shadow offset
-    // shadowOpacity: 0.2, // Shadow opacity
-    // shadowRadius: 2, // Shadow radius
   },
   listItem: {
     paddingStart: 10,

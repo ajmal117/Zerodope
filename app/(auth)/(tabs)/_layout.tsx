@@ -2,8 +2,8 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "react-native-paper";
 import index from "./index"; // Replace with your actual screen component
-import Homepage from "../../../screens/home/Homepage"; // Replace with your actual screen component
-import Chat from "../../../screens/services/Chat";
+// import Homepage from "../../../screens/home/Homepage"; // Replace with your actual screen component
+// import Chat from "../../../screens/services/Chat";
 import Notification from "../../../screens/services/Notification";
 import Coach from "../../../screens/services/Coach";
 import Tools from "../../../screens/services/Tools";
@@ -31,7 +31,7 @@ function MyTabs() {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="chat"
         component={Chat}
         options={{
@@ -40,7 +40,7 @@ function MyTabs() {
             <Icon source="chat-processing-outline" color={color} size={size} />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="coach"
         component={Coach}

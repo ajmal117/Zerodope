@@ -191,11 +191,6 @@
 
 // export default Login;
 
-
-
-
-
-
 import React, { useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import { useSession } from "./ctx";
@@ -222,12 +217,15 @@ const Login = () => {
 
   const saveToSecureStore = async (key, value) => {
     try {
-      await SecureStore.setItemAsync(key, value);
+      // Ensure value is a string
+      const stringValue =
+        typeof value === "string" ? value : JSON.stringify(value);
+      await SecureStore.setItemAsync(key, stringValue);
+      console.log(`Saved ${key} to SecureStore with value: ${stringValue}`);
     } catch (error) {
       console.log(`Error saving ${key}:`, error);
     }
   };
-
   const handleSubmit = async () => {
     try {
       setLoading(true);
@@ -251,12 +249,21 @@ const Login = () => {
       );
 
       // Log the API response
-      console.log(response.data);
+      console.log("API Response==>", response.data);
       const { jwt, user } = response.data;
 
+      // Ensure user data is valid
+      if (!user || !user.id) {
+        console.log("User data is not available in the response");
+        Alert.alert("Error", "Failed to retrieve user data");
+        setLoading(false);
+        return;
+      }
+
+      // Save values to SecureStore
       await saveToSecureStore("token", jwt);
       await saveToSecureStore("username", user.username);
-      await saveToSecureStore("userid", user.id);
+      await saveToSecureStore("userid", String(user.id)); // Convert user.id to string
 
       signIn();
 
@@ -267,11 +274,9 @@ const Login = () => {
 
       // Stop loading state
       setLoading(false);
-
-      // Navigate to Homepage if login is successful
     } catch (error) {
       // Handle any errors
-      Alert.alert("Enter valid email and password");
+      Alert.alert("Error", "Enter valid email and password");
       setLoading(false);
       console.log(error.response ? error.response.data : error.message);
     }
@@ -386,4 +391,3 @@ const styles = StyleSheet.create({
 });
 
 export default Login;
-
