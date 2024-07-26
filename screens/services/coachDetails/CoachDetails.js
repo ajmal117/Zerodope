@@ -13,7 +13,7 @@ const CoachDetails = () => {
   const coaches = [
     {
       name: "Musaddiq Ismail",
-      image: require("../../../assets/images/c1.avif"),
+      image: require("../../../assets/images/c1.jpg"),
       rating: 5,
       coachedPeople: 123,
       slotsAvailable: 2,
@@ -21,7 +21,7 @@ const CoachDetails = () => {
     },
     {
       name: "Varsha",
-      image: require("../../../assets/images/c2.avif"),
+      image: require("../../../assets/images/c2.jpg"),
       rating: 5,
       coachedPeople: 461,
       slotsAvailable: 2,
@@ -29,7 +29,7 @@ const CoachDetails = () => {
     },
     {
       name: "Prashant Vyas",
-      image: require("../../../assets/images/c3.avif"),
+      image: require("../../../assets/images/c3.jpg"),
       rating: 5,
       coachedPeople: 940,
       slotsAvailable: 2,
@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
     margin: 16,
     backgroundColor: "#ffffff",
     borderRadius: 8,
-    // borderWidth:1
   },
   helpCard: {
     margin: 10,
