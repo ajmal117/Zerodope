@@ -4,7 +4,7 @@ import { Icon } from "react-native-paper";
 import index from "./index"; // Replace with your actual screen component
 // import Homepage from "../../../screens/home/Homepage"; // Replace with your actual screen component
 // import Chat from "../../../screens/services/Chat";
-import Notification from "../../../screens/services/Notification";
+import Notification from "../../../screens/services/Notifications";
 import Coach from "../../../screens/services/Coach";
 import Tools from "../../../screens/services/Tools";
 

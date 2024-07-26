@@ -18,7 +18,7 @@ export default function PrivacyPolicy() {
     <PaperProvider>
       <ScrollView contentContainerStyle={styles.container}>
         <Title style={styles.para}>PRIVACY POLICY</Title>
-        <Text style={styles.date} >Last updated 27-11-2023</Text>
+        <Text style={styles.date}>Last updated 27-11-2023</Text>
         <Paragraph style={styles.para}>
           Thank you for choosing to be part of our community at Squats Fitness
           Private Limited, doing business as zerodope (“
@@ -50,7 +50,7 @@ export default function PrivacyPolicy() {
           <Text style={styles.bold}>Mobile Application</Text>”) and Internet
           pages of zerodope Website –
           <TouchableRipple
-          style={styles.para}
+            style={styles.para}
             onPress={() => handlePress("https://www.zerodope.com")}
           >
             <Text style={styles.link}> www.zerodope.com</Text>
