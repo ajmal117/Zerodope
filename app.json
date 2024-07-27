@@ -13,7 +13,8 @@
       "backgroundColor": "#180707"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ajmal117.zerodope"
     },
     "android": {
       "adaptiveIcon": {

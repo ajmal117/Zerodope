@@ -122,7 +122,7 @@ const Bplan = () => {
 
   const hasExercises = data[selectedDay] && data[selectedDay].sets.length > 0;
 
-  if (!noPlan) {
+  if (noPlan) {
     return (
       <View style={styles.noPlanContainer}>
         <Text style={styles.noDataText}>
