@@ -214,7 +214,8 @@ import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text, ScrollView } from "react-native";
-import { Card, Paragraph } from "react-native-paper";
+import { Card, Paragraph, Button } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 const SubCard = ({ imageSource, data }) => (
   <Card style={styles.subCard}>
@@ -243,6 +244,8 @@ const NutritionCard = ({ data, tillDate }) => (
 );
 
 const DietPlan = () => {
+  const navigation = useNavigation();
+
   const [dietData, setDietData] = useState({
     breakFast: { WriteDiet: [], TillDate: "" },
     lunch: { WriteDiet: [], TillDate: "" },
@@ -330,11 +333,14 @@ const DietPlan = () => {
 
   if (noData) {
     return (
-      <View style={styles.noDataText}>
-        <Text>
-          There is no diet plan for you right now. Please contact your Diet
+      <View style={styles.noDataContainer}>
+        <Text style={styles.noDataText}>
+          There is no Diet plan for you right now. Please contact your Diet
           Planner.
         </Text>
+        <Button mode="contained" onPress={() => navigation.navigate("BookNow")}>
+          BOOK NOW
+        </Button>
       </View>
     );
   }
@@ -438,12 +444,16 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: "#333",
   },
+  noDataContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
   noDataText: {
     fontSize: 20,
-    flex: 1,
     textAlign: "center",
-    justifyContent: "center",
-    padding: 20,
+    marginBottom: 20,
   },
 });
 

@@ -13,29 +13,11 @@ import {
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as SecureStore from "expo-secure-store";
+import BookNow from "../booknow/BookNow";
 
 const Stack = createStackNavigator();
 
-const Homepage = () => {
-  return (
-    <Provider>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Homepage"
-          component={HomeScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="BookNow"
-          component={BookNowScreen}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </Provider>
-  );
-};
-
-const HomeScreen = ({ navigation }) => {
+const Homepage = ({ navigation }) => {
   const [paid, setPaid] = useState(true);
   const [visible2, setVisible2] = useState(false);
   const [username, setUsername] = useState("");
@@ -158,49 +140,21 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-const BookNowScreen = ({ navigation }) => {
-  return (
-    <View style={styles.container}>
-      <Appbar.Header style={styles.appbar}>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Book Now" titleStyle={styles.appbarTitle} />
-      </Appbar.Header>
-      <ScrollView contentContainerStyle={styles.content}>
-        <View style={styles.headTitleSection}>
-          <Text style={styles.sectionTitle}>Choose Your Plan</Text>
-        </View>
-        <ScrollView contentContainerStyle={styles.cardsContainer}>
-          <View style={styles.bookNowcards}>
-            <Card style={styles.bookCard}>
-              <Card.Cover source={require("../../assets/images/gyma.jpg")} />
-              <Card.Content>
-                <Title>Consultation Scheduling</Title>
-                <Paragraph>Free Diet Plan, Free Workout Plan</Paragraph>
-              </Card.Content>
-              <Card.Actions>
-                <Button mode="contained" style={styles.button}>
-                  Book Now
-                </Button>
-              </Card.Actions>
-            </Card>
-            <Card style={styles.bookCard}>
-              <Card.Cover source={require("../../assets/images/gyma.jpg")} />
-              <Card.Content>
-                <Title>Free Support</Title>
-                <Paragraph>Free Diet Plan, Free Workout Plan</Paragraph>
-              </Card.Content>
-              <Card.Actions>
-                <Button mode="contained" style={styles.button}>
-                  Book Now
-                </Button>
-              </Card.Actions>
-            </Card>
-          </View>
-        </ScrollView>
-      </ScrollView>
-    </View>
-  );
-};
+const App = () => (
+  <Stack.Navigator initialRouteName="Homepage">
+    <Stack.Screen
+      name="Homepage"
+      component={Homepage}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="BookNow"
+      component={BookNow}
+      // options={{ headerShown: false }}
+    />
+    {/* Add other screens here as needed */}
+  </Stack.Navigator>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -221,7 +175,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   content: {
-    padding:12,
+    padding: 12,
   },
   headTitleSection: {
     borderTopWidth: 1, // Add top border
@@ -262,4 +216,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Homepage;
+export default App;

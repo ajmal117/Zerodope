@@ -4,6 +4,7 @@ import { Button, useTheme } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
+import { useNavigation } from "@react-navigation/native";
 
 const days = ["day1", "day2", "day3", "day4", "day5", "day6"];
 
@@ -40,6 +41,7 @@ const Bplan = () => {
   const [data, setData] = useState({});
   const [exerciseName, setExerciseName] = useState("");
   const [noPlan, setNoPlan] = useState(false);
+  const navigation = useNavigation();
 
   const handleClick = (day) => {
     setSelectedDay(day);
@@ -120,13 +122,16 @@ const Bplan = () => {
 
   const hasExercises = data[selectedDay] && data[selectedDay].sets.length > 0;
 
-  if (noPlan) {
+  if (!noPlan) {
     return (
       <View style={styles.noPlanContainer}>
-        <Text>
+        <Text style={styles.noDataText}>
           There is no Body Building plan for you right now. Please contact your
           Body Building planner.
         </Text>
+        <Button mode="contained" onPress={() => navigation.navigate("BookNow")}>
+          BOOK NOW
+        </Button>
       </View>
     );
   }
@@ -223,10 +228,11 @@ const styles = StyleSheet.create({
     borderColor: "black",
     paddingTop: 8,
     borderWidth: 1,
+    backgroundColor: "#f0f0f0",
     height: 70,
   },
   button: {
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "white",
     borderColor: "black",
     justifyContent: "center",
     borderWidth: 1,
@@ -319,6 +325,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     padding: 20,
+  },
+
+  noDataText: {
+    fontSize: 20,
+    textAlign: "center",
+    marginBottom: 20,
   },
   scrollContainer: {
     flexGrow: 1,
