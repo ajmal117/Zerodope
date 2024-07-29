@@ -185,6 +185,7 @@ const styles = StyleSheet.create({
   linkText: {
     textAlign: "center",
     marginVertical: 4,
+    
   },
   link1: {
     fontSize: 16,

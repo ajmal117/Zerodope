@@ -71,7 +71,7 @@ const App = () => {
         name="BodyBuild"
         component={BodyBuildingPlan}
         options={{
-          title: "Body Building Plan",
+          title: "Body Building",
           // headerShown: false,
           // headerStyle: {
           backgroundColor: "#000",
@@ -107,7 +107,7 @@ const App = () => {
         name="BodyBuildData"
         component={BodyBuildData}
         options={{
-          title: "Body Building Data",
+          title: "Day Data",
           // headerShown: false,
           // headerStyle: {
           backgroundColor: "#000",

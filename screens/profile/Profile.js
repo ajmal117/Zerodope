@@ -198,8 +198,6 @@
 
 // review comp
 
-
-
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -209,6 +207,7 @@ import {
   TouchableOpacity,
   Alert,
   Linking,
+  Image,
 } from "react-native";
 import {
   Avatar,
@@ -233,6 +232,7 @@ import TermsAndCond from "../profilePage/TermsAndCond";
 import PrivacyPolicy from "../profilePage/PrivacyPolicy";
 import { useSession } from "@/app/ctx";
 import { AirbnbRating } from "react-native-ratings";
+import AvatarImg from "../../assets/images/c1.jpg";
 
 const Stack = createStackNavigator();
 
@@ -296,7 +296,9 @@ const HomeProfile = ({ navigation = { navigate: () => {} } }) => {
           <Card.Title
             title={`Hey, ${username}`}
             subtitle="Complete your profile here"
-            left={(props) => <Avatar.Icon {...props} icon="account" />}
+            left={(props) => (
+              <Avatar.Image {...props} source={AvatarImg} size={40} />
+            )}
           />
         </TouchableOpacity>
       </Card>

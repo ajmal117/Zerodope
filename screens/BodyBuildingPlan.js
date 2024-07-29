@@ -337,7 +337,13 @@
 //   },
 // });
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableHighlight,
+} from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
@@ -449,7 +455,11 @@ const BodyBuildingPlan = () => {
           There is no Body Building plan for you right now. Please contact your
           Body Building planner.
         </Text>
-        <Button mode="contained" onPress={() => navigation.navigate("BookNow")}>
+        <Button
+          mode="contained"
+          onPress={() => navigation.navigate("BookNow")}
+          style={styles.bookNowButton}
+        >
           BOOK NOW
         </Button>
       </View>
@@ -458,34 +468,39 @@ const BodyBuildingPlan = () => {
 
   const renderDayButton = ({ item, index }) => (
     <View style={styles.buttonWrapper} key={index}>
-      <Button
-        mode="contained"
+      <TouchableHighlight
+        style={styles.touchableHighlight}
+        underlayColor="#ffd700" // Yellowish active state color
         onPress={() =>
           navigation.navigate("BodyBuildData", {
             day: item,
             data: data[item],
           })
         }
-        style={styles.button}
       >
-        <View style={styles.buttonContent}>
-          <Text style={styles.buttonText}>Day {index + 1} -</Text>
-          {data[item] && (
-            <Text style={styles.exerciseName}>{data[item].ExerciseName}</Text>
-          )}
-          <MaterialCommunityIcons
-            name="chevron-right"
-            size={20}
-            color={colors.text}
-            style={styles.downArrow}
-          />
+        <View style={styles.button}>
+          <View style={styles.buttonContent}>
+            <Text style={styles.buttonText}>Day {index + 1} -</Text>
+            {data[item] && (
+              <Text style={styles.exerciseName}>{data[item].ExerciseName}</Text>
+            )}
+            <MaterialCommunityIcons
+              name="chevron-right"
+              size={20}
+              color={colors.text}
+              style={styles.downArrow}
+            />
+          </View>
         </View>
-      </Button>
+      </TouchableHighlight>
     </View>
   );
 
   return (
     <View style={styles.container}>
+      <Text style={styles.heading}>
+        Select your day and get ready to crush it!
+      </Text>
       <View style={styles.headerContainer}>
         <FlatList
           data={days}
@@ -504,6 +519,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingHorizontal: 10,
   },
+  heading: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 15,
+    color: "#000",
+  },
+  bookNowButton: {
+    backgroundColor: "#FAB917",
+  },
   headerContainer: {
     justifyContent: "center",
     alignItems: "center",
@@ -514,26 +539,29 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: "100%",
   },
+  touchableHighlight: {
+    borderRadius: 10,
+  },
   button: {
     backgroundColor: "white",
     borderColor: "black",
     borderWidth: 2,
     justifyContent: "center",
-    height: 70,
+    height: 50,
+    borderRadius: 10,
   },
   buttonContent: {
     flexDirection: "row",
     alignItems: "center",
-    // justifyContent: "space-between",
     paddingHorizontal: 10,
   },
   buttonText: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
     paddingHorizontal: 10,
   },
   exerciseName: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "semibold",
     marginTop: 1,
     paddingHorizontal: 6,
@@ -541,7 +569,7 @@ const styles = StyleSheet.create({
   buttonList: {
     width: "100%",
   },
-  downArrow: { marginTop: 5, paddingHorizontal: 10 },
+  downArrow: { marginTop: 1, paddingHorizontal: 10 },
   noPlanContainer: {
     justifyContent: "center",
     alignItems: "center",

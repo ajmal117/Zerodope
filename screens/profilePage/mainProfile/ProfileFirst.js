@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
-import { Button, IconButton } from "react-native-paper";
+import { Button, IconButton, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { ProfileContext } from "./ProfileContext";
-import avatar from "../../../assets/images/avtar.jpg";
+import avatar from "../../../assets/images/c1.jpg";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const ProfileFirst = () => {
   const navigation = useNavigation();
+  const { colors } = useTheme();
   const { profile } = useContext(ProfileContext);
 
   return (
@@ -28,9 +30,15 @@ const ProfileFirst = () => {
       <Button
         mode="contained"
         onPress={() => navigation.navigate("EditProfile")}
-        style={styles.editButton}
+        style={styles.button}
       >
-        Edit Profile
+        <Text style={styles.editButton}>Edit Profile </Text>
+        <MaterialCommunityIcons
+          name="chevron-right"
+          size={17}
+          color={colors.text}
+          style={styles.downArrow}
+        />
       </Button>
     </View>
   );
@@ -70,8 +78,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   editButton: {
-    marginTop: 20,
+    fontSize: 16,
+    marginTop: 15,
+    backgroundColor: "#FAB917",
+    // backgroundColor: "black",
   },
+  button: {
+    backgroundColor: "#FAB917",
+  },
+  downArrow: {},
 });
 
 export default ProfileFirst;

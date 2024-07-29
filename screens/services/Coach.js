@@ -1,13 +1,23 @@
 import * as React from "react";
 import { View, ScrollView, Image, StyleSheet } from "react-native";
-import { Button, Text, Card, Title, Paragraph, List } from "react-native-paper";
+import {
+  Button,
+  Text,
+  Card,
+  Title,
+  Paragraph,
+  List,
+  useTheme,
+} from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import CoachDetails from "../services/coachDetails/CoachDetails";
 import coachPic from "../../assets/images/coach.jpg";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const Stack = createStackNavigator();
 
 const CoachScreen = ({ navigation }) => {
+  const { colors } = useTheme();
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -63,7 +73,13 @@ const CoachScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("CoachDetails")}
             style={styles.viewCoachesButton}
           >
-            View Coaches
+            <Text style={styles.buttonText}>View Coaches</Text>
+            <MaterialCommunityIcons
+              name="chevron-right"
+              size={16}
+              color={colors.text}
+              style={styles.downArrow}
+            />
           </Button>
         </Card.Actions>
       </Card>
@@ -103,7 +119,13 @@ const CoachScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("CoachDetails")}
             style={styles.viewCoachesButton}
           >
-            View Coaches
+            <Text style={styles.buttonText}>View Coaches</Text>
+            <MaterialCommunityIcons
+              name="chevron-right"
+              size={16}
+              color={colors.text}
+              style={styles.downArrow}
+            />
           </Button>
         </Card.Actions>
       </Card>
@@ -119,10 +141,7 @@ const Coach = () => {
         component={CoachScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="CoachDetails"
-        component={CoachDetails}
-      />
+      <Stack.Screen name="CoachDetails" component={CoachDetails} />
     </Stack.Navigator>
   );
 };
@@ -153,8 +172,19 @@ const styles = StyleSheet.create({
     paddingBottom: 35,
   },
   viewCoachesButton: {
-    marginTop: 1,
-    backgroundColor: "green",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FAB917",
+  },
+
+  buttonText: {
+    fontSize: 17,
+    backgroundColor: "#FAB917",
+    color: "white",
+  },
+  downArrow: {
+    padding: 30,
   },
 });
 

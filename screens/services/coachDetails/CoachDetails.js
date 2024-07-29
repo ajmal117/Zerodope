@@ -130,7 +130,8 @@ const styles = StyleSheet.create({
   },
   filterButton: {
     margin: 16,
-    backgroundColor: "#6200ee",
+    // backgroundColor: "#6200ee",
+    backgroundColor: "#FAB917",
   },
 });
 

@@ -134,7 +134,7 @@ const EditProfileScreen = () => {
           />
         ))}
       </View>
-      <Button mode="contained" onPress={handleSave}>
+      <Button mode="contained" onPress={handleSave} style={styles.button}>
         Save Changes
       </Button>
     </ScrollView>
@@ -160,6 +160,9 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 22,
     fontWeight: "bold",
+  },
+  button: {
+    backgroundColor: "#FAB917",
   },
 });
 

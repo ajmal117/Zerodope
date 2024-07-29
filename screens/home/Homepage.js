@@ -63,7 +63,7 @@ const Homepage = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
           <Avatar.Image
             size={40}
-            source={require("../../assets/images/gyma.jpg")}
+            source={require("../../assets/images/c1.jpg")}
             style={{ marginRight: 6 }}
           />
         </TouchableOpacity>

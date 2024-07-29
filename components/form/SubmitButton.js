@@ -4,9 +4,7 @@ import React from "react";
 const SubmitButton = ({ handleSubmit, btnTitle, loading }) => {
   return (
     <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit}>
-      <Text
-        style={styles.btnText}
-      >
+      <Text style={styles.btnText}>
         {loading ? "Please Wait..." : btnTitle}
       </Text>
     </TouchableOpacity>
@@ -15,7 +13,8 @@ const SubmitButton = ({ handleSubmit, btnTitle, loading }) => {
 
 const styles = StyleSheet.create({
   submitBtn: {
-    backgroundColor: "#11a664",
+    // backgroundColor: "#11a664",
+    backgroundColor: "#FAB917",
     height: 40,
     // marginHorizontal: 25,
     borderRadius: 8,

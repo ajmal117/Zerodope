@@ -115,7 +115,11 @@ const Bplan = () => {
           There is no workout plan for you right now. Please contact your
           Workout Planner.
         </Text>
-        <Button mode="contained" onPress={() => navigation.navigate("BookNow")}>
+        <Button
+          mode="contained"
+          onPress={() => navigation.navigate("BookNow")}
+          style={styles.bookNowButton}
+        >
           BOOK NOW
         </Button>
       </View>
@@ -308,5 +312,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     marginBottom: 20,
+  },
+  bookNowButton: {
+    backgroundColor: "#FAB917",
   },
 });
