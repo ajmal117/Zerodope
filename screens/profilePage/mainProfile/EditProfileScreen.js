@@ -119,7 +119,6 @@ const EditProfileScreen = () => {
           onChangeText={(text) => handleChange("country", text)}
           style={styles.input}
         />
-        {/* Render interests */}
         {formData.interests.map((interest, index) => (
           <PaperTextInput
             key={index}

@@ -13,6 +13,7 @@ import Profile from "@/screens/profile/Profile";
 import BodyBuildingPlan from "../screens/BodyBuildingPlan";
 import FreeSupport from "../screens/consultPlan/FreeSupport";
 import BookNow from "../screens/booknow/BookNow";
+import BodyBuildData from "../screens/bodyBuild/BodyBuildData";
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -95,6 +96,18 @@ const App = () => {
         component={BookNow}
         options={{
           // title: "Free Support",
+          // headerShown: false,
+          // headerStyle: {
+          backgroundColor: "#000",
+          // },
+          // headerTintColor: "white",
+        }}
+      />
+      <Stack.Screen
+        name="BodyBuildData"
+        component={BodyBuildData}
+        options={{
+          title: "Body Building Data",
           // headerShown: false,
           // headerStyle: {
           backgroundColor: "#000",

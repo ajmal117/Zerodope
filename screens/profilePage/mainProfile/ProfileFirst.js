@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ProfileContext } from "./ProfileContext";
 import avatar from "../../../assets/images/avtar.jpg";
 
-const ProfileScreen = () => {
+const ProfileFirst = () => {
   const navigation = useNavigation();
   const { profile } = useContext(ProfileContext);
 
@@ -13,7 +13,6 @@ const ProfileScreen = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <IconButton icon="arrow-left" onPress={() => navigation.goBack()} />
-        {/* <Text style={styles.headerText}>{profile.name}</Text> */}
       </View>
       <View style={styles.profileImageContainer}>
         <Image
@@ -49,10 +48,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
-  headerText: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
   profileImageContainer: {
     marginVertical: 20,
   },
@@ -79,4 +74,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+export default ProfileFirst;
