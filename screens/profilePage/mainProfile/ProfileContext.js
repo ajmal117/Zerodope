@@ -28,10 +28,12 @@ export const ProfileProvider = ({ children }) => {
       try {
         const id = await SecureStore.getItemAsync("userid");
         const name = await SecureStore.getItemAsync("username");
+        const email = await SecureStore.getItemAsync("email");
         setProfile((prevProfile) => ({
           ...prevProfile,
           id: id || prevProfile.id,
           name: name || prevProfile.name,
+          email: email || prevProfile.email,
         }));
       } catch (error) {
         console.error("Error retrieving user ID or username:", error);

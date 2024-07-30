@@ -336,6 +336,7 @@
 //     flexGrow: 1,
 //   },
 // });
+
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -470,7 +471,7 @@ const BodyBuildingPlan = () => {
     <View style={styles.buttonWrapper} key={index}>
       <TouchableHighlight
         style={styles.touchableHighlight}
-        underlayColor="#ffd700" // Yellowish active state color
+        // underlayColor="#ffd700" // Yellowish active state color
         onPress={() =>
           navigation.navigate("BodyBuildData", {
             day: item,
@@ -518,6 +519,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     paddingHorizontal: 10,
+    // paddingTop:4
   },
   heading: {
     fontSize: 18,
@@ -543,24 +545,28 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   button: {
-    backgroundColor: "white",
+    // backgroundColor: "white",
+    backgroundColor: "#FAB917",
     borderColor: "black",
-    borderWidth: 2,
+    borderWidth: 1,
     justifyContent: "center",
     height: 50,
     borderRadius: 10,
   },
   buttonContent: {
+    color: "white",
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 10,
   },
   buttonText: {
+    color: "white",
     fontSize: 16,
     fontWeight: "bold",
     paddingHorizontal: 10,
   },
   exerciseName: {
+    color: "white",
     fontSize: 16,
     fontWeight: "semibold",
     marginTop: 1,
@@ -569,7 +575,7 @@ const styles = StyleSheet.create({
   buttonList: {
     width: "100%",
   },
-  downArrow: { marginTop: 1, paddingHorizontal: 10 },
+  downArrow: { marginTop: 1, paddingHorizontal: 10, color: "white" },
   noPlanContainer: {
     justifyContent: "center",
     alignItems: "center",

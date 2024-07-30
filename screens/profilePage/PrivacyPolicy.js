@@ -90,5 +90,6 @@ const styles = StyleSheet.create({
   },
   para: {
     color: "black",
+    fontSize: 16,
   },
 });

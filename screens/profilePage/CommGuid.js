@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     color: "#333", // Dark text color
+    fontSize: 16,
   },
 });
 

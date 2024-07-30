@@ -6,7 +6,7 @@ import index from "./index"; // Replace with your actual screen component
 // import Chat from "../../../screens/services/Chat";
 import Notification from "../../../screens/services/Notifications";
 import Coach from "../../../screens/services/Coach";
-import Tools from "../../../screens/services/Tools";
+import Settings from "../../../screens/services/Settings";
 
 const Tab = createBottomTabNavigator();
 
@@ -62,10 +62,10 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="tools"
-        component={Tools}
+        name="Settings"
+        component={Settings}
         options={{
-          tabBarLabel: "Tools",
+          tabBarLabel: "Settings",
           tabBarIcon: ({ color, size }) => (
             <Icon source="bag-personal-outline" color={color} size={size} />
           ),

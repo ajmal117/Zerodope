@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
   message: {
     // color: "#fff", // Assuming white text color
     textAlign: "center",
+    fontSize: 16,
   },
 });
 

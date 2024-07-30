@@ -20,7 +20,7 @@ const CoachDetails = () => {
       level: "Starter",
     },
     {
-      name: "Varsha",
+      name: "Ramanuj",
       image: require("../../../assets/images/c2.jpg"),
       rating: 5,
       coachedPeople: 461,

@@ -141,7 +141,7 @@ const BodyBuildData = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image
         source={require("../../assets/images/gymi.jpg")}
         style={styles.headerImage}
@@ -151,7 +151,7 @@ const BodyBuildData = () => {
         Workouts Included:{" "}
         <Text style={styles.exerciseName}>{data.ExerciseName}</Text>
       </Text>
-      <ScrollView style={styles.scrollContainer}>
+      <View style={styles.scrollContainer}>
         <View style={styles.workoutContainer}>
           {data.sets.map((exercise, index) => (
             <View key={index} style={styles.workoutItem}>
@@ -167,8 +167,8 @@ const BodyBuildData = () => {
             </View>
           ))}
         </View>
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
 

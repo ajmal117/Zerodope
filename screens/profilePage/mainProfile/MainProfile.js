@@ -7,14 +7,16 @@ import EditProfileScreen from "./EditProfileScreen";
 
 const Stack = createStackNavigator();
 
-export default function App() {
+export default function MainProfile() {
   return (
-      <ProfileProvider>
-        <Stack.Navigator initialRouteName="Profile" screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Profile" component={ProfileFirst} />
-          <Stack.Screen name="EditProfile" component={EditProfileScreen} />
-        </Stack.Navigator>
-      </ProfileProvider>
-
+    <ProfileProvider>
+      <Stack.Navigator
+        initialRouteName="Profile"
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name="Profile" component={ProfileFirst} />
+        <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+      </Stack.Navigator>
+    </ProfileProvider>
   );
 }

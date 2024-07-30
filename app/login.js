@@ -71,6 +71,7 @@ const Login = () => {
       await saveToSecureStore("token", jwt);
       await saveToSecureStore("username", user.username);
       await saveToSecureStore("userid", String(user.id)); // Convert user.id to string
+      await saveToSecureStore("email", user.email); // Convert user.id to string
 
       signIn();
 
@@ -185,7 +186,6 @@ const styles = StyleSheet.create({
   linkText: {
     textAlign: "center",
     marginVertical: 4,
-    
   },
   link1: {
     fontSize: 16,
