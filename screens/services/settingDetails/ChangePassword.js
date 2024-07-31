@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 20,
     paddingHorizontal: 10,
-    paddingVertical: 10,
+    // paddingVertical: 10,
   },
   input: {
     flex: 1,
@@ -172,11 +172,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
     paddingVertical: 10,
+    height: 40,
   },
   buttonText: {
     color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 20,
+    fontWeight: "400",
   },
 });
 
