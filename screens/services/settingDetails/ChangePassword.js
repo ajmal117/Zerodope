@@ -5,10 +5,14 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import axios from "axios";
+import * as SecureStore from "expo-secure-store";
+import { useNavigation } from "@react-navigation/native";
 
-const ResetPassword = () => {
+const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -16,21 +20,51 @@ const ResetPassword = () => {
   const [hideNewPassword, setHideNewPassword] = useState(true);
   const [hideConfirmNewPassword, setHideConfirmNewPassword] = useState(true);
 
+  const navigation = useNavigation();
+
   const togglePasswordVisibility = (setter) => {
     setter((prevState) => !prevState);
   };
 
-  const handleSubmit = () => {
-    // Handle password change submission logic here
-    console.log("Old Password:", oldPassword);
-    console.log("New Password:", newPassword);
-    console.log("Confirm New Password:", confirmNewPassword);
+  const handleSubmit = async () => {
+    if (newPassword !== confirmNewPassword) {
+      Alert.alert("Error", "New passwords do not match");
+      return;
+    }
+
+    try {
+      const token = await SecureStore.getItemAsync("token");
+      const response = await axios.post(
+        "https://beta.zerodope.in/api/auth/change-password",
+        {
+          password: newPassword,
+          currentPassword: oldPassword,
+          passwordConfirmation: confirmNewPassword,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Include the token in the request headers
+          },
+        }
+      );
+      console.log("Response:", response.data);
+
+      if (response.status === 200) {
+        Alert.alert("Success", "Password has been changed successfully");
+        navigation.goBack(); // Navigate to the previous screen
+      } else {
+        Alert.alert("Error", response.data.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      Alert.alert("Error", "Failed to change password");
+    }
   };
 
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.title}>Change Password</Text> */}
-
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -134,7 +168,6 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   button: {
-    // backgroundColor: "#00b894",
     backgroundColor: "#FAB917",
     borderRadius: 5,
     alignItems: "center",
@@ -147,4 +180,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ResetPassword;
+export default ChangePassword;

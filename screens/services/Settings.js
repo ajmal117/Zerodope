@@ -100,7 +100,7 @@ import {
 import { Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import AvatarImg from "../../assets/images/c1.jpg"; // replace with your image path
 import MainProfile from "../profilePage/mainProfile/MainProfile";
-import ResetPassword from "../services/settingDetails/ResetPassword";
+import ChangePassword from "./settingDetails/ChangePassword";
 import Privacy from "../services/settingDetails/Privacy";
 import Acount from "../services/settingDetails/Acount";
 import BlockedUser from "../services/settingDetails/BlockedUser";
@@ -157,10 +157,10 @@ const SettingScreen = ({ navigation }) => {
       </TouchableOpacity> */}
       <TouchableOpacity
         style={styles.menuItem}
-        onPress={() => navigation.navigate("ResetPassword")}
+        onPress={() => navigation.navigate("ChangePassword")}
       >
         <Ionicons name="key" size={24} color="orange" />
-        <Text style={styles.menuText}>Reset Password</Text>
+        <Text style={styles.menuText}>Change Password</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.menuItem}
@@ -183,10 +183,10 @@ const SettingScreen = ({ navigation }) => {
         <Ionicons name="notifications" size={24} color="blue" />
         <Text style={styles.menuText}>Notifications</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.menuItem}>
+      {/* <TouchableOpacity style={styles.menuItem}>
         <MaterialIcons name="location-on" size={24} color="green" />
         <Text style={styles.menuText}>Location Access</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity
         style={styles.menuItem}
         onPress={() => navigation.navigate("BlockedUser")}
@@ -211,9 +211,13 @@ const Settings = () => {
         component={MainProfile}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="ResetPassword" component={ResetPassword} options={{
-          title: "Reset Password",
-        }} />
+      <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}
+        options={{
+          title: "Change Password",
+        }}
+      />
       <Stack.Screen name="Privacy" component={Privacy} />
       <Stack.Screen name="Acount" component={Acount} />
       <Stack.Screen
