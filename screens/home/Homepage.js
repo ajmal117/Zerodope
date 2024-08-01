@@ -221,17 +221,23 @@
 
 //final compon
 import React, { useEffect, useState, useRef } from "react";
-import { View, Text, StyleSheet, ScrollView, Animated } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Animated,
+  TouchableOpacity,
+} from "react-native";
 import { Avatar, Appbar, Snackbar } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import * as SecureStore from "expo-secure-store";
 import BookNow from "../booknow/BookNow";
 
 const Stack = createStackNavigator();
 
 const Homepage = ({ navigation }) => {
-  const [paid, setPaid] = useState(false);
+  const [paid, setPaid] = useState(true);
   const [visible2, setVisible2] = useState(false);
   const [username, setUsername] = useState("");
   const [todayDate, setTodayDate] = useState("");
@@ -278,7 +284,7 @@ const Homepage = ({ navigation }) => {
   const activities = [
     {
       name: "Consultation Scheduling",
-      icon: "📅", // Calendar for scheduling
+      icon: "📅",
       text: "Free Diet Plan, Free Workout Plan",
       color: "#F4DDFD",
       component: "ConsultSchedule",
@@ -302,54 +308,62 @@ const Homepage = ({ navigation }) => {
     },
     {
       name: "Diet Plan",
-      icon: "🍎", // Apple for diet plan
+      icon: "🍎",
       text: "Audio, Video & Text",
       color: "#FDEEC7",
       component: "DietPlan",
     },
     {
       name: "Body Building",
-      icon: "🏋️", // Weightlifter for BodyBuild
+      icon: "🏋️",
       text: "Audio, Video & Text",
       color: "#BBDEFB",
       component: "BodyBuild",
     },
   ];
 
-  const ActivityCard = ({ activity, index, navigation }) => (
-    <TouchableOpacity
-      style={{ flex: 1 }}
-      onPress={() => navigation.navigate(activity.component)}
-    >
-      <Animated.View
-        style={[
-          styles.card,
-          { backgroundColor: activity.color },
-          index === 1 && { transform: [{ scale: scaleAnim }] },
-        ]}
-      >
-        <Text style={styles.icon}>{activity.icon}</Text>
-        <Text style={styles.title}>{activity.name}</Text>
-        <Text style={styles.text}>{activity.text}</Text>
-        <Text
+  const ActivityCard = ({ activity, index, navigation, paid }) => {
+    const handlePress = () => {
+      if (activity.name === "Free Support") {
+        navigation.navigate("FreeSupport");
+      } else {
+        const destination = paid ? activity.component : "BookNow";
+        navigation.navigate(destination);
+      }
+    };
+
+    return (
+      <TouchableOpacity style={{ flex: 1 }} onPress={handlePress}>
+        <Animated.View
           style={[
-            styles.bookNowText,
-            activity.name === "Free Support"
-              ? { color: "green" }
-              : !paid
-              ? { color: "red" }
-              : { color: "green" },
+            styles.card,
+            { backgroundColor: activity.color },
+            index === 1 && { transform: [{ scale: scaleAnim }] },
           ]}
         >
-          {activity.name === "Free Support"
-            ? "Open Now"
-            : paid
-            ? "Open Now"
-            : "Book Now"}
-        </Text>
-      </Animated.View>
-    </TouchableOpacity>
-  );
+          <Text style={styles.icon}>{activity.icon}</Text>
+          <Text style={styles.title}>{activity.name}</Text>
+          <Text style={styles.text}>{activity.text}</Text>
+          <Text
+            style={[
+              styles.bookNowText,
+              activity.name === "Free Support"
+                ? { color: "green" }
+                : !paid
+                ? { color: "red" }
+                : { color: "green" },
+            ]}
+          >
+            {activity.name === "Free Support"
+              ? "Open Now"
+              : paid
+              ? "Open Now"
+              : "Book Now"}
+          </Text>
+        </Animated.View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -381,6 +395,7 @@ const Homepage = ({ navigation }) => {
               activity={activity}
               index={index}
               navigation={navigation}
+              paid={paid} // Pass the paid state
             />
           ))}
         </ScrollView>
@@ -394,6 +409,7 @@ const Homepage = ({ navigation }) => {
               activity={activity}
               index={index}
               navigation={navigation}
+              paid={paid} // Pass the paid state
             />
           ))}
         </View>
@@ -440,29 +456,28 @@ const styles = StyleSheet.create({
   headerContent: {
     flex: 1,
     justifyContent: "center",
-    // alignItems: "center",
     marginLeft: 3,
-    marginTop: 10,
+    marginTop: 12,
   },
   dateText: {
     fontSize: 12,
     color: "#888",
-    marginBottom: 13,
+    marginBottom: 8,
   },
   content: {
-    paddingHorizontal: 7,
+    paddingLeft: 15,
     paddingVertical: 20,
   },
   headTitleSection: {
-    borderColor: "#333", // Color of the border
-    width: "100%", // Ensure it takes the full width
+    borderColor: "#333",
+    width: "100%",
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
     color: "#333",
-    paddingVertical: 2, // Optional: Add some padding for better spacing
-    paddingHorizontal: 7, // Optional: Add horizontal padding
+    paddingVertical: 2,
+    paddingHorizontal: 3,
   },
   activitiesContainer: {
     flexDirection: "row",
@@ -476,7 +491,7 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     marginVertical: 15,
-    paddingHorizontal: 6,
+    paddingHorizontal: 7,
     paddingVertical: 15,
     borderRadius: 10,
     width: "86%",
@@ -502,7 +517,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 14,
     fontWeight: "bold",
-    color: "#000", // Default color for "Open Now"
+    color: "#000",
   },
 });
 
