@@ -228,19 +228,24 @@ import {
   ScrollView,
   Animated,
   TouchableOpacity,
+  Dimensions,
+  ActivityIndicator,
 } from "react-native";
 import { Avatar, Appbar, Snackbar } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as SecureStore from "expo-secure-store";
+import { Video } from "expo-av";
 import BookNow from "../booknow/BookNow";
 
 const Stack = createStackNavigator();
+const { width } = Dimensions.get("window");
 
 const Homepage = ({ navigation }) => {
   const [paid, setPaid] = useState(true);
   const [visible2, setVisible2] = useState(false);
   const [username, setUsername] = useState("");
   const [todayDate, setTodayDate] = useState("");
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   const onToggleSnackBar2 = () => setVisible2(!visible2);
   const onDismissSnackBar2 = () => setVisible2(false);
@@ -322,6 +327,17 @@ const Homepage = ({ navigation }) => {
     },
   ];
 
+  const videos = [
+    {
+      uri: require("../../assets/videos/fit1.mp4"),
+      color: "#E8F5E9",
+    },
+    {
+      uri: require("../../assets/videos/fitness.mp4"),
+      color: "#FDEEC7",
+    },
+  ];
+
   const ActivityCard = ({ activity, index, navigation, paid }) => {
     const handlePress = () => {
       if (activity.name === "Free Support") {
@@ -362,6 +378,26 @@ const Homepage = ({ navigation }) => {
           </Text>
         </Animated.View>
       </TouchableOpacity>
+    );
+  };
+
+  const VideoCard = ({ video }) => {
+    return (
+      <View style={[styles.videoCard, { backgroundColor: video.color }]}>
+        {!videoLoaded && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        )}
+        <Video
+          source={video.uri}
+          style={styles.video}
+          resizeMode="cover"
+          isLooping
+          shouldPlay
+          onLoad={() => setVideoLoaded(true)}
+        />
+      </View>
     );
   };
 
@@ -413,6 +449,14 @@ const Homepage = ({ navigation }) => {
             />
           ))}
         </View>
+        <View style={styles.headTitleSection}>
+          <Text style={styles.sectionTitle}>Videos</Text>
+        </View>
+        <ScrollView horizontal style={styles.videoContainer}>
+          {videos.map((video, index) => (
+            <VideoCard key={index} video={video} />
+          ))}
+        </ScrollView>
       </ScrollView>
       <Snackbar
         visible={visible2}
@@ -451,7 +495,7 @@ const styles = StyleSheet.create({
   },
   appbarTitle: {
     fontSize: 22,
-    fontWeight: "600",
+    fontWeight: "700",
   },
   headerContent: {
     flex: 1,
@@ -518,6 +562,28 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     color: "#000",
+  },
+  videoContainer: {
+    flexDirection: "row",
+    marginVertical: 4,
+    paddingVertical: 10,
+  },
+  videoCard: {
+    width: width * 0.8,
+    height: 200,
+    borderRadius: 10,
+    overflow: "hidden",
+    marginRight: 10,
+  },
+  video: {
+    width: "100%",
+    height: "100%",
+  },
+  loadingContainer: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
   },
 });
 
