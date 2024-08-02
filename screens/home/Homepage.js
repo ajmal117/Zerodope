@@ -249,7 +249,6 @@ const Homepage = ({ navigation }) => {
 
   const onToggleSnackBar2 = () => setVisible2(!visible2);
   const onDismissSnackBar2 = () => setVisible2(false);
-
   useEffect(() => {
     const getName = async () => {
       try {
@@ -261,9 +260,25 @@ const Homepage = ({ navigation }) => {
     };
     getName();
 
-    // Set today's date
+    // Set today's date in Indian format (day month)
     const today = new Date();
-    const formattedDate = today.toLocaleDateString(); // Change format as needed
+    const day = today.getDate();
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const month = monthNames[today.getMonth()];
+    const formattedDate = `${day} ${month}`;
     setTodayDate(formattedDate);
   }, []);
 
