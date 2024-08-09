@@ -235,6 +235,7 @@ import * as SecureStore from "expo-secure-store";
 import BookNow from "../booknow/BookNow";
 import VideoCard from "./VideoCard/VideoCard";
 import { videos } from "./VideoCard/videos"; // Correctly import the videos array
+import PromoCard from "./promo/PromoCard";
 
 const Stack = createStackNavigator();
 
@@ -403,6 +404,7 @@ const Homepage = ({ navigation }) => {
         <Appbar.Action icon="magnify" onPress={onToggleSnackBar2} />
       </Appbar.Header>
       <ScrollView contentContainerStyle={styles.content}>
+        <PromoCard />
         <View style={styles.headTitleSection}>
           <Text style={styles.sectionTitle}>Your Activities</Text>
         </View>
@@ -498,6 +500,7 @@ const styles = StyleSheet.create({
   headTitleSection: {
     borderColor: "#333",
     width: "100%",
+    marginTop: 10,
   },
   sectionTitle: {
     fontSize: 18,
@@ -550,8 +553,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginVertical: 4,
     paddingVertical: 10,
+    // backgroundColor: "white",
     // backgroundColor: "#F5F5F5", // Light background color
     borderRadius: 14,
+    // padding:14
     // paddingLeft: 15, // Added padding to align with other sections
   },
 });

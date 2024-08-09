@@ -25,7 +25,7 @@ const VideoCard = ({ video }) => {
     <View style={[styles.videoCard]}>
       {!videoLoaded && (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#0000ff" />
+          {/* <ActivityIndicator size="large" color="#0000ff" /> */}
         </View>
       )}
       <Video
@@ -72,16 +72,16 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     overflow: "hidden",
     marginRight: 10,
-    backgroundColor: "#fff",
-    borderBottomWidth: 3,
-    marginHorizontal: 10,
-    // Shadow properties for iOS
-    shadowColor: "#000",
-    shadowOffset: { width: -5, height: 5 }, // Left shadow with slight vertical offset
-    shadowOpacity: 0.7, // Visible shadow
-    shadowRadius: 3, // Soft shadow edges
-    // Elevation for Android
-    elevation: 5, // Elevated shadow on Android
+    // backgroundColor:'white',
+    // borderBottomWidth: 3,
+    paddingLeft: 7,
+    paddingBottom: 10,
+    // Adjusted shadow properties
+    shadowColor: "#FAB917",
+    shadowOffset: { width: -5, height: 5 }, // Shadow evenly around the card
+    shadowOpacity: 0.4, // Reduce opacity for a softer shadow
+    shadowRadius: 15, // Increase radius for a smoother shadow
+    elevation: 6, // Slightly increase elevation for a more pronounced shadow on Android
   },
   video: {
     width: "100%",
@@ -96,14 +96,15 @@ const styles = StyleSheet.create({
   },
   videoOverlay: {
     position: "absolute",
-    bottom: 50,
-    left: 10,
-    right: 10,
+    bottom: 62,
+    left: 14,
+    right: 20,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
   videoTitle: {
+    borderRadius: 15,
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
@@ -117,13 +118,17 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   videoBottomTitle: {
+    marginTop: 2,
+    // borderRadius: 15,
+    borderEndEndRadius: 15,
+    borderEndStartRadius: 15,
     bottom: 0,
     width: "100%",
     paddingHorizontal: 10,
     paddingTop: 5,
     backgroundColor: "white",
-    borderTopWidth: 1,
-    borderTopColor: "#ddd",
+    // borderTopWidth: 1,
+    // borderTopColor: "white",
     flexDirection: "column",
     justifyContent: "space-between",
   },
