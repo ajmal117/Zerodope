@@ -222,6 +222,8 @@
 //final compon
 import React, { useEffect, useState, useRef } from "react";
 import {
+  Alert,
+  BackHandler,
   View,
   Text,
   StyleSheet,
@@ -279,6 +281,28 @@ const Homepage = ({ navigation }) => {
     const month = monthNames[today.getMonth()];
     const formattedDate = `${day} ${month}`;
     setTodayDate(formattedDate);
+  }, []);
+
+  useEffect(() => {
+    const backAction = () => {
+      // Optionally show an alert or just return true to prevent going back
+      Alert.alert("Hold on!", "Are you sure you want to exit?", [
+        {
+          text: "Cancel",
+          onPress: () => null,
+          style: "cancel",
+        },
+        { text: "YES", onPress: () => BackHandler.exitApp() },
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
   }, []);
 
   const scaleAnim = useRef(new Animated.Value(1)).current;
