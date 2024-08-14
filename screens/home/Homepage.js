@@ -238,6 +238,7 @@ import BookNow from "../booknow/BookNow";
 import VideoCard from "./VideoCard/VideoCard";
 import { videos } from "./VideoCard/videos"; // Correctly import the videos array
 import PromoCard from "./promo/PromoCard";
+import MediaPlayer from "./mediaplayer/MediaPlayer";
 
 const Stack = createStackNavigator();
 
@@ -486,6 +487,7 @@ const App = () => (
       options={{ headerShown: false }}
     />
     <Stack.Screen name="BookNow" component={BookNow} />
+    <Stack.Screen name="MediaPlayer" component={MediaPlayer} />
     {/* Add other screens here as needed */}
   </Stack.Navigator>
 );
