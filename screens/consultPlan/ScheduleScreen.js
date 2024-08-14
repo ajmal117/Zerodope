@@ -20,56 +20,10 @@ const ScheduleScreen = ({ route }) => {
     setSelectedDay(day);
     Alert.alert(
       "Consultation Scheduled",
-      `You have scheduled a consultation for ${plan} on ${day}.`
+      `You have scheduled an ${plan} on ${day}.`
     );
   };
 
-  const getToken = async () => {
-    try {
-      const token = await SecureStore.getItemAsync("token");
-      // const token = await AsyncStorage.getItem("token");
-      return token;
-    } catch (error) {
-      console.error("Error retrieving token:", error);
-    }
-  };
-
-  useEffect(() => {
-    const getData = async () => {
-      const token = await getToken();
-      console.log("Token:", token);
-      try {
-        const response = await axios.get(
-          "https://beta.zerodope.in/api/consultation-timings?filters[users_permissions_users].[id].[$eq]=1&populate=*",
-          {
-            headers: {
-              accept: "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const responseData = response.data;
-        console.log(
-          "Complete Response Data:",
-          JSON.stringify(responseData, null, 2)
-        );
-
-        // Access the nested data
-        if (responseData.data && responseData.data.length > 0) {
-          const fetchedData = responseData.data.map((item) => {
-            const { id, attributes } = item;
-            return { id, attributes };
-          });
-          console.log("Fetched Data:", JSON.stringify(fetchedData, null, 2));
-        } else {
-          console.log("No data found");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    getData();
-  }, []);
 
   return (
     <View style={styles.container}>

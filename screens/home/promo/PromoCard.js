@@ -3,10 +3,7 @@ import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 
 const { width } = Dimensions.get("window");
 
-const PromoCard = ({
-  offerDetail = "🔥 limited offer",
-  offerText = "30% Discount Before 31st",
-}) => {
+const PromoCard = ({ offerDetail, offerText }) => {
   return (
     <View style={styles.promoCardContainer}>
       <View style={styles.promoContent}>
