@@ -105,8 +105,6 @@
 
 // export default MainScreen;
 
-
-
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -119,7 +117,7 @@ const plans = [
     title: "Apointment",
     subtitle: "Free Diet Plan, Free Workout Plan",
     key: "apointment",
-    image: "../../assets/images/gyma.jpg",
+    image: require("../../assets/images/gyma1.jpg"),
   },
 ];
 
@@ -131,7 +129,8 @@ const MainScreen = () => {
       {plans.map((plan) => (
         <View key={plan.key} style={styles.card}>
           <Image
-            source={require("../../assets/images/gyma.jpg")}
+            // source={require("../../assets/images/gyma1.jpg")}
+            source={plan.image}
             style={styles.cardImage}
           />
           <View style={styles.cardContent}>
