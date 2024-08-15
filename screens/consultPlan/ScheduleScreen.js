@@ -25,6 +25,7 @@ const ScheduleScreen = ({ route }) => {
   };
 
 
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{plan}</Text>
