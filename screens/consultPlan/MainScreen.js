@@ -109,8 +109,8 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
-import axios from "axios";
-import * as SecureStore from "expo-secure-store";
+// import axios from "axios";
+// import * as SecureStore from "expo-secure-store";
 
 const plans = [
   {

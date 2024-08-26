@@ -5,7 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { useNavigation } from "@react-navigation/native";
-import { API_URL } from "@env";
+// import { API_URL } from "@env";
 
 const days = ["day1", "day2", "day3", "day4", "day5", "day6"];
 
@@ -61,7 +61,8 @@ const Bplan = () => {
       console.log("Token:", token);
       try {
         const response = await axios.get(
-          `${API_URL}/workout-plans?filters[users_permissions_users].[id].[$eq]=${id}&populate=*`,
+          `https://beta.zerodope.in/api/workout-plans?filters[users_permissions_users].[id].[$eq]=${id}&populate=*`,
+          // `${API_URL}/workout-plans?filters[users_permissions_users].[id].[$eq]=${id}&populate=*`,
           {
             headers: {
               accept: "application/json",

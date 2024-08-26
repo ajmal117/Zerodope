@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from "react";
 import {
   Alert,
@@ -21,6 +20,8 @@ import MediaPlayer from "./mediaplayer/MediaPlayer";
 import { activities } from "./activities/activities";
 import { customise } from "./customise/customise";
 import ActivityCard from "./activities/ActivityCard";
+import { useIsFocused } from "@react-navigation/native";
+
 // import Apointment from "./apointment/Apointment";
 
 const Stack = createStackNavigator();
@@ -31,6 +32,8 @@ const Homepage = ({ navigation }) => {
   const [visible2, setVisible2] = useState(false);
   const [username, setUsername] = useState("");
   const [todayDate, setTodayDate] = useState("");
+
+  const isFocused = useIsFocused(); // Hook to check if screen is focused
 
   const onToggleSnackBar2 = () => setVisible2(!visible2);
   const onDismissSnackBar2 = () => setVisible2(false);
@@ -68,18 +71,38 @@ const Homepage = ({ navigation }) => {
     setTodayDate(formattedDate);
   }, []);
 
+  // useEffect(() => {
+  //   const backAction = () => {
+  //     // Optionally show an alert or just return true to prevent going back
+  //     Alert.alert("Hold on!", "Are you sure you want to exit?", [
+  //       {
+  //         text: "Cancel",
+  //         onPress: () => null,
+  //         style: "cancel",
+  //       },
+  //       { text: "YES", onPress: () => BackHandler.exitApp() },
+  //     ]);
+  //     return true;
+  //   };
+
+  //   const backHandler = BackHandler.addEventListener(
+  //     "hardwareBackPress",
+  //     backAction
+  //   );
+
+  //   return () => backHandler.remove();
+  // }, []);
+
   useEffect(() => {
     const backAction = () => {
-      // Optionally show an alert or just return true to prevent going back
-      Alert.alert("Hold on!", "Are you sure you want to exit?", [
-        {
-          text: "Cancel",
-          onPress: () => null,
-          style: "cancel",
-        },
-        { text: "YES", onPress: () => BackHandler.exitApp() },
-      ]);
-      return true;
+      if (isFocused) {
+        Alert.alert("Hold on!", "Are you sure you want to exit?", [
+          { text: "Cancel", onPress: () => null, style: "cancel" },
+          { text: "YES", onPress: () => BackHandler.exitApp() },
+        ]);
+        return true; // Prevent default behavior
+      }
+      return false; // Allow default behavior if not focused
     };
 
     const backHandler = BackHandler.addEventListener(
@@ -87,8 +110,8 @@ const Homepage = ({ navigation }) => {
       backAction
     );
 
-    return () => backHandler.remove();
-  }, []);
+    return () => backHandler.remove(); // Clean up listener
+  }, [isFocused]);
 
   return (
     <View style={styles.container}>
