@@ -1,81 +1,3 @@
-// import React, { useState,useEffect } from "react";
-// import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
-// import axios from "axios";
-// import * as SecureStore from "expo-secure-store";
-
-// const days = [
-//   "Monday",
-//   "Tuesday",
-//   "Wednesday",
-//   "Thursday",
-//   "Friday",
-//   "Saturday",
-// ];
-
-// const ScheduleScreen = ({ route }) => {
-//   const { plan } = route.params;
-//   const [selectedDay, setSelectedDay] = useState(null);
-
-//   const handleDayPress = (day) => {
-//     setSelectedDay(day);
-//     Alert.alert(
-//       "Consultation Scheduled",
-//       `You have scheduled an ${plan} on ${day}.`
-//     );
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.title}>{plan}</Text>
-//       {days.map((day, index) => (
-//         <TouchableOpacity
-//           key={index}
-//           style={[
-//             styles.dayButton,
-//             selectedDay === day && styles.selectedDayButton,
-//           ]}
-//           onPress={() => handleDayPress(day)}
-//         >
-//           <Text style={styles.dayText}>{day}</Text>
-//         </TouchableOpacity>
-//       ))}
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: "center",
-//     alignItems: "center",
-//     backgroundColor: "#f8f9fa",
-//   },
-//   title: {
-//     fontSize: 24,
-//     marginBottom: 20,
-//   },
-//   dayButton: {
-//     backgroundColor: "#6c757d",
-//     padding: 15,
-//     margin: 5,
-//     borderRadius: 10,
-//     width: "70%",
-//     alignItems: "center",
-//   },
-//   selectedDayButton: {
-//     backgroundColor: "#28a745",
-//   },
-//   dayText: {
-//     color: "#fff",
-//     fontSize: 18,
-//   },
-// });
-
-// export default ScheduleScreen;
-
-
-
-
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -111,7 +33,6 @@ const ScheduleScreen = () => {
   }, []);
 
   const suggestTime = () => {
-    
     const currentMinute = moment().minute();
     const nextHalfHour = moment()
       .add(30 - (currentMinute % 30), "minutes")
@@ -147,6 +68,7 @@ const ScheduleScreen = () => {
       console.error("Error retrieving name:", error);
     }
   };
+
   const handlePostAppointment = async () => {
     const postData = {
       data: {
@@ -179,7 +101,6 @@ const ScheduleScreen = () => {
   };
 
   // Function to render time options in half-hour increments
-
   const renderTimeOptions = () => {
     const times = [];
     for (let i = 0; i < 24; i++) {
@@ -194,10 +115,15 @@ const ScheduleScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Date:</Text>
-      <Button
-        onPress={() => setShowDatePicker(true)}
-        title={moment(date).format("YYYY-MM-DD")}
-      />
+
+      {/* Add a View wrapper with custom styles */}
+      <View style={styles.dateButtonContainer}>
+        <Button
+          onPress={() => setShowDatePicker(true)}
+          title={moment(date).format("YYYY-MM-DD")}
+          // color="#000" // Optional: Set button text color
+        />
+      </View>
 
       {showDatePicker && (
         <DateTimePicker
@@ -281,6 +207,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 12,
     borderRadius: 4,
+    overflow: "hidden",
+  },
+  // Add new styles for the date button container
+  dateButtonContainer: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 4,
+    marginBottom: 12,
     overflow: "hidden",
   },
 });
