@@ -16,6 +16,7 @@ import BookNow from "../booknow/BookNow";
 import VideoCard from "./VideoCard/VideoCard";
 import { videos } from "./VideoCard/videos"; // Correctly import the videos array
 import PromoCard from "./promo/PromoCard";
+import AppointCard from "./promo/AppointCard";
 import MediaPlayer from "./mediaplayer/MediaPlayer";
 import { activities } from "./activities/activities";
 import { customise } from "./customise/customise";
@@ -71,28 +72,6 @@ const Homepage = ({ navigation }) => {
     setTodayDate(formattedDate);
   }, []);
 
-  // useEffect(() => {
-  //   const backAction = () => {
-  //     // Optionally show an alert or just return true to prevent going back
-  //     Alert.alert("Hold on!", "Are you sure you want to exit?", [
-  //       {
-  //         text: "Cancel",
-  //         onPress: () => null,
-  //         style: "cancel",
-  //       },
-  //       { text: "YES", onPress: () => BackHandler.exitApp() },
-  //     ]);
-  //     return true;
-  //   };
-
-  //   const backHandler = BackHandler.addEventListener(
-  //     "hardwareBackPress",
-  //     backAction
-  //   );
-
-  //   return () => backHandler.remove();
-  // }, []);
-
   useEffect(() => {
     const backAction = () => {
       if (isFocused) {
@@ -133,6 +112,7 @@ const Homepage = ({ navigation }) => {
         <Appbar.Action icon="magnify" onPress={onToggleSnackBar2} />
       </Appbar.Header>
       <ScrollView contentContainerStyle={styles.content}>
+        <AppointCard />
         <PromoCard
           offerDetail="🔥 limited offer"
           offerText="30% Discount Before 31st"
