@@ -23,7 +23,7 @@ import { customise } from "./customise/customise";
 import ActivityCard from "./activities/ActivityCard";
 import { useIsFocused } from "@react-navigation/native";
 
-// import Apointment from "./apointment/Apointment";
+import AppointUpdate from "../home/promo/AppointUpdate";
 
 const Stack = createStackNavigator();
 
@@ -175,7 +175,18 @@ const App = () => (
     />
     <Stack.Screen name="BookNow" component={BookNow} />
     <Stack.Screen name="MediaPlayer" component={MediaPlayer} />
-    {/* <Stack.Screen name="Apointment" component={Apointment} /> */}
+    <Stack.Screen
+      name="AppointUpdate"
+      component={AppointUpdate}
+      options={{
+        title: "Appointment Reschedule",
+        // headerShown: false,
+        // headerStyle: {
+        backgroundColor: "#000",
+        // },
+        // headerTintColor: "white",
+      }}
+    />
     {/* Add other screens here as needed */}
   </Stack.Navigator>
 );

@@ -83,8 +83,9 @@ const ScheduleScreen = () => {
 
     try {
       const token = await getToken();
+      const id = await getId()
       const response = await axios.post(
-        "https://beta.zerodope.in/api/appoints?filters[users_permissions_users].[id].[$eq]=2&populate=*",
+        `https://beta.zerodope.in/api/appoints?filters[users_permissions_users].[id].[$eq]=${id}&populate=*`,
         postData,
         {
           headers: {
@@ -157,13 +158,13 @@ const ScheduleScreen = () => {
         onChangeText={setZoomMeetingLink}
       />
 
-      <Text style={styles.label}>User (ID or name):</Text>
+      {/* <Text style={styles.label}>User (ID or name):</Text>
       <TextInput
         style={styles.input}
         placeholder="Enter user ID or name"
         value={user}
         onChangeText={setUser}
-      />
+      /> */}
 
       <TouchableOpacity style={styles.btn} onPress={handlePostAppointment}>
         <Text style={styles.btnText}>Post Appointment</Text>

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
+import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 
@@ -16,7 +17,8 @@ const AppointCard = () => {
   const [timeRemaining, setTimeRemaining] = useState("");
   const [appointmentTime, setAppointmentTime] = useState(null);
   const [zoomMeetingLink, setZoomMeetingLink] = useState("");
-  const [isCardVisible, setIsCardVisible] = useState(true); // New state to control visibility
+  const [isCardVisible, setIsCardVisible] = useState(true);
+  const navigation = useNavigation();
 
   const getToken = async () => {
     try {
@@ -62,15 +64,15 @@ const AppointCard = () => {
 
             setAppointmentTime(appointmentDateTime.toISOString());
             setZoomMeetingLink(appointmentData.zoomMeetingLink);
-            setIsCardVisible(true); // Show the card when appointment data is found
+            setIsCardVisible(true);
           } else {
             console.log("No appointment data found.");
-            setIsCardVisible(false); // Hide the card if no data is found
+            setIsCardVisible(false);
           }
         }
       } catch (error) {
         console.error("Error fetching appointment data:", error);
-        setIsCardVisible(false); // Hide the card if an error occurs
+        setIsCardVisible(false);
       }
     };
 
@@ -115,7 +117,11 @@ const AppointCard = () => {
     }
   };
 
-  if (!isCardVisible) return null; // Return null to hide the component if no data
+  const handleUpdatePress = () => {
+    navigation.navigate("AppointUpdate");
+  };
+
+  if (!isCardVisible) return null;
 
   return (
     <TouchableOpacity
@@ -123,17 +129,25 @@ const AppointCard = () => {
       disabled={timeRemaining !== "Time to join the appointment! Tap to join."}
     >
       <View style={styles.card}>
-        <Text
-          style={[
-            styles.timerText,
-            timeRemaining === "Time to join the appointment! Tap to join." &&
-              styles.joinNowText,
-          ]}
-        >
-          {timeRemaining === "Time to join the appointment! Tap to join."
-            ? "Join the appointment right now"
-            : `Appointment starts in : ${timeRemaining}`}
-        </Text>
+        <View style={styles.row}>
+          <Text
+            style={[
+              styles.timerText,
+              timeRemaining === "Time to join the appointment! Tap to join." &&
+                styles.joinNowText,
+            ]}
+          >
+            {timeRemaining === "Time to join the appointment! Tap to join."
+              ? "Join the appointment right now"
+              : `Appointment starts in : ${timeRemaining}`}
+          </Text>
+          <TouchableOpacity
+            onPress={handleUpdatePress}
+            style={styles.updateButton}
+          >
+            <Text style={styles.updateButtonText}>Update</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -152,15 +166,29 @@ const styles = StyleSheet.create({
     elevation: 3,
     marginBottom: 10,
   },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   timerText: {
-    textAlign: "center",
     fontSize: 14,
     fontWeight: "bold",
     color: "#333",
   },
   joinNowText: {
-    color: "#1e90ff", // Change to your preferred color
-    fontSize: 14, // Optionally increase the font size
+    color: "#1e90ff",
+    fontSize: 14,
+  },
+  updateButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    backgroundColor: "#1e90ff",
+    borderRadius: 5,
+  },
+  updateButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
   },
 });
 
