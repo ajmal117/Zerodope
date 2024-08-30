@@ -87,28 +87,29 @@ const AppointUpdate = () => {
         }
       );
 
-      console.log("API Response:", response.data); // Log the entire response
+      console.log("API Response 1:", response.data); // Log the entire response
 
       // Adjust the response handling based on the structure you provided
       if (
         response.data &&
-        response.data.data &&
-        Array.isArray(response.data.data)
+        // response.data.data &&
+        Array.isArray(response.data)
       ) {
         // Assuming you want the first appointment in the array
-        const appointmentData = response.data.data[0];
+        const appointmentData = response.data[0];
 
         if (appointmentData) {
           console.log("Appointments Data:", appointmentData); // Log the appointment data
 
           // Extract attributes from the appointmentData object
           const { id, date, time, zoomMeetingLink, user } = appointmentData;
+          // console.log(user);
 
           setAppointmentId(id); // Store the appointment ID
           setDate(new Date(date)); // Convert date string to Date object
           setTime(time); // Set time string directly
           setZoomMeetingLink(zoomMeetingLink); // Set Zoom meeting link
-          setUser(user.id); // Assuming you want to store the user ID
+          setUser(user); // Assuming you want to store the user ID
         } else {
           Alert.alert("Error", "No appointment data found for the user.");
         }
