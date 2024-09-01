@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  TextInput, // Import TextInput
+  TextInput,
   Button,
   StyleSheet,
   Alert,
@@ -12,21 +12,25 @@ import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
-import moment from "moment"; // Import moment for date and time handling
+import moment from "moment";
 
 const ScheduleScreen = () => {
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState("");
   const [zoomMeetingLink, setZoomMeetingLink] = useState("");
   const [user, setUser] = useState("");
-  const [username, setUsername] = useState("User"); // Default username
+  const [username, setUsername] = useState("User");
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   useEffect(() => {
     const initializeData = async () => {
-      await getId();
-      await getName();
-      suggestTime();
+      try {
+        await getId();
+        await getName();
+        suggestTime();
+      } catch (error) {
+        console.error("Error initializing data:", error);
+      }
     };
 
     initializeData();
@@ -37,7 +41,7 @@ const ScheduleScreen = () => {
     const nextHalfHour = moment()
       .add(30 - (currentMinute % 30), "minutes")
       .startOf("minute")
-      .format("HH:mm:ss.SSS"); // Include milliseconds
+      .format("HH:mm"); // Updated to "HH:mm" format
 
     setTime(nextHalfHour);
   };
@@ -48,24 +52,27 @@ const ScheduleScreen = () => {
       return token;
     } catch (error) {
       console.error("Error retrieving token:", error);
+      throw error; // Re-throw error to handle it upstream
     }
   };
 
   const getId = async () => {
     try {
       const id = await SecureStore.getItemAsync("userid");
-      setUser(id || ""); // Update user field with retrieved ID
+      setUser(id || "");
     } catch (error) {
       console.error("Error retrieving ID:", error);
+      throw error; // Re-throw error to handle it upstream
     }
   };
 
   const getName = async () => {
     try {
       const name = await SecureStore.getItemAsync("username");
-      setUsername(name || "User"); // Provide a default value in case name is null
+      setUsername(name || "User");
     } catch (error) {
       console.error("Error retrieving name:", error);
+      throw error; // Re-throw error to handle it upstream
     }
   };
 
@@ -83,7 +90,7 @@ const ScheduleScreen = () => {
 
     try {
       const token = await getToken();
-      const id = await getId()
+      const id = await getId();
       const response = await axios.post(
         `https://beta.zerodope.in/api/appoints?filters[users_permissions_users].[id].[$eq]=${id}&populate=*`,
         postData,
@@ -94,19 +101,22 @@ const ScheduleScreen = () => {
         }
       );
       Alert.alert("Success", "Appointment posted successfully");
-      console.log(response.data);
+      console.log(response.data.id);
+      await SecureStore.setItemAsync(
+        "appointmentId",
+        response.data.id.toString()
+      );
     } catch (error) {
       console.error("Error posting appointment:", error);
       Alert.alert("Error", "Failed to post appointment");
     }
   };
 
-  // Function to render time options in half-hour increments
   const renderTimeOptions = () => {
     const times = [];
     for (let i = 0; i < 24; i++) {
-      times.push(`${i.toString().padStart(2, "0")}:00:00.000`);
-      times.push(`${i.toString().padStart(2, "0")}:30:00.000`);
+      times.push(`${i.toString().padStart(2, "0")}:00`);
+      times.push(`${i.toString().padStart(2, "0")}:30`);
     }
     return times.map((timeOption) => (
       <Picker.Item key={timeOption} label={timeOption} value={timeOption} />
@@ -117,12 +127,10 @@ const ScheduleScreen = () => {
     <View style={styles.container}>
       <Text style={styles.label}>Date:</Text>
 
-      {/* Add a View wrapper with custom styles */}
       <View style={styles.dateButtonContainer}>
         <Button
           onPress={() => setShowDatePicker(true)}
           title={moment(date).format("YYYY-MM-DD")}
-          // color="#000" // Optional: Set button text color
         />
       </View>
 
@@ -140,7 +148,7 @@ const ScheduleScreen = () => {
         />
       )}
 
-      <Text style={styles.label}>Time:</Text>
+      <Text style={styles.label}>Time (24 hours format):</Text>
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={time}
@@ -157,14 +165,6 @@ const ScheduleScreen = () => {
         value={zoomMeetingLink}
         onChangeText={setZoomMeetingLink}
       />
-
-      {/* <Text style={styles.label}>User (ID or name):</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter user ID or name"
-        value={user}
-        onChangeText={setUser}
-      /> */}
 
       <TouchableOpacity style={styles.btn} onPress={handlePostAppointment}>
         <Text style={styles.btnText}>Post Appointment</Text>
@@ -210,7 +210,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     overflow: "hidden",
   },
-  // Add new styles for the date button container
   dateButtonContainer: {
     borderWidth: 1,
     borderColor: "#ccc",

@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Alert,
   TouchableOpacity,
-  ActivityIndicator, // Import ActivityIndicator for loading state
+  ActivityIndicator,
 } from "react-native";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
@@ -22,14 +22,14 @@ const AppointUpdate = () => {
   const [user, setUser] = useState("");
   const [username, setUsername] = useState("User");
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [loading, setLoading] = useState(false); // Loading state
-  const [appointmentId, setAppointmentId] = useState(null); // Store the appointment ID
+  const [loading, setLoading] = useState(false);
+  const [appointmentId, setAppointmentId] = useState(null);
 
   useEffect(() => {
     const initializeData = async () => {
       await getId();
       await getName();
-      await fetchAppointmentData(); // Fetch existing appointment data
+      await fetchAppointmentData();
       suggestTime();
     };
 
@@ -41,7 +41,7 @@ const AppointUpdate = () => {
     const nextHalfHour = moment()
       .add(30 - (currentMinute % 30), "minutes")
       .startOf("minute")
-      .format("HH:mm:ss.SSS");
+      .format("HH:mm"); // Changed format to HH:mm
 
     setTime(nextHalfHour);
   };
@@ -58,8 +58,8 @@ const AppointUpdate = () => {
   const getId = async () => {
     try {
       const id = await SecureStore.getItemAsync("userid");
-      setUser(id || ""); // Update user field with retrieved ID
-      return id; // Return ID for use in fetchAppointmentData
+      setUser(id || "");
+      return id;
     } catch (error) {
       console.error("Error retrieving ID:", error);
     }
@@ -68,11 +68,12 @@ const AppointUpdate = () => {
   const getName = async () => {
     try {
       const name = await SecureStore.getItemAsync("username");
-      setUsername(name || "User"); // Provide a default value in case name is null
+      setUsername(name || "User");
     } catch (error) {
       console.error("Error retrieving name:", error);
     }
   };
+
   const fetchAppointmentData = async () => {
     setLoading(true);
     try {
@@ -87,29 +88,17 @@ const AppointUpdate = () => {
         }
       );
 
-      console.log("API Response 1:", response.data); // Log the entire response
-
-      // Adjust the response handling based on the structure you provided
-      if (
-        response.data &&
-        // response.data.data &&
-        Array.isArray(response.data)
-      ) {
-        // Assuming you want the first appointment in the array
+      if (response.data && Array.isArray(response.data)) {
         const appointmentData = response.data[0];
 
-        if (appointmentData) {
-          console.log("Appointments Data:", appointmentData); // Log the appointment data
-
-          // Extract attributes from the appointmentData object
+        if (appointmentData) {2
           const { id, date, time, zoomMeetingLink, user } = appointmentData;
-          // console.log(user);
-
-          setAppointmentId(id); // Store the appointment ID
-          setDate(new Date(date)); // Convert date string to Date object
-          setTime(time); // Set time string directly
-          setZoomMeetingLink(zoomMeetingLink); // Set Zoom meeting link
-          setUser(user); // Assuming you want to store the user ID
+          setAppointmentId(user.id);
+          console.log(appointmentId);
+          setDate(new Date(date));
+          setTime(time.slice(0, 5)); // Remove seconds from the time
+          setZoomMeetingLink(zoomMeetingLink);
+          setUser(user);
         } else {
           Alert.alert("Error", "No appointment data found for the user.");
         }
@@ -140,13 +129,10 @@ const AppointUpdate = () => {
       },
     };
 
-    console.log(updatedData);
-
     try {
       const token = await getToken();
-      const id = await getId();
       const response = await axios.put(
-        `https://beta.zerodope.in/api/appoints/${id}`, // Use the appointment ID for the PUT request
+        `https://beta.zerodope.in/api/appoints/${appointmentId}`, // Use the appointment ID for the PUT request
         updatedData,
         {
           headers: {
@@ -155,7 +141,6 @@ const AppointUpdate = () => {
         }
       );
       Alert.alert("Success", "Appointment updated successfully");
-      console.log(response.data);
     } catch (error) {
       console.error("Error updating appointment:", error);
       Alert.alert("Error", "Failed to update appointment");
@@ -165,8 +150,8 @@ const AppointUpdate = () => {
   const renderTimeOptions = () => {
     const times = [];
     for (let i = 0; i < 24; i++) {
-      times.push(`${i.toString().padStart(2, "0")}:00:00.000`);
-      times.push(`${i.toString().padStart(2, "0")}:30:00.000`);
+      times.push(`${i.toString().padStart(2, "0")}:00`);
+      times.push(`${i.toString().padStart(2, "0")}:30`);
     }
     return times.map((timeOption) => (
       <Picker.Item key={timeOption} label={timeOption} value={timeOption} />
@@ -201,7 +186,7 @@ const AppointUpdate = () => {
             />
           )}
 
-          <Text style={styles.label}>Time:</Text>
+          <Text style={styles.label}>Time (24 hours format) :</Text>
           <View style={styles.pickerContainer}>
             <Picker
               selectedValue={time}

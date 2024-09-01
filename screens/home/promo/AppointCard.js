@@ -32,7 +32,15 @@ const AppointCard = () => {
   const getId = async () => {
     try {
       const id = await SecureStore.getItemAsync("userid");
-      return id || "";
+      return id;
+    } catch (error) {
+      console.error("Error retrieving ID:", error);
+    }
+  };
+  const getAppointmentId = async () => {
+    try {
+      const appointmentId = await SecureStore.getItemAsync("appointmentId");
+      return appointmentId;
     } catch (error) {
       console.error("Error retrieving ID:", error);
     }
@@ -43,10 +51,13 @@ const AppointCard = () => {
       try {
         const token = await getToken();
         const id = await getId();
+        console.log(id);
+        const appointmentId = await getAppointmentId();
+        console.log(appointmentId);
 
         if (id && token) {
           const response = await axios.get(
-            `https://beta.zerodope.in/api/appoints?filters[users_permissions_users].[id][$eq]=${id}&populate=*`,
+            `https://beta.zerodope.in/api/appoints/${appointmentId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -57,7 +68,7 @@ const AppointCard = () => {
           console.log("API Response:", response.data);
 
           if (response.data && response.data.length > 0) {
-            const appointmentData = response.data[0];
+            const appointmentData = response.data;
             const appointmentDateTime = new Date(
               `${appointmentData.date}T${appointmentData.time}`
             );
