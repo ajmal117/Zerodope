@@ -18,7 +18,7 @@ import moment from "moment";
 const AppointUpdate = () => {
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState("");
-  const [zoomMeetingLink, setZoomMeetingLink] = useState("");
+  // const [zoomMeetingLink, setZoomMeetingLink] = useState("");
   const [user, setUser] = useState("");
   const [username, setUsername] = useState("User");
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -64,6 +64,15 @@ const AppointUpdate = () => {
       console.error("Error retrieving ID:", error);
     }
   };
+  const getAppointmentId = async () => {
+    try {
+      const id = await SecureStore.getItemAsync("appointmentId");
+      setUser(id || "");
+      return id;
+    } catch (error) {
+      console.error("Error retrieving ID:", error);
+    }
+  };
 
   const getName = async () => {
     try {
@@ -79,25 +88,29 @@ const AppointUpdate = () => {
     try {
       const token = await getToken();
       const id = await getId();
+      const appointmentId = await getAppointmentId();
+      setAppointmentId(appointmentId);
       const response = await axios.get(
-        `https://beta.zerodope.in/api/appoints?filters[users_permissions_users][id][$eq]=${id}&populate=*`,
+        // `https://beta.zerodope.in/api/appoints?filters[users_permissions_users][id][$eq]=${id}&populate=*`,
+        `https://beta.zerodope.in/api/appoints/${appointmentId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+      console.log(response.data);
 
-      if (response.data && Array.isArray(response.data)) {
-        const appointmentData = response.data[0];
+      if (response.data) {
+        const appointmentData = response.data;
+        console.log("data", appointmentData);
 
-        if (appointmentData) {2
+        if (appointmentData) {
           const { id, date, time, zoomMeetingLink, user } = appointmentData;
-          setAppointmentId(user.id);
           console.log(appointmentId);
           setDate(new Date(date));
           setTime(time.slice(0, 5)); // Remove seconds from the time
-          setZoomMeetingLink(zoomMeetingLink);
+          // setZoomMeetingLink(zoomMeetingLink);
           setUser(user);
         } else {
           Alert.alert("Error", "No appointment data found for the user.");
@@ -124,7 +137,7 @@ const AppointUpdate = () => {
       data: {
         date: moment(date).format("YYYY-MM-DD"),
         time,
-        zoomMeetingLink,
+        zoomMeetingLink: "",
         user,
       },
     };
@@ -140,6 +153,7 @@ const AppointUpdate = () => {
           },
         }
       );
+      console.log("put response", response);
       Alert.alert("Success", "Appointment updated successfully");
     } catch (error) {
       console.error("Error updating appointment:", error);
@@ -196,13 +210,13 @@ const AppointUpdate = () => {
             </Picker>
           </View>
 
-          <Text style={styles.label}>Zoom Meeting Link:</Text>
+          {/* <Text style={styles.label}>Zoom Meeting Link:</Text>
           <TextInput
             style={styles.input}
             placeholder="Enter Zoom meeting link"
             value={zoomMeetingLink}
             onChangeText={setZoomMeetingLink}
-          />
+          /> */}
 
           <TouchableOpacity
             style={styles.btn}

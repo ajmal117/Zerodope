@@ -16,7 +16,6 @@ const { width } = Dimensions.get("window");
 const AppointCard = () => {
   const [timeRemaining, setTimeRemaining] = useState("");
   const [appointmentTime, setAppointmentTime] = useState(null);
-  const [zoomMeetingLink, setZoomMeetingLink] = useState("");
   const [isCardVisible, setIsCardVisible] = useState(true);
   const navigation = useNavigation();
 
@@ -37,25 +36,31 @@ const AppointCard = () => {
       console.error("Error retrieving ID:", error);
     }
   };
+
   const getAppointmentId = async () => {
     try {
       const appointmentId = await SecureStore.getItemAsync("appointmentId");
       return appointmentId;
     } catch (error) {
-      console.error("Error retrieving ID:", error);
+      console.error("Error retrieving appointment ID:", error);
     }
   };
 
   useEffect(() => {
     const fetchAppointmentData = async () => {
-      try {
-        const token = await getToken();
-        const id = await getId();
-        console.log(id);
-        const appointmentId = await getAppointmentId();
-        console.log(appointmentId);
+      const token = await getToken();
+      const id = await getId();
+      const appointmentId = await getAppointmentId();
 
-        if (id && token) {
+      // Check if appointmentId exists before making the API call
+      if (!appointmentId) {
+        console.log("No appointment ID found.");
+        setIsCardVisible(false);
+        return;
+      }
+
+      if (id && token) {
+        try {
           const response = await axios.get(
             `https://beta.zerodope.in/api/appoints/${appointmentId}`,
             {
@@ -67,23 +72,29 @@ const AppointCard = () => {
 
           console.log("API Response:", response.data);
 
-          if (response.data && response.data.length > 0) {
+          if (response.data) {
             const appointmentData = response.data;
-            const appointmentDateTime = new Date(
-              `${appointmentData.date}T${appointmentData.time}`
-            );
 
-            setAppointmentTime(appointmentDateTime.toISOString());
-            setZoomMeetingLink(appointmentData.zoomMeetingLink);
-            setIsCardVisible(true);
+            // Ensure appointmentData has the necessary fields
+            if (appointmentData.date && appointmentData.time) {
+              const appointmentDateTime = new Date(
+                `${appointmentData.date}T${appointmentData.time}`
+              );
+
+              setAppointmentTime(appointmentDateTime.toISOString());
+              setIsCardVisible(true);
+            } else {
+              console.log("Incomplete appointment data.");
+              setIsCardVisible(false);
+            }
           } else {
             console.log("No appointment data found.");
             setIsCardVisible(false);
           }
+        } catch (error) {
+          console.error("Error fetching appointment data:", error);
+          setIsCardVisible(false);
         }
-      } catch (error) {
-        console.error("Error fetching appointment data:", error);
-        setIsCardVisible(false);
       }
     };
 
@@ -120,11 +131,10 @@ const AppointCard = () => {
   }, [appointmentTime]);
 
   const handlePress = () => {
-    if (
-      zoomMeetingLink &&
-      timeRemaining === "Time to join the appointment! Tap to join."
-    ) {
-      Linking.openURL(zoomMeetingLink);
+    if (timeRemaining === "Time to join the appointment! Tap to join.") {
+      Linking.openURL(
+        "https://us05web.zoom.us/j/85195110539?pwd=2kHabli2ZMGuThKHwj69q858aJs7aX.1"
+      );
     }
   };
 

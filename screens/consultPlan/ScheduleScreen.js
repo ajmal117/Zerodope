@@ -60,6 +60,7 @@ const ScheduleScreen = () => {
     try {
       const id = await SecureStore.getItemAsync("userid");
       setUser(id || "");
+      return id;
     } catch (error) {
       console.error("Error retrieving ID:", error);
       throw error; // Re-throw error to handle it upstream
@@ -91,6 +92,7 @@ const ScheduleScreen = () => {
     try {
       const token = await getToken();
       const id = await getId();
+      console.log("appoint me used id", id);
       const response = await axios.post(
         `https://beta.zerodope.in/api/appoints?filters[users_permissions_users].[id].[$eq]=${id}&populate=*`,
         postData,
@@ -101,13 +103,19 @@ const ScheduleScreen = () => {
         }
       );
       Alert.alert("Success", "Appointment posted successfully");
-      console.log(response.data.id);
+
+      console.log(response.data);
       await SecureStore.setItemAsync(
         "appointmentId",
         response.data.id.toString()
       );
+      console.log(response.data.zoomMeetingLink);
+      await SecureStore.setItemAsync(
+        "appointmentLink",
+        response.data.zoomMeetingLink.toString()
+      );
     } catch (error) {
-      console.error("Error posting appointment:", error);
+      console.error("Error posting appointment:", error.message);
       Alert.alert("Error", "Failed to post appointment");
     }
   };
