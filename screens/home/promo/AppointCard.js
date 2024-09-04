@@ -464,13 +464,13 @@ const styles = StyleSheet.create({
     // backgroundColor: "#003F51",
     // backgroundColor: "#FDEEC7",
     borderRadius: 5,
-    padding: 5,
+    // padding: 5,
   },
   appointmentLabel: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "500",
     // color: "#fff",
-    marginBottom: 5,
+    // marginBottom: 5,
     textAlign: "center",
   },
   timeContainer: {
@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
     padding: 3,
   },
   valueText: {
-    fontSize: 16,
+    fontSize: 13,
     fontWeight: "bold",
     color: "#FF3B3B",
   },
