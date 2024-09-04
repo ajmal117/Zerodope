@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   promoCardContainer: {
     width: width * 0.93,
     height: 120,
-    borderRadius: 15,
+    borderRadius: 5,
     backgroundColor: "#7B51D3", // Set the background color to match the design
     overflow: "hidden",
     flexDirection: "row", // Align content horizontally

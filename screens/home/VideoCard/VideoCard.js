@@ -170,7 +170,6 @@
 
 //new compo
 
-
 import React from "react";
 import {
   View,
@@ -234,7 +233,7 @@ const styles = StyleSheet.create({
   videoCard: {
     width: width * 0.88,
     height: 240,
-    borderRadius: 15,
+    borderRadius: 5,
     overflow: "hidden",
     marginRight: 10,
     paddingLeft: 7,
@@ -249,7 +248,7 @@ const styles = StyleSheet.create({
   video: {
     width: "100%",
     height: "80%",
-    borderRadius: 15,
+    borderRadius: 5,
   },
   videoOverlay: {
     position: "absolute",

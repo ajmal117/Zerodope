@@ -16,6 +16,7 @@ import BookNow from "../booknow/BookNow";
 import VideoCard from "./VideoCard/VideoCard";
 import { videos } from "./VideoCard/videos"; // Correctly import the videos array
 import PromoCard from "./promo/PromoCard";
+// import CheckCard from "./promo/CheckCard";
 import AppointCard from "./promo/AppointCard";
 import MediaPlayer from "./mediaplayer/MediaPlayer";
 import { activities } from "./activities/activities";
@@ -113,6 +114,7 @@ const Homepage = ({ navigation }) => {
       </Appbar.Header>
       <ScrollView contentContainerStyle={styles.content}>
         <AppointCard />
+        {/* <CheckCard /> */}
         <PromoCard
           offerDetail="🔥 limited offer"
           offerText="30% Discount Before 31st"
