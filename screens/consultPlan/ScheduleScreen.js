@@ -13,6 +13,7 @@ import * as SecureStore from "expo-secure-store";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import moment from "moment";
+import { useNavigation } from "@react-navigation/native"; // Import useNavigation
 
 const ScheduleScreen = () => {
   const [date, setDate] = useState(new Date());
@@ -21,6 +22,8 @@ const ScheduleScreen = () => {
   const [user, setUser] = useState("");
   const [username, setUsername] = useState("User");
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const navigation = useNavigation(); // Initialize navigation
 
   useEffect(() => {
     const initializeData = async () => {
@@ -102,7 +105,12 @@ const ScheduleScreen = () => {
           },
         }
       );
-      Alert.alert("Success", "Appointment posted successfully");
+      Alert.alert("Success", "Appointment posted successfully", [
+        {
+          text: "OK",
+          onPress: () => navigation.navigate("Homepage"), // Navigate to Home on alert OK press
+        },
+      ]);
 
       console.log(response.data);
       await SecureStore.setItemAsync(

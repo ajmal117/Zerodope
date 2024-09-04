@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 
@@ -46,60 +46,60 @@ const AppointCard = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchAppointmentData = async () => {
-      const token = await getToken();
-      const id = await getId();
-      const appointmentId = await getAppointmentId();
+  const fetchAppointmentData = async () => {
+    const token = await getToken();
+    const id = await getId();
+    const appointmentId = await getAppointmentId();
 
-      // Check if appointmentId exists before making the API call
-      if (!appointmentId) {
-        console.log("No appointment ID found.");
-        setIsCardVisible(false);
-        return;
-      }
+    if (!appointmentId) {
+      console.log("No appointment ID found.");
+      setIsCardVisible(false);
+      return;
+    }
 
-      if (id && token) {
-        try {
-          const response = await axios.get(
-            `https://beta.zerodope.in/api/appoints/${appointmentId}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+    if (id && token) {
+      try {
+        const response = await axios.get(
+          `https://beta.zerodope.in/api/appoints/${appointmentId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-          console.log("API Response:", response.data);
+        console.log("API Response:", response.data);
 
-          if (response.data) {
-            const appointmentData = response.data;
+        if (response.data) {
+          const appointmentData = response.data;
 
-            // Ensure appointmentData has the necessary fields
-            if (appointmentData.date && appointmentData.time) {
-              const appointmentDateTime = new Date(
-                `${appointmentData.date}T${appointmentData.time}`
-              );
+          if (appointmentData.date && appointmentData.time) {
+            const appointmentDateTime = new Date(
+              `${appointmentData.date}T${appointmentData.time}`
+            );
 
-              setAppointmentTime(appointmentDateTime.toISOString());
-              setIsCardVisible(true);
-            } else {
-              console.log("Incomplete appointment data.");
-              setIsCardVisible(false);
-            }
+            setAppointmentTime(appointmentDateTime.toISOString());
+            setIsCardVisible(true);
           } else {
-            console.log("No appointment data found.");
+            console.log("Incomplete appointment data.");
             setIsCardVisible(false);
           }
-        } catch (error) {
-          console.error("Error fetching appointment data:", error);
+        } else {
+          console.log("No appointment data found.");
           setIsCardVisible(false);
         }
+      } catch (error) {
+        console.error("Error fetching appointment data:", error);
+        setIsCardVisible(false);
       }
-    };
+    }
+  };
 
-    fetchAppointmentData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchAppointmentData();
+    }, [])
+  );
 
   useEffect(() => {
     if (!appointmentTime) return;
