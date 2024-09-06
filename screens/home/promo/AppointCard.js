@@ -558,11 +558,6 @@ const AppointCard = () => {
     if (token && appointmentId) {
       try {
         // Show alert when appointment expires
-        Alert.alert(
-          "Appointment Expired",
-          "The appointment link has expired.",
-          [{ text: "OK" }]
-        );
 
         await axios.delete(
           `https://beta.zerodope.in/api/appoints/${appointmentId}`,
@@ -577,7 +572,13 @@ const AppointCard = () => {
         await SecureStore.deleteItemAsync("appointmentId");
 
         // Hide the card since the appointment is deleted
+
         setIsCardVisible(false);
+        Alert.alert(
+          "Appointment Expired",
+          "The appointment link has expired.",
+          [{ text: "OK" }]
+        );
       } catch (error) {
         console.error("Error deleting appointment:", error);
       }

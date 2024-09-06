@@ -127,7 +127,7 @@ const ScheduleScreen = () => {
       );
     } catch (error) {
       console.error("Error posting appointment:", error.message);
-      Alert.alert("Error", "Failed to post appointment");
+      Alert.alert("Error", "Failed to post appointment", error.message);
     } finally {
       setLoading(false); // Hide the loader after the appointment is posted
     }
