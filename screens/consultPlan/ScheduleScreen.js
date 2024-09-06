@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  TextInput,
   Button,
   StyleSheet,
   Alert,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
@@ -22,6 +22,7 @@ const ScheduleScreen = () => {
   const [user, setUser] = useState("");
   const [username, setUsername] = useState("User");
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state for the button
 
   const navigation = useNavigation(); // Initialize navigation
 
@@ -81,6 +82,8 @@ const ScheduleScreen = () => {
   };
 
   const handlePostAppointment = async () => {
+    setLoading(true); // Show the loader when the appointment is being posted
+
     const postData = {
       data: {
         date: moment(date).format("YYYY-MM-DD"),
@@ -125,6 +128,8 @@ const ScheduleScreen = () => {
     } catch (error) {
       console.error("Error posting appointment:", error.message);
       Alert.alert("Error", "Failed to post appointment");
+    } finally {
+      setLoading(false); // Hide the loader after the appointment is posted
     }
   };
 
@@ -174,16 +179,24 @@ const ScheduleScreen = () => {
         </Picker>
       </View>
 
-      <Text style={styles.label}>Zoom Meeting Link:</Text>
+      {/* <Text style={styles.label}>Zoom Meeting Link:</Text>
       <TextInput
         style={styles.input}
         placeholder="Enter Zoom meeting link"
         value={zoomMeetingLink}
         onChangeText={setZoomMeetingLink}
-      />
+      /> */}
 
-      <TouchableOpacity style={styles.btn} onPress={handlePostAppointment}>
-        <Text style={styles.btnText}>Post Appointment</Text>
+      <TouchableOpacity
+        style={styles.btn}
+        onPress={handlePostAppointment}
+        disabled={loading} // Disable button while loading
+      >
+        {loading ? ( // Show loader or button text based on loading state
+          <ActivityIndicator size="small" color="#fff" />
+        ) : (
+          <Text style={styles.btnText}>Post Appointment</Text>
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -200,6 +213,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     alignItems: "center",
+    marginVertical: 4,
   },
   btnText: {
     color: "#fff",
@@ -210,14 +224,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontSize: 16,
     fontWeight: "bold",
-  },
-  input: {
-    height: 40,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    marginBottom: 12,
-    paddingHorizontal: 8,
-    borderRadius: 4,
   },
   pickerContainer: {
     borderColor: "#ccc",

@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     flexDirection: "row", // Align content horizontally
     padding: 10,
+    marginBottom:14
   },
   promoContent: {
     flex: 1,

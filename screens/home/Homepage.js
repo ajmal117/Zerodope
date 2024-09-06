@@ -136,7 +136,7 @@ const Homepage = ({ navigation }) => {
         <View style={styles.headTitleSection}>
           <Text style={styles.sectionTitle}>Customise Plan</Text>
         </View>
-        <View style={styles.activitiesContainer1}>
+        <ScrollView horizontal style={styles.activitiesContainer1}>
           {customise.map((activity, index) => (
             <ActivityCard
               key={index}
@@ -146,7 +146,7 @@ const Homepage = ({ navigation }) => {
               paid={paid} // Pass the paid state
             />
           ))}
-        </View>
+        </ScrollView>
         <View style={styles.headTitleSection}>
           <Text style={styles.sectionTitle}>Fitness videos</Text>
         </View>
@@ -173,7 +173,7 @@ const App = () => (
     <Stack.Screen
       name="Homepage"
       component={Homepage}
-      options={{ headerShown: false }}
+      options={{ headerShown: false, title: "Home" }}
     />
     <Stack.Screen name="BookNow" component={BookNow} />
     <Stack.Screen name="MediaPlayer" component={MediaPlayer} />
@@ -227,7 +227,8 @@ const styles = StyleSheet.create({
   headTitleSection: {
     borderColor: "#333",
     width: "100%",
-    marginTop: 10,
+    // marginTop: 12,
+    marginBottom: 4,
   },
   sectionTitle: {
     fontSize: 18,
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
   },
   activitiesContainer1: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     marginVertical: 4,
   },
   card: {
@@ -278,8 +279,8 @@ const styles = StyleSheet.create({
   },
   videoContainer: {
     flexDirection: "row",
-    marginVertical: 4,
-    paddingVertical: 10,
+    // marginVertical: 4,
+    paddingVertical: 6,
     // backgroundColor: "white",
     // backgroundColor: "#F5F5F5", // Light background color
     borderRadius: 14,

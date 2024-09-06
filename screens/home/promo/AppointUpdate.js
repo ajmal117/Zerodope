@@ -14,7 +14,7 @@ import * as SecureStore from "expo-secure-store";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import moment from "moment";
-import { useNavigation } from "@react-navigation/native"; // Import the navigation hook
+import { useNavigation } from "@react-navigation/native";
 
 const AppointUpdate = () => {
   const [date, setDate] = useState(new Date());
@@ -22,10 +22,11 @@ const AppointUpdate = () => {
   const [user, setUser] = useState("");
   const [username, setUsername] = useState("User");
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // Loader for fetching data
+  const [updateLoading, setUpdateLoading] = useState(false); // Loader for update process
   const [appointmentId, setAppointmentId] = useState(null);
 
-  const navigation = useNavigation(); // Initialize navigation
+  const navigation = useNavigation();
 
   useEffect(() => {
     const initializeData = async () => {
@@ -135,6 +136,7 @@ const AppointUpdate = () => {
       },
     };
 
+    setUpdateLoading(true); // Start the update loader
     try {
       const token = await getToken();
       await axios.put(
@@ -150,12 +152,16 @@ const AppointUpdate = () => {
       Alert.alert("Success", "Appointment updated successfully", [
         {
           text: "OK",
-          onPress: () => navigation.navigate("Homepage"), // Navigate to the home page on alert click
+          onPress: () => {
+            setUpdateLoading(false); // Stop the update loader
+            navigation.navigate("Homepage"); // Navigate to the home page on alert click
+          },
         },
       ]);
     } catch (error) {
       console.error("Error updating appointment:", error);
       Alert.alert("Error", "Failed to update appointment");
+      setUpdateLoading(false); // Stop the update loader in case of error
     }
   };
 
@@ -211,8 +217,13 @@ const AppointUpdate = () => {
           <TouchableOpacity
             style={styles.btn}
             onPress={handleUpdateAppointment}
+            disabled={updateLoading} // Disable the button when updating
           >
-            <Text style={styles.btnText}>Update Appointment</Text>
+            {updateLoading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Text style={styles.btnText}>Update Appointment</Text>
+            )}
           </TouchableOpacity>
         </>
       )}

@@ -8,45 +8,43 @@ import {
 } from "react-native";
 
 const ActivityCard = ({ activity, index, navigation, paid, apointMent }) => {
-  const scaleAnim = useRef(new Animated.Value(1)).current;
+  // const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePress = () => {
     if (activity.name === "Free Support") {
       navigation.navigate("FreeSupport");
-    } 
-    else if (activity.name === "Consultation Scheduling") {
+    } else if (activity.name === "Consultation Scheduling") {
       navigation.navigate(activity.component);
-    }
-     else {
+    } else {
       const destination = paid ? activity.component : "BookNow";
       navigation.navigate(destination);
     }
   };
 
-  useEffect(() => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(scaleAnim, {
-          toValue: 1.1,
-          duration: 1000,
-          useNativeDriver: true,
-        }),
-        Animated.timing(scaleAnim, {
-          toValue: 1,
-          duration: 1000,
-          useNativeDriver: true,
-        }),
-      ])
-    ).start();
-  }, [scaleAnim]);
+  // useEffect(() => {
+  //   Animated.loop(
+  //     Animated.sequence([
+  //       Animated.timing(scaleAnim, {
+  //         toValue: 1.1,
+  //         duration: 1000,
+  //         useNativeDriver: true,
+  //       }),
+  //       Animated.timing(scaleAnim, {
+  //         toValue: 1,
+  //         duration: 1000,
+  //         useNativeDriver: true,
+  //       }),
+  //     ])
+  //   ).start();
+  // }, [scaleAnim]);
 
   return (
     <TouchableOpacity style={{ flex: 1 }} onPress={handlePress}>
-      <Animated.View
+      <View
         style={[
           styles.card,
           { backgroundColor: activity.color },
-          index === 1 && { transform: [{ scale: scaleAnim }] },
+          // index === 1 && { transform: [{ scale: scaleAnim }] },
         ]}
       >
         <Text style={styles.icon}>{activity.icon}</Text>
@@ -68,7 +66,7 @@ const ActivityCard = ({ activity, index, navigation, paid, apointMent }) => {
             ? "Open Now"
             : "Book Now"}
         </Text>
-      </Animated.View>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -78,12 +76,14 @@ export default ActivityCard;
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    marginVertical: 15,
+    // marginVertical: 12,
     paddingHorizontal: 7,
     paddingVertical: 15,
     borderRadius: 5,
-    width: "86%",
+    // width: "86%",
     alignItems: "center",
+    marginEnd:12,
+    marginBottom:14
   },
   icon: {
     fontSize: 40,
