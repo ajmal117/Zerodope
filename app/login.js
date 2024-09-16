@@ -14,6 +14,7 @@ import InputBox from "../components/form/InputBox";
 import SubmitButton from "../components/form/SubmitButton";
 import axios from "axios";
 import { router } from "expo-router";
+import { API_URL, API_KEY } from "@env";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -48,7 +49,7 @@ const Login = () => {
 
       // Make API call to register the user
       const response = await axios.post(
-        "https://beta.zerodope.in/api/auth/local",
+        `${API_URL}/auth/local`,
         {
           identifier: email,
           password: password,
