@@ -662,8 +662,8 @@ const AppointCard = () => {
         const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
         setTimeRemaining({ days, hours, minutes, seconds });
-        // } else if (difference <= 0 && difference > -1800000) {
-      } else if (difference <= 0 && difference > -120000) {
+      } else if (difference <= 0 && difference > -1800000) {
+        // } else if (difference <= 0 && difference > -120000) {
         // Appointment time has passed, but less than 30 minutes ago
         setTimeRemaining(null); // Time to join the meeting
       } else {
