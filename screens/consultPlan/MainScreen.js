@@ -109,13 +109,15 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
+import { API_URL, API_KEY } from "@env";
+
 // import axios from "axios";
 // import * as SecureStore from "expo-secure-store";
 
 const plans = [
   {
     title: "Apointment",
-    subtitle: "Free Diet Plan, Free Workout Plan",
+    subtitle: "For Diet Plan and Workout Plan",
     key: "apointment",
     image: require("../../assets/images/gyma1.jpg"),
   },
@@ -124,6 +126,7 @@ const plans = [
 const MainScreen = () => {
   const navigation = useNavigation();
 
+  console.log(API_URL);
   return (
     <ScrollView style={styles.container}>
       {plans.map((plan) => (

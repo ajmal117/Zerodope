@@ -23,14 +23,14 @@ import { activities } from "./activities/activities";
 import { customise } from "./customise/customise";
 import ActivityCard from "./activities/ActivityCard";
 import { useIsFocused } from "@react-navigation/native";
-import { API_URL, API_KEY } from "@env";
+// import { API_URL, API_KEY } from "@env";
 
 import AppointUpdate from "../home/promo/AppointUpdate";
 
 const Stack = createStackNavigator();
 
 const Homepage = ({ navigation }) => {
-  console.log(API_URL, API_KEY);
+  // console.log(API_URL, API_KEY);
 
   const [paid, setPaid] = useState(true);
   const [apointMent, setApointMent] = useState(true);

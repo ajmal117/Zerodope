@@ -14,6 +14,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import moment from "moment";
 import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import { API_URL, API_KEY } from "@env";
 
 const ScheduleScreen = () => {
   const [date, setDate] = useState(new Date());
@@ -100,7 +101,7 @@ const ScheduleScreen = () => {
       const id = await getId();
       console.log("appoint me used id", id);
       const response = await axios.post(
-        `https://beta.zerodope.in/api/appoints?filters[users_permissions_users].[id].[$eq]=${id}&populate=*`,
+        `${API_URL}/appoints?filters[users_permissions_users].[id].[$eq]=${id}&populate=*`,
         postData,
         {
           headers: {
