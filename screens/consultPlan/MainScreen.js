@@ -217,8 +217,8 @@ export default MainScreen;
 // import { useNavigation } from "@react-navigation/native";
 // import { ScrollView } from "react-native-gesture-handler";
 // import RazorpayCheckout from "react-native-razorpay"; // Razorpay SDK
-// import * as SecureStore from "expo-secure-store"; // SecureStore for saving and retrieving data
 // import { RAZOR_PAY_KEY_ID } from "@env";
+// import * as SecureStore from "expo-secure-store"; // SecureStore for saving and retrieving data
 
 // // Your plans array
 // const plans = [
@@ -232,72 +232,72 @@ export default MainScreen;
 
 // const MainScreen = () => {
 //   const navigation = useNavigation();
-//   const [username, setUsername] = useState("");
-//   const [email, setEmail] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [email, setEmail] = useState("");
 
-//   useEffect(() => {
-//     // Retrieve username and email from SecureStore
-//     const getName = async () => {
-//       try {
-//         const name = await SecureStore.getItemAsync("username");
-//         if (name) {
-//           setUsername(name);
-//         }
-//       } catch (error) {
-//         console.error("Error retrieving name:", error);
-//       }
-//     };
+  // useEffect(() => {
+  //   // Retrieve username and email from SecureStore
+  //   const getName = async () => {
+  //     try {
+  //       const name = await SecureStore.getItemAsync("username");
+  //       if (name) {
+  //         setUsername(name);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error retrieving name:", error);
+  //     }
+  //   };
 
-//     const getEmail = async () => {
-//       try {
-//         const emailValue = await SecureStore.getItemAsync("email");
-//         if (emailValue) {
-//           setEmail(emailValue);
-//         }
-//       } catch (error) {
-//         console.error("Error retrieving email:", error);
-//       }
-//     };
+    // const getEmail = async () => {
+    //   try {
+        // const emailValue = await SecureStore.getItemAsync("email");
+    //     if (emailValue) {
+    //       setEmail(emailValue);
+    //     }
+    //   } catch (error) {
+    //     console.error("Error retrieving email:", error);
+    //   }
+    // };
 
-//     getName();
-//     getEmail();
-//   }, []);
+  //   getName();
+  //   getEmail();
+  // }, []);
 
-//   const TotalAmount = 18;
+  // const TotalAmount = 18;
 
-//   const openRazorpay = () => {
-//     var options = {
-//       description: "Payment for Appointment",
-//       image: require("../../assets/images/adaptive-icon.png"), // Optional: add your logo URL here
-//       currency: "INR",
-//       key: RAZOR_PAY_KEY_ID, // Replace with your Razorpay Key ID
-//       amount: TotalAmount * 100, // Amount in paise (130 INR = 13000 paise)
-//       name: "Zerodope",
-//       prefill: {
-//         email: email || "test@example.com", // Prefill email if available, otherwise fallback
-//         contact: "", // Add the phone number if needed
-//         name: username || "Test User", // Prefill name if available
-//       },
-//       theme: { color: "#FAB917" }, // Customize the payment screen theme color
-//     };
+  // const openRazorpay = () => {
+  //   var options = {
+  //     description: "Payment for Appointment",
+  //     image: require("../../assets/images/adaptive-icon.png"), // Optional: add your logo URL here
+  //     currency: "INR",
+  //     key: RAZOR_PAY_KEY_ID, // Replace with your Razorpay Key ID
+  //     amount: TotalAmount * 100, // Amount in paise (130 INR = 13000 paise)
+  //     name: "Zerodope",
+  //     prefill: {
+  //       email: email || "test@example.com", // Prefill email if available, otherwise fallback
+  //       contact: "", // Add the phone number if needed
+  //       name: username || "Test User", // Prefill name if available
+  //     },
+  //     theme: { color: "#FAB917" }, // Customize the payment screen theme color
+  //   };
 
-//     RazorpayCheckout.open(options)
-//       .then((data) => {
-//         // Payment successful, handle response here
-//         Alert.alert(
-//           "Payment Successful",
-//           `Payment ID: ${data.razorpay_payment_id}`
-//         );
-//         navigation.navigate("Schedule", { plan: "Appointment" }); // Redirect to the schedule screen
-//       })
-//       .catch((error) => {
-//         // Payment failed, handle the error here
-//         Alert.alert(
-//           "Payment Failed",
-//           `Error: ${error.code} | ${error.description}`
-//         );
-//       });
-//   };
+  //   RazorpayCheckout.open(options)
+  //     .then((data) => {
+  //       // Payment successful, handle response here
+  //       Alert.alert(
+  //         "Payment Successful",
+  //         `Payment ID: ${data.razorpay_payment_id}`
+  //       );
+  //       navigation.navigate("Schedule", { plan: "Appointment" }); // Redirect to the schedule screen
+  //     })
+  //     .catch((error) => {
+  //       // Payment failed, handle the error here
+  //       Alert.alert(
+  //         "Payment Failed",
+  //         `Error: ${error.code} | ${error.description}`
+  //       );
+  //     });
+  // };
 
 //   return (
 //     <ScrollView style={styles.container}>
