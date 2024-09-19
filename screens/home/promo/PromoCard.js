@@ -11,7 +11,7 @@ const PromoCard = () => {
     const fetchBannerData = async () => {
       try {
         const response = await axios.get(`${API_URL}/banners?populate=*`);
-        console.log(response.data);
+        // console.log(response.data);
 
         // Correct the data path based on your response
         const banner = response.data?.data?.[0]?.attributes?.titles;

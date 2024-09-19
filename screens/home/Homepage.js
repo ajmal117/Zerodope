@@ -14,7 +14,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as SecureStore from "expo-secure-store";
 import BookNow from "../booknow/BookNow";
 import VideoCard from "./VideoCard/VideoCard";
-import { videos } from "./VideoCard/videos"; // Correctly import the videos array
+// import { videos } from "./VideoCard/videos"; // Correctly import the videos array
 import PromoCard from "./promo/PromoCard";
 // import CheckCard from "./promo/CheckCard";
 import AppointCard from "./promo/AppointCard";
@@ -118,7 +118,7 @@ const Homepage = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.content}>
         <AppointCard />
         {/* <CheckCard /> */}
-        <PromoCard/>
+        <PromoCard />
         <View style={styles.headTitleSection}>
           <Text style={styles.sectionTitle}>Your Activities</Text>
         </View>
@@ -150,12 +150,12 @@ const Homepage = ({ navigation }) => {
         <View style={styles.headTitleSection}>
           <Text style={styles.sectionTitle}>Fitness videos</Text>
         </View>
-        <ScrollView horizontal style={styles.videoContainer}>
-          {videos &&
-            videos.map((video, index) => (
-              <VideoCard key={index} video={video} />
-            ))}
-        </ScrollView>
+        {/* <ScrollView horizontal style={styles.videoContainer}> */}
+        {/* {videos.map((video, index) => (
+            <VideoCard key={index} video={video} />
+          ))} */}
+        <VideoCard />
+        {/* </ScrollView> */}
       </ScrollView>
       <Snackbar
         visible={visible2}
@@ -176,7 +176,18 @@ const App = () => (
       options={{ headerShown: false, title: "Home" }}
     />
     <Stack.Screen name="BookNow" component={BookNow} />
-    <Stack.Screen name="MediaPlayer" component={MediaPlayer} />
+    <Stack.Screen
+      name="MediaPlayer"
+      component={MediaPlayer}
+      options={{
+        title: "Workout Video",
+        // headerShown: false,
+        // headerStyle: {
+        backgroundColor: "#000",
+        // },
+        // headerTintColor: "white",
+      }}
+    />
     <Stack.Screen
       name="AppointUpdate"
       component={AppointUpdate}
@@ -277,16 +288,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#000",
   },
-  videoContainer: {
-    flexDirection: "row",
-    // marginVertical: 4,
-    paddingVertical: 6,
-    // backgroundColor: "white",
-    // backgroundColor: "#F5F5F5", // Light background color
-    borderRadius: 14,
-    // padding:14
-    // paddingLeft: 15, // Added padding to align with other sections
-  },
+  // videoContainer: {
+  //   flexDirection: "row",
+  //   // borderWidth:1,
+  //   // marginVertical: 4,
+  //   paddingVertical: 6,
+  //   // backgroundColor: "white",
+  //   // backgroundColor: "#F5F5F5", // Light background color
+  //   borderRadius: 14,
+  //   // padding:14
+  //   // paddingLeft: 15, // Added padding to align with other sections
+  // },
 });
 
 export default App;

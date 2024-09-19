@@ -169,8 +169,7 @@
 // });
 
 //new compo
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -178,52 +177,107 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  ScrollView,
 } from "react-native";
+import axios from "axios"; // Import axios
 import { useNavigation } from "@react-navigation/native";
+import { API_URL } from "@env"; // Make sure to configure .env for API_URL
 
 const { width } = Dimensions.get("window");
 
-const VideoCard = ({ video }) => {
-  const navigation = useNavigation();
+// Helper function to get YouTube thumbnail from video URL
+const getYoutubeThumbnail = (url) => {
+  const videoId = url.split("v=")[1];
+  const ampersandPosition = videoId ? videoId.indexOf("&") : -1;
+  if (ampersandPosition !== -1) {
+    return `https://img.youtube.com/vi/${videoId.substring(
+      0,
+      ampersandPosition
+    )}/hqdefault.jpg`;
+  }
+  return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+};
 
-  const handlePress = () => {
-    // Pass only the necessary serializable data
+const VideoCard = () => {
+  const navigation = useNavigation();
+  const [videoData, setVideoData] = useState(null);
+
+  useEffect(() => {
+    // Fetch data from the API
+    const fetchVideoData = async () => {
+      try {
+        const response = await axios.get(
+          `${API_URL}/youtube-videos?populate=*`
+        );
+
+        if (response.data && response.data.data) {
+          const videos = response.data.data
+            .map((item) => {
+              if (item && item.attributes && item.attributes.youtubeVideo) {
+                return item.attributes.youtubeVideo;
+              }
+              return null; // Return null if youtubeVideo is missing
+            })
+            .filter((video) => video !== null); // Filter out any null values
+
+          setVideoData(videos); // Set only valid videos
+        } else {
+          console.error("Invalid API response structure");
+        }
+      } catch (error) {
+        console.error("Error fetching video data:", error);
+      }
+    };
+
+    fetchVideoData();
+  }, []);
+
+  const handlePress = (video) => {
     navigation.navigate("MediaPlayer", {
-      title: video.title,
-      uri: video.uri,
-      color: video.color,
+      video,
     });
   };
 
+  if (!videoData) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
-    <TouchableOpacity onPress={handlePress}>
-      <View style={[styles.videoCard, { backgroundColor: video.color }]}>
-        {/* Use the thumbnail if available */}
-        <Image
-          source={video.thumbnailUri}
-          style={styles.video}
-          resizeMode="cover"
-        />
-        <View style={styles.videoOverlay}>
-          <Text style={styles.videoTitle}>{video.title}</Text>
-        </View>
-        <View style={styles.videoBottomTitle}>
-          <View style={{ paddingBottom: 4 }}>
-            <Text style={styles.bottomTitleFirst}>
-              Two hour bulking training
-            </Text>
-          </View>
-          <View style={styles.bottomTitle}>
-            <View style={styles.bottomTitle}>
-              {/* Render the icon directly */}
-              {video.icon}
-              <Text style={styles.videoBottomTitleSubText}>Beginner</Text>
+    <ScrollView horizontal style={styles.videoContainer}>
+      {videoData.map((video, index) => (
+        <TouchableOpacity key={index} onPress={() => handlePress(video)}>
+          <View style={styles.videoCard}>
+            {/* Use the YouTube thumbnail URL for the image */}
+            <Image
+              source={{
+                uri: video.videoUrl
+                  ? getYoutubeThumbnail(video.videoUrl)
+                  : require("../../../assets/images/powerlifting.jpg"),
+              }}
+              style={styles.video}
+              resizeMode="cover"
+              alt="image"
+            />
+            <View style={styles.videoOverlay}>
+              <Text style={styles.videoTitle}>{video.heading}</Text>
             </View>
-            <Text style={styles.videoBottomTitleSubTextMnt}> • 42 Min</Text>
+            <View style={styles.videoBottomTitle}>
+              <View style={{ paddingBottom: 4 }}>
+                <Text style={styles.bottomTitleFirst}>{video.title}</Text>
+              </View>
+              <View style={styles.bottomTitle}>
+                <Text style={styles.videoBottomTitleSubText}>
+                  {video.category}
+                </Text>
+                <Text style={styles.videoBottomTitleSubTextMnt}>
+                  • {video.time}
+                </Text>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
-    </TouchableOpacity>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 };
 
@@ -232,28 +286,28 @@ export default VideoCard;
 const styles = StyleSheet.create({
   videoCard: {
     width: width * 0.88,
-    height: 240,
+    height: 242,
     borderRadius: 5,
     overflow: "hidden",
+    // borderWidth: 1,
+    padding: 5,
     marginRight: 10,
-    paddingLeft: 7,
-    paddingBottom: 10,
+    paddingLeft: 5,
     shadowColor: "#FAB917",
     shadowOffset: { width: -5, height: 5 },
     shadowOpacity: 0.4,
-    shadowRadius: 15,
+    shadowRadius: 10,
     elevation: 8,
   },
-
   video: {
     width: "100%",
-    height: "80%",
+    height: "84%",
     borderRadius: 5,
   },
   videoOverlay: {
     position: "absolute",
-    bottom: 62,
-    left: 14,
+    bottom: 44,
+    left: 10,
     right: 20,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -266,36 +320,38 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   videoBottomTitle: {
-    marginTop: 2,
-    borderEndEndRadius: 15,
-    borderEndStartRadius: 15,
+    // marginTop: 2,
+    borderEndEndRadius: 5,
+    borderEndStartRadius: 5,
     bottom: 0,
     width: "100%",
-    paddingHorizontal: 14,
+    paddingHorizontal: 4,
     paddingTop: 5,
     backgroundColor: "white",
     flexDirection: "column",
     justifyContent: "space-between",
   },
   bottomTitleFirst: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "bold",
   },
   bottomTitle: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  videoBottomTitleSubicon: {
-    paddingRight: 5,
-  },
   videoBottomTitleSubText: {
-    marginLeft: 10,
-    paddingBottom: 10,
+    // marginLeft: 10,
+    // paddingBottom: 16,
     fontSize: 12,
     fontWeight: "bold",
     color: "#777",
   },
   videoBottomTitleSubTextMnt: {
     fontSize: 12,
+  },
+  videoContainer: {
+    flexDirection: "row",
+    // paddingVertical: 6,
+    borderRadius: 5,
   },
 });
