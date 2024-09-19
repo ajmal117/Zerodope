@@ -118,10 +118,7 @@ const Homepage = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.content}>
         <AppointCard />
         {/* <CheckCard /> */}
-        <PromoCard
-          offerDetail="🔥 limited offer"
-          offerText="30% Discount Before 31st"
-        />
+        <PromoCard/>
         <View style={styles.headTitleSection}>
           <Text style={styles.sectionTitle}>Your Activities</Text>
         </View>
