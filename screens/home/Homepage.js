@@ -25,7 +25,7 @@ import ActivityCard from "./activities/ActivityCard";
 import { useIsFocused } from "@react-navigation/native";
 // import { API_URL, API_KEY } from "@env";
 
-import AppointUpdate from "../home/promo/AppointUpdate";
+import AppointUpdate from "../home/promo/AppointUpdate" ;
 
 const Stack = createStackNavigator();
 
