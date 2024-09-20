@@ -473,6 +473,7 @@ import {
 } from "react-native";
 import { Card, Paragraph, Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import { API_URL } from "@env";
 
 const SubCard = ({ imageSource, data }) => (
   <Card style={styles.subCard}>
@@ -538,7 +539,7 @@ const DietPlan = () => {
 
       try {
         const response = await axios.get(
-          `https://beta.zerodope.in/api/diet-plans?filters[users_permissions_users].[id].[$eq]=${id}&populate=*`,
+          `${API_URL}/diet-plans?filters[users_permissions_users].[id].[$eq]=${id}&populate=*`,
           {
             headers: {
               accept: "application/json",

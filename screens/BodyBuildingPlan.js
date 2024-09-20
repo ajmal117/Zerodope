@@ -610,6 +610,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { useNavigation } from "@react-navigation/native";
+import { API_URL } from "@env";
 
 const days = ["day1", "day2", "day3", "day4", "day5", "day6"];
 
@@ -674,7 +675,7 @@ const BodyBuildingPlan = () => {
 
       try {
         const response = await axios.get(
-          `https://beta.zerodope.in/api/body-building-plans?filters[users_permissions_users].[id].[$eq]=${storedUserId}&populate=*`,
+          `${API_URL}/body-building-plans?filters[users_permissions_users].[id].[$eq]=${storedUserId}&populate=*`,
           {
             headers: {
               accept: "application/json",

@@ -514,6 +514,7 @@ import {
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { API_URL } from "@env";
 
 const { width } = Dimensions.get("window");
 
@@ -559,14 +560,11 @@ const AppointCard = () => {
       try {
         // Show alert when appointment expires
 
-        await axios.delete(
-          `https://beta.zerodope.in/api/appoints/${appointmentId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        await axios.delete(`${API_URL}/appoints/${appointmentId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         // Remove appointmentId from SecureStore after deletion
         await SecureStore.deleteItemAsync("appointmentId");
@@ -600,7 +598,7 @@ const AppointCard = () => {
     if (id && token) {
       try {
         const response = await axios.get(
-          `https://beta.zerodope.in/api/appoints/${appointmentId}`,
+          `${API_URL}/appoints/${appointmentId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

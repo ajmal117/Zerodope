@@ -15,6 +15,10 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
+import { API_URL } from "@env";
+
+
+
 
 const AppointUpdate = () => {
   const [date, setDate] = useState(new Date());
@@ -95,7 +99,7 @@ const AppointUpdate = () => {
       const appointmentId = await getAppointmentId();
 
       const response = await axios.get(
-        `https://beta.zerodope.in/api/appoints/${appointmentId}`,
+        `${API_URL}/appoints/${appointmentId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -140,7 +144,7 @@ const AppointUpdate = () => {
     try {
       const token = await getToken();
       await axios.put(
-        `https://beta.zerodope.in/api/appoints/${appointmentId}`,
+        `${API_URL}/appoints/${appointmentId}`,
         updatedData,
         {
           headers: {
