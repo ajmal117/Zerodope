@@ -56,10 +56,11 @@ export default PromoCard;
 const styles = StyleSheet.create({
   promoCardContainer: {
     width: width * 0.93,
-    height: 120,
+    // width: 330,
+    height: 80,
     borderRadius: 5,
-    backgroundColor: "#7B51D3", // Set the background color to match the design
-    overflow: "hidden",
+    backgroundColor: "#8B32C7CF", // Set the background color to match the design
+    // overflow: "hidden",
     flexDirection: "row", // Align content horizontally
     padding: 10,
     marginBottom: 14,
@@ -67,26 +68,28 @@ const styles = StyleSheet.create({
   promoContent: {
     flex: 1,
     justifyContent: "center",
+    left: 53,
   },
   offerDetail: {
-    color: "#FFCC00", // Matches the icon color
-    fontSize: 16,
+    color: "#FFD700", // Matches the icon color
+    fontSize: 10,
     marginBottom: 5,
+    fontWeight: "500",
     width: "50%",
-    textAlign: "center",
+    // textAlign: "center",
   },
   offerText: {
     width: "50%",
     color: "#fff",
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontSize: 12,
+    fontWeight: "700",
+    // textAlign: "center",
   },
   coupleImage: {
-    width: 210, // Increase the size of the image
-    height: 210, // Increase the size to make it appear outside the container
+    width: 200, // Increase the size of the image
+    height: 105, // Increase the size to make it appear outside the container
     position: "absolute",
-    right: -35, // Move the image slightly outside the right edge
-    bottom: -80, // Move the image slightly outside the bottom edge
+    right: 0, // Move the image slightly outside the right edge
+    bottom: 0, // Move the image slightly outside the bottom edge
   },
 });

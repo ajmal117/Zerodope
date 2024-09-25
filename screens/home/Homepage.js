@@ -22,10 +22,11 @@ import MediaPlayer from "./mediaplayer/MediaPlayer";
 import { activities } from "./activities/activities";
 import { customise } from "./customise/customise";
 import ActivityCard from "./activities/ActivityCard";
+import ActivityCard1 from "./activities/ActivityCard1";
 import { useIsFocused } from "@react-navigation/native";
 // import { API_URL, API_KEY } from "@env";
 
-import AppointUpdate from "../home/promo/AppointUpdate" ;
+import AppointUpdate from "../home/promo/AppointUpdate";
 
 const Stack = createStackNavigator();
 
@@ -138,7 +139,7 @@ const Homepage = ({ navigation }) => {
         </View>
         <ScrollView horizontal style={styles.activitiesContainer1}>
           {customise.map((activity, index) => (
-            <ActivityCard
+            <ActivityCard1
               key={index}
               activity={activity}
               index={index}
@@ -242,11 +243,12 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 12,
+    fontWeight: "700",
     color: "#333",
     paddingVertical: 2,
     paddingHorizontal: 3,
+    lineHeight: 18,
   },
   activitiesContainer: {
     flexDirection: "row",

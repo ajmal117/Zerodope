@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const ActivityCard = ({ activity, index, navigation, paid, apointMent }) => {
+const ActivityCard1 = ({ activity, index, navigation, paid, apointMent }) => {
   // const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePress = () => {
@@ -49,8 +49,8 @@ const ActivityCard = ({ activity, index, navigation, paid, apointMent }) => {
       >
         <Text style={styles.icon}>{activity.icon}</Text>
         <Text style={styles.title}>{activity.name}</Text>
-        <Text style={styles.text}>{activity.text}</Text>
-        <Text
+        {/* <Text style={styles.text}>{activity.text}</Text> */}
+        {/* <Text
           style={[
             styles.bookNowText,
             activity.name === "Free Support"
@@ -65,18 +65,28 @@ const ActivityCard = ({ activity, index, navigation, paid, apointMent }) => {
             : paid
             ? "Open Now"
             : "Book Now"}
+        </Text> */}
+        <Text
+          style={[
+            styles.bookNowText,
+            {
+              color: activity.name === "Free Support" || paid ? "green" : "red",
+            },
+          ]}
+        >
+          {activity.name === "Free Support" || paid ? "Open Now" : "Book Now"}
         </Text>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default ActivityCard;
+export default ActivityCard1;
 
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    width:190,
+    width: 130,
     height: 110,
     // marginVertical: 12,
     paddingHorizontal: 7,
@@ -88,10 +98,10 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   icon: {
-    // fontSize: 40,
-    width: 37,
-    height: 29,
-    // marginBottom: 15,
+    fontSize: 30,
+    // width: 37,
+    // height: 29,
+    marginBottom: 5,
     textAlign: "center",
   },
   title: {

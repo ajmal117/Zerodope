@@ -285,12 +285,12 @@ export default VideoCard;
 
 const styles = StyleSheet.create({
   videoCard: {
-    width: width * 0.88,
-    height: 242,
+    width: width * 0.78,
+    height: 228,
     borderRadius: 5,
     overflow: "hidden",
     // borderWidth: 1,
-    padding: 5,
+    padding: 2,
     marginRight: 10,
     paddingLeft: 5,
     shadowColor: "#FAB917",
@@ -301,13 +301,13 @@ const styles = StyleSheet.create({
   },
   video: {
     width: "100%",
-    height: "84%",
+    height: "82%",
     borderRadius: 5,
   },
   videoOverlay: {
     position: "absolute",
-    bottom: 44,
-    left: 10,
+    bottom: 45,
+    left: 13,
     right: 20,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -332,22 +332,23 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   bottomTitleFirst: {
-    fontSize: 13,
+    fontSize: 10,
     fontWeight: "bold",
   },
   bottomTitle: {
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingBottom: 10,
   },
   videoBottomTitleSubText: {
     // marginLeft: 10,
     // paddingBottom: 16,
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: "bold",
     color: "#777",
   },
   videoBottomTitleSubTextMnt: {
-    fontSize: 12,
+    fontSize: 10,
   },
   videoContainer: {
     flexDirection: "row",
