@@ -16,7 +16,7 @@ const ActivityCard1 = ({ activity, index, navigation, paid, apointMent }) => {
     } else if (activity.name === "Consultation Scheduling") {
       navigation.navigate(activity.component);
     } else {
-      const destination = paid ? activity.component : "BookNow";
+      const destination = paid ? activity.component : "MainScreen";
       navigation.navigate(destination);
     }
   };

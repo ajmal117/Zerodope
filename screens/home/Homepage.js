@@ -13,6 +13,8 @@ import { Avatar, Appbar, Snackbar } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as SecureStore from "expo-secure-store";
 import BookNow from "../booknow/BookNow";
+import MainScreen from "../consultPlan/MainScreen";
+
 import VideoCard from "./VideoCard/VideoCard";
 // import { videos } from "./VideoCard/videos"; // Correctly import the videos array
 import PromoCard from "./promo/PromoCard";
@@ -102,7 +104,7 @@ const Homepage = ({ navigation }) => {
       <Appbar.Header style={styles.appbar} mode="small">
         <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
           <Avatar.Image
-            size={40}
+            size={38}
             source={require("../../assets/images/c1.jpg")}
             style={{ marginRight: 6 }}
           />
@@ -114,7 +116,7 @@ const Homepage = ({ navigation }) => {
           />
           <Text style={styles.dateText}>{todayDate}</Text>
         </View>
-        <Appbar.Action icon="magnify" onPress={onToggleSnackBar2} />
+        {/* <Appbar.Action icon="magnify" onPress={onToggleSnackBar2} /> */}
       </Appbar.Header>
       <ScrollView contentContainerStyle={styles.content}>
         <AppointCard />
@@ -158,13 +160,13 @@ const Homepage = ({ navigation }) => {
         <VideoCard />
         {/* </ScrollView> */}
       </ScrollView>
-      <Snackbar
+      {/* <Snackbar
         visible={visible2}
         onDismiss={onDismissSnackBar2}
         duration={Snackbar.DURATION_SHORT}
       >
         Search
-      </Snackbar>
+      </Snackbar> */}
     </View>
   );
 };
@@ -177,6 +179,7 @@ const App = () => (
       options={{ headerShown: false, title: "Home" }}
     />
     <Stack.Screen name="BookNow" component={BookNow} />
+    <Stack.Screen name="MainScreen" component={MainScreen} />
     <Stack.Screen
       name="MediaPlayer"
       component={MediaPlayer}
@@ -218,7 +221,7 @@ const styles = StyleSheet.create({
     shadowRadius: 1, // Shadow radius
   },
   appbarTitle: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: "700",
   },
   headerContent: {
@@ -228,9 +231,9 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   dateText: {
-    fontSize: 12,
+    fontSize: 10,
     color: "#888",
-    marginBottom: 8,
+    marginBottom: 12,
   },
   content: {
     paddingLeft: 15,

@@ -609,7 +609,7 @@ const DietPlan = () => {
         <Button
           mode="contained"
           style={styles.bookNowButton}
-          onPress={() => navigation.navigate("BookNow")}
+          onPress={() => navigation.navigate("ConsultSchedule")}
         >
           BOOK NOW
         </Button>

@@ -731,7 +731,7 @@ const BodyBuildingPlan = () => {
         </Text>
         <Button
           mode="contained"
-          onPress={() => navigation.navigate("BookNow")}
+          onPress={() => navigation.navigate("ConsultSchedule")}
           style={styles.bookNowButton}
         >
           BOOK NOW
