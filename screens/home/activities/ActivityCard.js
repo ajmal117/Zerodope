@@ -122,7 +122,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
-const ActivityCard = ({ activity, index, navigation, paid, apointMent }) => {
+const ActivityCard = ({ activity, index, navigation, paid }) => {
   const [paymentId, setPaymentId] = useState(null);
 
   // Retrieve paymentId from SecureStore when the component mounts
@@ -147,7 +147,7 @@ const ActivityCard = ({ activity, index, navigation, paid, apointMent }) => {
     } else if (activity.name === "Consultation Scheduling") {
       navigation.navigate(activity.component);
     } else {
-      const destination = paid ? activity.component : "BookNow";
+      const destination = paymentId ? activity.component : "BookNow";
       navigation.navigate(destination);
     }
   };
@@ -156,13 +156,8 @@ const ActivityCard = ({ activity, index, navigation, paid, apointMent }) => {
     if (activity.name === "Free Support") {
       return { color: "green" };
     } else if (activity.name === "Consultation Scheduling") {
-      // If the paymentId exists or it's marked as paid, show green text
-      if (paymentId || paid) {
-        return { color: "green" };
-      } else {
-        return { color: "red" };
-      }
-    } else if (!paid && !paymentId) {
+      return paymentId ? { color: "green" } : { color: "red" };
+    } else if (!paymentId) {
       return { color: "red" };
     } else {
       return { color: "green" };
@@ -178,10 +173,8 @@ const ActivityCard = ({ activity, index, navigation, paid, apointMent }) => {
         <Text style={[styles.bookNowText, getTextColor()]}>
           {activity.name === "Free Support"
             ? "Open Now"
-            : activity.name === "Consultation Scheduling" && paymentId
+            : paymentId
             ? "Paid"
-            : paid
-            ? "Open Now"
             : "Book Now"}
         </Text>
       </View>
